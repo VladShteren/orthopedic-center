@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ортопедический центр — Травы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Page-only layout & spacing (same Cupertino look) -->
+  <style>
+    .section{ margin:40px 0 24px; }
+    .section__title{ margin:0 0 14px; font-weight:800; font-size:clamp(22px,3vw,28px); color:#0b0b0c; letter-spacing:-.01em; }
+    .section__note{ color:var(--tertiary); font-size:13px; margin:0 0 10px; }
+    /* .divider{ height:1px; background:var(--separator,rgba(60,60,67,.16)); margin:22px 0 6px; border-radius:1px; } */
+    .divider {
+      height: 1px;
+      background: var(--bg);  /* same color as background → invisible */
+      margin: 22px 0 6px;
+      border-radius: 1px;
+    }
+
+    .cards{ display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); align-items:start; }
+    .card{ display:flex; flex-direction:column; height:100%; }
+    .card--hero{ grid-column:1 / -1; }
+    .card--wide{ grid-column:span 2; }
+    .card--tall{ grid-row:span 2; }
+    @media(max-width:980px){ .card--wide{ grid-column:span 1; } .card--tall{ grid-row:auto; } }
+
+    .card.block{ padding:0; overflow:hidden; }
+    .card__media{ width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
+    .card__body{ padding:22px 24px; line-height:1.65; }
+    .card__title{ margin:0 0 10px; font-weight:800; font-size:clamp(18px,2.4vw,22px); color:#0b0b0c; letter-spacing:-.01em; }
+    .card__meta{ color:var(--tertiary); font-size:13px; margin:-2px 0 12px; }
+    .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .chip{ font-size:13px; color:#1c1c1e; background:rgba(118,118,128,.12); padding:6px 10px; border-radius:999px; }
+    .list-grid{ display:grid; gap:10px; margin:2px 0 0; }
+
+    .twoup{ display:grid; gap:18px; }
+    @media(min-width:960px){ .twoup{ grid-template-columns:1fr 1fr; } }
+
+    .card__cta{ display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap; }
+    .btn-ghost{ background:#fff; border:1px solid var(--separator); color:#111114; padding:10px 14px; border-radius:12px; font-weight:600; transition:all .2s ease; }
+    .btn-ghost:hover{ background:rgba(118,118,128,.06); }
+
+    /* Slim outer padding when .block reused as container */
+    main > .block{ padding:22px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="container nav-wrap">
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="index.html">Главная</a>
+      <a href="akupunktura.html">Акупунктура</a>
+      <a href="lechebny-massazh.html">Массаж</a>
+      <a href="travy.html" class="active" aria-current="page">Травы</a>
+    </div>
+    <a class="cta" href="zapisatsya.html">Записаться</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<header class="container hero">
+  <div class="hero-inner">
+    <h1 class="hero-title">Фитотерапия (Лечебные травы)</h1>
+    <p>Натуральная поддержка восстановления: противовоспалительный эффект, сон и стресс-менеджмент, мягкая помощь суставам и мышцам. Подбираем сочетания, совместимые с вашей терапией.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Обзор -->
+  <section class="section">
+    <h2 class="section__title">Обзор</h2>
+    <p class="section__note">Что входит в подход и чего ожидать.</p>
+    <div class="cards">
+      <article class="card card--hero block">
+        <img class="card__media" src="assets/images/herbs/hero_blend.jpg" alt="Травяная смесь и чашка настоя (герой)">
+        <div class="card__body">
+          <h3 class="card__title">Зачем травы в ортопедии?</h3>
+          <p class="card__meta">Воспаление • Сон • Тревога • Пищеварение • Восстановление тканей</p>
+          <p>Фитокомплексы могут мягко снижать воспалительные реакции, улучшать качество сна и нормализовать стресс-ответ. Мы используем травы как дополнение к основному лечению (акупунктура, массаж, ЛФК) с учётом противопоказаний и взаимодействий.</p>
+          <div class="chip-row">
+            <span class="chip">Натурально</span>
+            <span class="chip">Совместимо с терапией</span>
+            <span class="chip">Индивидуальный подбор</span>
+          </div>
+          <div class="card__cta">
+            <a class="btn-primary" href="zapisatsya.html">Подобрать сбор</a>
+            <a class="btn-ghost" href="#faq">FAQ</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="container divider"></div>
+
+  <!-- Формы и как принимаем -->
+  <section class="section">
+    <h2 class="section__title">Формы и приём</h2>
+    <div class="cards">
+      <article class="card block">
+        <img class="card__media" src="assets/images/herbs/tea_cup.jpg" alt="Чай/настой из трав">
+        <div class="card__body">
+          <h3 class="card__title">Чаи и настои</h3>
+          <p>Классический способ для успокоения и сна: пассифлора, мелисса, ромашка, липа. Готовятся свежими курсами 2–4 недели.</p>
+        </div>
+      </article>
+
+      <article class="card block">
+        <img class="card__media" src="assets/images/herbs/tincture_bottles.jpg" alt="Фитокомплексы и настойки">
+        <div class="card__body">
+          <h3 class="card__title">Экстракты и настойки</h3>
+          <p>Стандартизованные экстракты (например, куркумин, босвеллия) — удобная дозировка для противовоспалительной поддержки.</p>
+        </div>
+      </article>
+
+      <article class="card block">
+        <img class="card__media" src="assets/images/herbs/raw_roots.jpg" alt="Корни и сырьё для отваров">
+        <div class="card__body">
+          <h3 class="card__title">Отвары и компрессы</h3>
+          <p>Корни имбиря/лавзеи, окопник — местно как компресс (по показаниям) для мышечного комфорта и согревания.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="container divider"></div>
+
+  <!-- Показания и безопасноcть -->
+  <section class="section">
+    <h2 class="section__title">Показания и безопасность</h2>
+    <div class="cards">
+      <article class="card block">
+        <img class="card__media" src="assets/images/herbs/indications.jpg" alt="Набор трав и карточки показаний">
+        <div class="card__body">
+          <h3 class="card__title">Когда помогают</h3>
+          <ul class="list-grid">
+            <li>Мышечно-суставной дискомфорт при нагрузках.</li>
+            <li>Хроническое низкоуровневое воспаление.</li>
+            <li>Нарушение сна, повышенная тревожность.</li>
+            <li>Пищеварительный дискомфорт на фоне стресса.</li>
+            <li>Восстановление после травм (как дополнение).</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card block">
+        <img class="card__media" src="assets/images/herbs/safety_allergy.jpg" alt="Аллергопробы и безопасность">
+        <div class="card__body">
+          <h3 class="card__title">Безопасность прежде всего</h3>
+          <ul class="list-grid">
+            <li>Проверяем аллергии и взаимодействия с лекарствами.</li>
+            <li>Исключаем беременность/лактацию, болезни печени/почек без согласования.</li>
+            <li>Используем только проверенных поставщиков сырья.</li>
+            <li>Начинаем с малых доз, контроль самочувствия.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="container divider"></div>
+
+  <!-- Схемы, дозировки, хранение -->
+  <section class="section">
+    <h2 class="section__title">Схемы приёма и хранение</h2>
+    <div class="cards">
+      <article class="card card--wide block">
+        <img class="card__media" src="assets/images/herbs/dosage_measure.jpg" alt="Мерные ложки и банки с травами">
+        <div class="card__body">
+          <h3 class="card__title">Как мы назначаем</h3>
+          <div class="twoup">
+            <ul class="list-grid">
+              <li><strong>Курс:</strong> обычно 3–6 недель, затем оценка эффекта.</li>
+              <li><strong>Режим:</strong> 1–2 раза в день, чаще вечером для седации.</li>
+              <li><strong>Комбинации:</strong> не более 3–4 компонентов одновременно.</li>
+            </ul>
+            <ul class="list-grid">
+              <li><strong>Хранение:</strong> сухое, тёмное место, герметично.</li>
+              <li><strong>Срок:</strong> сырьё до 12 месяцев, экстракты — по этикетке.</li>
+              <li><strong>Отмена:</strong> постепенно при длительном использовании.</li>
+            </ul>
+          </div>
+          <p class="card__meta">Индивидуальные схемы всегда согласуются с вашим лечащим врачом при приёме рецептурных препаратов.</p>
+        </div>
+      </article>
+
+      <article class="card block">
+        <img class="card__media" src="assets/images/herbs/herb_storage.jpg" alt="Стеклянные банки с травами на полке">
+        <div class="card__body">
+          <h3 class="card__title">Качество сырья</h3>
+          <p>Выбираем партии с анализ-сертификатами (микробиология, тяжёлые металлы), хранение в стекле/картоне без света и влаги.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="container divider"></div>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <h2 class="section__title">Частые вопросы</h2>
+    <div class="cards">
+      <article class="card card--wide block">
+        <img class="card__media" src="assets/images/herbs/faq.jpg" alt="Вопросы по травам">
+        <div class="card__body">
+          <h3 class="card__title">Вопросы и ответы</h3>
+          <div class="twoup">
+            <div>
+              <p><strong>Можно совмещать с НПВС?</strong><br>В ряде случаев да, но дозы и длительность согласуем, чтобы не усиливать нагрузку на ЖКТ/печень.</p>
+              <p><strong>Когда ждать эффект?</strong><br>Обычно 1–2 недели на сон/стресс, 2–4 недели на суставно-мышечный комфорт.</p>
+            </div>
+            <div>
+              <p><strong>Есть ли побочные эффекты?</strong><br>Редко — диспепсия/сонливость/аллергия. При любых реакциях — прекращаем и корректируем схему.</p>
+              <p><strong>Можно ли только травами?</strong><br>Мы рассматриваем травы как дополнение к базовой терапии и образу жизни.</p>
+            </div>
+          </div>
+          <div class="card__cta">
+            <a class="btn-primary" href="zapisatsya.html">Подобрать сбор</a>
+            <a class="btn-ghost" href="akupunktura.html">Комбинировать с акупунктурой</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2025 — Ортопедический центр • Фитотерапия</footer>
+</body>
+</html>
