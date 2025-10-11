@@ -1,80 +1,126 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ортопедический центр — Записаться</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ортопедический центр — Записаться</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
-  <style>
-    .section { margin: 36px 0 22px; }
-    .section__title { margin: 0 0 12px; font-weight: 800; font-size: clamp(22px, 3vw, 28px); color: #0b0b0c; letter-spacing: -0.01em; }
-    .section__note { color: var(--tertiary); font-size: 13px; margin: 0 0 10px; }
-    .divider { height: 1px; background: var(--bg); border-radius: 1px; margin: 22px 0; }
-    .appt-card.block { padding: 22px; margin-top: 0; }
-    @media (min-width: 920px){
-      .appt-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }
-      .appt-layout > aside > *:first-child { margin-top: 0; }
-      .intro-align { padding-left: 22px; }
-    }
-    .form { width: 100%; max-width: 720px; }
-    .form legend { font-weight: 700; color: #0b0b0c; margin-bottom: 10px; }
-    .row { display: grid; gap: 12px; }
-    .row-2 { grid-template-columns: 1fr; }
-    @media (min-width: 720px){ .row-2 { grid-template-columns: 1fr 1fr; } }
-    .inline { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    .inline .control { width:auto; min-width: 180px; }
-    .hint { color: var(--tertiary); font-size: 12px; margin-top: 4px; }
-    .section-caption { color: #1c1c1e; font-weight: 600; margin-top: 8px; }
-    .pill-note { display: inline-flex; align-items: center; gap: 8px; background: rgba(118,118,128,.12); color: #1c1c1e; padding: 6px 10px; border-radius: 999px; font-size: 13px; }
-    .summary { background:linear-gradient(180deg,#fdfefe,#f5f9ff); border:2px solid #e6efff; border-radius:22px; padding:18px; line-height:1.6; box-shadow: var(--shadow-sm); }
-    .summary + .summary, .summary + .media-card, .media-card + .summary { margin-top:14px; }
-    .summary h4 { margin:0 0 8px; font-size:16px; font-weight:800; color:#0b0b0c; }
-    .summary ul { margin:8px 0 0 18px; padding:0; }
-    .summary li { margin:4px 0; }
-    .media-card { background: var(--surface); border: 1px solid var(--separator); border-radius: 22px; padding: 0; overflow: hidden; box-shadow: var(--shadow-sm); }
-    .media-card img { display: block; width: 100%; height: auto; }
-    .media-card .caption { padding: 12px 14px; font-size: 13px; color: var(--secondary); }
-    .banner { display:none; background:#e8fbe9; border:1.5px solid #bfe9c8; color:#0a3b22; padding:12px 14px; border-radius:14px; margin:12px 0 0; font-weight:600; }
-    .banner.show { display:block; }
-    .success-image { width:100%; border-radius:22px; margin-top:14px; opacity:.9; display:none; box-shadow:0 6px 16px rgba(0,0,0,.08); }
-    .banner.show + .success-image { display:block; }
-    .hero-image { width:100%; max-width:980px; border-radius:22px; margin:24px auto 0; display:block; box-shadow:0 6px 16px rgba(0,0,0,.08); }
-    .contact-list { list-style:none; margin:0; padding:0; }
-    .contact-list li { margin:6px 0; display:flex; gap:8px; align-items:flex-start; }
-    .contact-list svg { flex:0 0 18px; margin-top:2px; opacity:.7; }
-  </style>
+    <style>
+        .section { margin: 36px 0 22px; }
+        .section__title { margin: 0 0 12px; font-weight: 800; font-size: clamp(22px, 3vw, 28px); color: #0b0b0c; letter-spacing: -0.01em; }
+        .section__note { color: var(--tertiary); font-size: 13px; margin: 0 0 10px; }
+
+        /* Center the intro texts */
+        .section.intro-align { text-align: center; }
+        @media (min-width: 920px){ .intro-align { padding-left: 0; } }
+
+        .divider { height: 1px; background: var(--bg); border-radius: 1px; margin: 22px 0; }
+
+        /* Cupertino-style form card */
+        .appt-card.block{
+          padding: 24px;
+          margin-top: 0;
+          background: #fff;
+          border: 1px solid #e6e7eb;
+          border-radius: 22px;
+          box-shadow: 0 8px 24px rgba(0,0,0,.06);
+        }
+
+        @media (min-width: 920px){
+          .appt-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }
+          .appt-layout > aside > *:first-child { margin-top: 0; }
+        }
+
+        .form { width: 100%; max-width: 720px; }
+        .form legend { font-weight: 700; color: #0b0b0c; margin-bottom: 10px; }
+
+        /* Remove the default fieldset borders (the “black lines”) */
+        fieldset.field{ border: 0; padding: 0; margin: 0 0 18px; }
+        fieldset.field + fieldset.field{ margin-top: 18px; }
+
+        .row { display: grid; gap: 12px; }
+        .row-2 { grid-template-columns: 1fr; }
+        @media (min-width: 720px){ .row-2 { grid-template-columns: 1fr 1fr; } }
+
+        /* Cupertino inputs */
+        .control,
+        select.control,
+        textarea.control{
+          width: 100%;
+          border: 1px solid #e6e7eb;
+          background: #fff;
+          border-radius: 14px;
+          padding: 12px 14px;
+          font: inherit;
+          color: #0b0b0c;
+          outline: none;
+          box-shadow: inset 0 1px 0 rgba(0,0,0,.02);
+          transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .control:focus,
+        select.control:focus,
+        textarea.control:focus{
+          border-color: #86a8ff;
+          box-shadow: 0 0 0 4px rgba(134,168,255,.18);
+        }
+
+        label{ font-size: 14px; color:#1c1c1e; margin-bottom:6px; display:block; }
+        .hint{ color:#8e8e93; font-size:12px; margin-top:4px; }
+        .section-caption { color: #1c1c1e; font-weight: 600; margin-top: 8px; }
+
+        .pill-note { display: inline-flex; align-items: center; gap: 8px; background: rgba(118,118,128,.12); color: #1c1c1e; padding: 6px 10px; border-radius: 999px; font-size: 13px; }
+
+        .summary { background:linear-gradient(180deg,#fdfefe,#f5f9ff); border:2px solid #e6efff; border-radius:22px; padding:18px; line-height:1.6; box-shadow: var(--shadow-sm); }
+        .summary + .summary, .summary + .media-card, .media-card + .summary { margin-top:14px; }
+        .summary h4 { margin:0 0 8px; font-size:16px; font-weight:800; color:#0b0b0c; }
+        .summary ul { margin:8px 0 0 18px; padding:0; }
+        .summary li { margin:4px 0; }
+
+        .media-card { background: var(--surface); border: 1px solid #e6e7eb; border-radius: 22px; padding: 0; overflow: hidden; box-shadow: var(--shadow-sm); }
+        .media-card img { display: block; width: 100%; height: auto; }
+        .media-card .caption { padding: 12px 14px; font-size: 13px; color: var(--secondary); }
+
+        .banner { display:none; background:#e8fbe9; border:1.5px solid #bfe9c8; color:#0a3b22; padding:12px 14px; border-radius:14px; margin:12px 0 0; font-weight:600; }
+        .banner.show { display:block; }
+        .success-image { width:100%; border-radius:22px; margin-top:14px; opacity:.9; display:none; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+        .banner.show + .success-image { display:block; }
+
+        .hero-image { width:100%; max-width:980px; border-radius:22px; margin:24px auto 0; display:block; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+        .contact-list { list-style:none; margin:0; padding:0; }
+        .contact-list li { margin:6px 0; display:flex; gap:8px; align-items:flex-start; }
+        .contact-list svg { flex:0 0 18px; margin-top:2px; opacity:.7; }
+    </style>
 </head>
 <body>
-
 <!-- NAV -->
 <div class="container nav-wrap">
-  <nav class="nav" aria-label="Главное меню">
-    <div class="nav-left" role="tablist" aria-label="Разделы сайта">
-      <a href="index.html">Главная</a>
-      <a href="akupunktura.html">Акупунктура</a>
-      <a href="lechebny-massazh.html">Массаж</a>
-      <a href="travy.html">Травы</a>
-    </div>
-    <a class="cta current" href="zapisatsya.html" aria-current="page">Записаться</a>
-  </nav>
+    <nav class="nav" aria-label="Главное меню">
+        <div class="nav-left" role="tablist" aria-label="Разделы сайта">
+            <a href="index.html">Главная</a>
+            <a href="akupunktura.html">Акупунктура</a>
+            <a href="lechebny-massazh.html">Массаж</a>
+            <a href="travy.html">Травы</a>
+        </div>
+        <a class="cta current" href="zapisatsya.html" aria-current="page">Записаться</a>
+    </nav>
 </div>
 
 <!-- HERO -->
 <header class="container hero page-book">
-  <div class="hero-inner">
-    <h1 class="hero-title">Записаться на приём</h1>
-    <p>Короткая анкета — и мы подтвердим время в течение рабочего дня.</p>
-    <img src="assets/images/booking/hero_booking.jpg" alt="Чистый стол с блокнотом и растениями" class="hero-image" loading="lazy" decoding="async">
-  </div>
+    <div class="hero-inner">
+        <h1 class="hero-title">Записаться на приём</h1>
+        <p>Короткая анкета — и мы подтвердим время в течение рабочего дня.</p>
+        <img src="assets/images/booking/hero_booking.jpg" alt="Чистый стол с блокнотом и растениями" class="hero-image" loading="lazy" decoding="async">
+    </div>
 </header>
 
-<!-- INTRO -->
+<!-- INTRO (now centered) -->
 <section class="container section intro-align">
-  <h2 class="section__title">Заполнить форму</h2>
-  <p class="section__note">Акупунктура, массаж и травы — выберем подходящий план вместе.</p>
-  <p class="section__note">Можно также <a href="tel:+79990000000">связаться с нами</a> для консультации.</p>
+    <h2 class="section__title">Заполнить форму</h2>
+    <p class="section__note">Акупунктура, массаж и травы — выберем подходящий план вместе.</p>
+    <p class="section__note">Можно также <a href="tel:+79990000000">связаться с нами</a> для консультации.</p>
 </section>
 
 <main class="container">
