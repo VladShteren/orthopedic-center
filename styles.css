@@ -2,13 +2,13 @@
 
 /* ========= Cupertino Design System ========= */
 :root {
-  --accent: #34c759;                  /* iOS green */
-  --bg: #f5f5f7;                      /* system background */
-  --surface: rgba(255,255,255,0.8);   /* frosted surfaces */
-  --label: #111114;                   /* primary text */
-  --secondary: #636366;               /* secondary text */
-  --tertiary: #8e8e93;                /* tertiary text */
-  --separator: rgba(60,60,67,0.16);   /* border lines */
+  --accent: #34c759; /* iOS green */
+  --bg: #f5f5f7;
+  --surface: rgba(255,255,255,0.8);
+  --label: #111114;
+  --secondary: #636366;
+  --tertiary: #8e8e93;
+  --separator: rgba(60,60,67,0.16);
   --radius: 20px;
   --radius-lg: 28px;
   --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
@@ -32,10 +32,51 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
 .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
 /* ========= NAVIGATION ========= */
-.nav-wrap { position: sticky; top: 14px; z-index: 50; }
+/* Sticky container with initial breathing room */
+/* .container.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding-top: 16px;
+  transition: padding-top .22s ease;
+  backdrop-filter: saturate(160%) blur(20px);
+  -webkit-backdrop-filter: saturate(160%) blur(20px);
+} */
+
+.container.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  /* Keep small breathing room initially */
+  padding-top: 16px;
+  transition: padding-top .22s ease, background .3s ease;
+
+  /* Solid background (same as page) */
+  background: #f5f5f7;
+
+  /* Subtle fade at bottom for elegance */
+  background: linear-gradient(to bottom, #f5f5f7 100%, rgba(0,0,0,0.03));
+
+  /* Remove transparency/glass */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+
+
+
+/* When page is scrolled, remove the gap */
+body.scrolled .container.nav-wrap {
+  padding-top: 0;
+}
+
+/* Nav bar design */
 .nav {
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f5f7;
   border: 1px solid var(--separator);
   border-radius: 999px;
   padding: 8px 12px;
@@ -46,17 +87,27 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
 
 /* Segmented control style menu */
 .nav-left {
-  display: flex; align-items: center; gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   background: rgba(118,118,128,0.12);
   border-radius: 999px;
   padding: 4px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
+.nav-left::-webkit-scrollbar { display: none; }
+.nav-left { scrollbar-width: none; }
 .nav-left a {
-  font-weight: 600; font-size: 15px; line-height: 1;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
   color: #1c1c1e;
   padding: 8px 16px;
   border-radius: 999px;
   transition: all .2s ease;
+  scroll-snap-align: start;
 }
 .nav-left a:hover { background: rgba(118,118,128,0.16); }
 .nav-left a.active {
@@ -68,8 +119,10 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
 /* Booking button */
 .cta {
   background: linear-gradient(180deg, #34d167, #2fbe5c);
-  color: #fff; font-weight: 700;
-  padding: 10px 18px; border: none;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 18px;
+  border: none;
   border-radius: 999px;
   box-shadow: 0 4px 10px rgba(52,199,89,0.3);
   transition: transform .1s ease, filter .2s ease;
@@ -77,11 +130,22 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
 .cta:hover { filter: brightness(1.05); }
 .cta:active { transform: translateY(1px); }
 
-/* ========= HERO ========= */
-.hero {
-  padding: 80px 0 32px;
-  text-align: center;
+/* Mobile scroll arrow hint */
+.container.nav-wrap::after {
+  content: "›";
+  position: absolute;
+  right: 14px;
+  top: calc(50% + 2px);
+  transform: translateY(-50%);
+  font-size: 20px;
+  line-height: 1;
+  color: rgba(0,0,0,0.25);
+  pointer-events: none;
 }
+@media (min-width: 768px) { .container.nav-wrap::after { display: none; } }
+
+/* ========= HERO ========= */
+.hero { padding: 80px 0 32px; text-align: center; }
 .hero-inner { max-width: 980px; margin: 0 auto; }
 .hero-title {
   margin: 0 0 12px;
@@ -183,18 +247,11 @@ footer {
   outline-offset: 3px;
 }
 
-
-
-/* Make the nav stick and snap to the very top when scrolled */
-.nav-wrap{
-  position: sticky;
-  top: 16px;              /* nice breathing room at page start */
-  z-index: 1000;
-  transition: top .2s ease;
+/* ========= Small screens ========= */
+@media (max-width: 360px) {
+  .nav-left a, .cta {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
 }
-
-/* When scrolling, remove the gap entirely */
-body.nav-docked .nav-wrap{
-  top: 0;                 /* flush to viewport ceiling */
-}
-
