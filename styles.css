@@ -198,36 +198,3 @@ body.nav-docked .nav-wrap{
   top: 0;                 /* flush to viewport ceiling */
 }
 
-/* Make the menu fit on narrow phones without changing layout */
-.nav { display:flex; align-items:center; gap:8px; }
-
-.nav-left{
-  display:flex;
-  gap:8px;
-  flex: 1 1 auto;      /* take remaining space */
-  min-width: 0;        /* allow shrink */
-  overflow-x: auto;    /* enable horizontal scroll when needed */
-  white-space: nowrap; /* keep links on one line */
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;  /* nice snapping when swiping */
-}
-
-/* Links snap nicely while swiping */
-.nav-left a{ scroll-snap-align: start; }
-
-/* Keep the CTA visible and not squished */
-.nav .cta{ flex: 0 0 auto; }
-
-/* Hide the scrollbar (still scrolls by swipe) */
-.nav-left::-webkit-scrollbar{ display:none; }
-.nav-left{ scrollbar-width: none; }
-
-/* Slightly tighter padding/fonts on very small screens */
-@media (max-width: 360px){
-  .nav-left a,
-  .nav .cta{
-    padding: 8px 10px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-}
