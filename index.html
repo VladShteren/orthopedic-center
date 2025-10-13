@@ -7,18 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Page-only refinements for Home -->
+    <!-- Page-only refinements -->
     <style>
+        /* Accent fallback in case not set in styles.css */
+        :root { --accent: #34c759; }
+
         .section { margin: 40px 0 26px; }
         .section__title { margin:0 0 14px; font-weight:800; font-size:clamp(22px,3vw,28px); color:#0b0b0c; letter-spacing:-0.01em; }
         .section__note { color: var(--tertiary); font-size:13px; margin:0 0 12px; }
-        /* .divider { height:1px; background:var(--separator, rgba(60,60,67,.16)); margin:22px 0 6px; border-radius:1px; } */
-        .divider {
-          height: 1px;
-          background: var(--bg);  /* same color as background → invisible */
-          margin: 22px 0 6px;
-          border-radius: 1px;
-        }
+
+        /* Invisible divider (keeps spacing) */
+        .divider { height:1px; background: var(--bg); margin:22px 0 6px; border-radius:1px; }
 
         .cards { display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); align-items:start; }
         .card { display:flex; flex-direction:column; height:100%; }
@@ -40,11 +39,73 @@
 
         /* Slimmer outer padding when reusing .block */
         main > .block { padding:22px; }
+
+        /* ------- Mobile bottom tab bar with green "Записаться" button ------- */
+        .tabbar { display:none; } /* hidden on desktop */
+
+        @media (max-width:720px){
+          /* hide top nav on small screens */
+          .nav-wrap{ display:none; }
+
+          /* keep content visible above fixed tabbar */
+          body{ padding-bottom:calc(74px + env(safe-area-inset-bottom,0px)); }
+
+          .tabbar{
+            display:flex;
+            position:fixed; left:0; right:0; bottom:0;
+            height:74px;
+            padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
+            background:rgba(255,255,255,0.9);
+            -webkit-backdrop-filter:saturate(160%) blur(14px);
+            backdrop-filter:saturate(160%) blur(14px);
+            border-top:1px solid rgba(60,60,67,.16);
+            z-index:1000;
+          }
+          .tabbar__list{
+            display:flex; align-items:center; justify-content:space-between;
+            width:100%; gap:4px;
+          }
+          .tabbar__item{
+            flex:1 1 0;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            gap:2px; text-decoration:none; font-size:11px; color:#1c1c1e;
+            padding:4px 0; border-radius:12px;
+          }
+          .tabbar__item[aria-current="page"]{ color:var(--accent); font-weight:600; }
+          .tabbar__icon{ width:22px; height:22px; display:block; }
+          .tabbar__icon svg{ width:100%; height:100%; }
+
+          /* Green pill "Записаться" — text only (no icon) */
+          .tabbar__item.register{
+            flex:none;
+            background:var(--accent);
+            color:#fff;
+            font-weight:700;
+            padding:12px 18px;          /* a bit taller since no icon */
+            border-radius:999px;
+            margin:0 4px;
+            display:flex;
+            flex-direction:row;          /* text centered in a row */
+            align-items:center;
+            justify-content:center;
+            gap:0;                       /* no gap needed */
+            box-shadow:0 4px 12px rgba(52,199,89,.28);
+            text-decoration:none;
+            line-height:1;
+          }
+          .tabbar__item.register span{ font-size:13px; }
+          .tabbar__item.register:hover{ background:#2eb150; }
+          .tabbar__item.register:active{ transform:translateY(1px); }
+        }
+
+        /* Footer spacing so it doesn’t collide with tabbar */
+        footer{ padding:26px 0 90px; text-align:center; color:#8e8e93; }
+        @media (min-width:721px){ footer{ padding-bottom:26px; } }
     </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAV (desktop; hidden on mobile via CSS above) -->
 <div class="container nav-wrap">
     <nav class="nav">
         <div class="nav-left">
@@ -56,6 +117,56 @@
         <a class="cta" href="zapisatsya.html">Записаться</a>
     </nav>
 </div>
+
+<!-- MOBILE TAB BAR -->
+<nav class="tabbar" role="navigation" aria-label="Основная навигация (мобильная)">
+    <div class="tabbar__list">
+        <!-- Главная -->
+        <a class="tabbar__item" href="index.html" aria-current="page">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
+            </svg>
+          </span>
+            <span>Главная</span>
+        </a>
+
+        <!-- Акупунктура -->
+        <a class="tabbar__item" href="akupunktura.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 5c-2 2-6.5 6.5-9 9l-5 5"/><path d="M15 9l-3-3"/><circle cx="19" cy="5" r="1.8" fill="currentColor"/>
+            </svg>
+          </span>
+            <span>Акуп.</span>
+        </a>
+
+        <!-- Массаж -->
+        <a class="tabbar__item" href="lechebny-massazh.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12v-2a2 2 0 0 1 4 0v2"/><path d="M10 12v-3a2 2 0 1 1 4 0v3"/><path d="M14 12v-4a2 2 0 1 1 4 0v6a5 5 0 0 1-5 5H8a4 4 0 0 1-4-4v-1a3 3 0 0 1 3-3z"/>
+            </svg>
+          </span>
+            <span>Массаж</span>
+        </a>
+
+        <!-- Травы -->
+        <a class="tabbar__item" href="travy.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 3c-7 1-12 6-12 12 0 3.866 3.134 7 7 7 6-0 6-10 5-19z"/><path d="M4 20c3-4 7-6 12-7"/>
+            </svg>
+          </span>
+            <span>Травы</span>
+        </a>
+
+        <!-- Записаться (зелёная кнопка, ТЕКСТ БЕЗ ИКОНКИ) -->
+        <a class="tabbar__item register" href="zapisatsya.html" aria-label="Записаться">
+            <span>Записаться</span>
+        </a>
+    </div>
+</nav>
 
 <!-- HERO -->
 <header class="container hero">
@@ -87,8 +198,6 @@
             </div>
         </article>
     </section>
-
-    <!-- <div class="container divider"></div> -->
 
     <!-- Services -->
     <section id="services" class="section">
@@ -196,32 +305,9 @@
 
     <div class="container divider"></div>
 
-    <!-- Testimonials (short, calm) -->
-    <!-- <section class="section">
-      <h2 class="section__title">Отзывы</h2>
-      <div class="cards">
-        <article class="card block">
-          <div class="card__body">
-            <h3 class="card__title">«Шея перестала болеть через три сеанса»</h3>
-            <p class="card__meta">Алексей, 34</p>
-            <p>Комбинировали акупунктуру и массаж. Понравилось, что все объясняют простыми словами и дают упражнения на дом.</p>
-          </div>
-        </article>
-        <article class="card block">
-          <div class="card__body">
-            <h3 class="card__title">«Стала лучше спать и меньше нервничать»</h3>
-            <p class="card__meta">Мария, 29</p>
-            <p>Сделали мягкий курс и травяную поддержку. Очень бережное отношение и спокойная атмосфера.</p>
-          </div>
-        </article>
-      </div>
-    </section> -->
-
-    <!-- <div class="container divider"></div> -->
-
     <!-- Contact / clinic block -->
     <section class="section">
-        <h2 class="section__title">Контакты</h2>
+        <h2 class="section__title">Контақты</h2>
         <div class="contact block">
             <div>
                 <img class="card__media" src="assets/images/home/map.jpg" alt="Карта и ориентиры клиники" style="border-bottom:1px solid var(--separator);">
@@ -249,5 +335,21 @@
 </main>
 
 <footer>© 2025 — Ортопедический центр</footer>
+
+<!-- Auto-highlight current page for both desktop and mobile nav -->
+<script>
+    (function () {
+      const path = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.tabbar a').forEach(a => {
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+      document.querySelectorAll('.nav .nav-left a').forEach(a => {
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+    })();
+</script>
+
 </body>
 </html>
