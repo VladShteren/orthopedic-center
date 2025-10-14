@@ -287,34 +287,67 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* --- Fix: don't clip tabs; keep full visibility --- */
+/* === Mobile nav fix: keep CTA inside, show full first/last tabs, no clipping === */
 @media (max-width: 720px){
-  /* Let the rounded shell show its children fully */
+
+  /* Solid wrapper (same as desktop) with space above/below */
+  .tabbar{
+    position: fixed !important;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: var(--bg) !important;
+    background-image: linear-gradient(to bottom, var(--bg), var(--bg)) !important;
+  }
+  .tabbar__inner{ padding: 10px 10px 16px !important; }
+
+  /* Rounded shell, do NOT clip children */
   .tabbar__shell{
-    overflow: visible !important;        /* was hidden */
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    background: #f5f5f7 !important;
+    border: 1px solid var(--separator) !important;
+    border-radius: 999px !important;
+    box-shadow: var(--shadow-sm) !important;
+    overflow: visible !important; /* <-- critical */
   }
 
-  /* Add safe padding so first/last tab aren't cut by the curve */
-  .tabbar__list,
-  .seg{
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-    scroll-padding-inline: 12px;         /* keeps snap positions in view */
+  /* Scrollable tab track: support both .seg and .tabbar__list versions */
+  .seg,
+  .tabbar__list{
+    flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    background: rgba(118,118,128,.12);
+    border-radius: 999px;
+    padding: 8px 12px !important;                 /* safe inset so edges aren't cut */
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .seg::-webkit-scrollbar,
+  .tabbar__list::-webkit-scrollbar{ display: none; }
+
+  /* Tabs never stretch; they scroll */
+  .seg__item,
+  .tabbar__item{ flex: 0 0 auto !important; padding: 8px 12px !important; }
+
+  /* Add invisible side spacers so 1st/last tab are fully visible under the curve */
+  .seg::before, .seg::after,
+  .tabbar__list::before, .tabbar__list::after{
+    content:""; flex: 0 0 6px;
   }
 
-  /* Make sure the CTA never overlaps the scroll area */
-  .tabbar__item.register,
-  .tabbar__cta{
-    position: relative;                   /* stay in flow */
-    z-index: 1;                           /* above, but not overlapping content */
+  /* CTA stays INSIDE the shell, never overlaps the scroll area */
+  .tabbar__cta,
+  .tabbar__item.register{
+    position: relative !important;
+    z-index: 1;
     flex: 0 0 auto !important;
-    margin-left: 8px !important;
+    margin-left: 6px !important;
   }
 
-  /* Tabs are compact and fully visible while scrolling */
-  .tabbar__item,
-  .seg__item{
-    flex: 0 0 auto !important;
-    padding: 8px 12px !important;
-  }
+  /* Body offset so content doesn't slide under the fixed bar */
+  body{ padding-top: calc(88px + env(safe-area-inset-top, 0px)) !important; }
 }
