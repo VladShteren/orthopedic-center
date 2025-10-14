@@ -287,60 +287,53 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* === Mobile nav: 4 tabs + CTA fully visible (no scroll) === */
+/* === Mobile nav: balanced width so all 4 buttons fit nicely === */
 @media (max-width: 720px){
-  /* Keep solid wrapper you already use */
-  .tabbar{ position: fixed !important; top:0; left:0; right:0; z-index:1000; }
-  .tabbar__inner{ padding:10px 8px 16px !important; }
 
-  /* Rounded shell with green border (unchanged) but tighter */
-  .tabbar__shell{
-    display:flex !important; align-items:center;
-    gap:6px !important; padding:6px !important;
-    background:#f5f5f7 !important;
-    border:2px solid var(--accent) !important; border-radius:999px !important;
-    box-shadow:0 6px 16px rgba(0,0,0,.08) !important;
+  /* Make outer shell use a little more of the screen */
+  .tabbar__shell,
+  .nav {
+    width: min(100% - 8px, 1220px) !important; /* slightly wider */
+    margin-inline: auto !important;
+    padding: 6px 10px !important;
+    gap: 8px !important;
   }
 
-  /* Tab track – NO HORIZONTAL SCROLL; tabs share width evenly */
-  .seg, .tabbar__list{
-    flex:1 1 0 !important;
-    display:flex !important; align-items:center;
-    justify-content:space-between !important;
-    gap:4px !important; padding:6px !important;
-    background:rgba(118,118,128,.12); border-radius:999px;
-    overflow:visible !important;           /* <-- no scroll */
+  /* Inner tabs section — give a bit more room */
+  .tabbar__list,
+  .nav-left {
+    flex: 1 1 auto !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+    padding: 6px 10px !important;
   }
 
-  /* Each tab gets an equal slice */
-  .seg__item, .tabbar__item{
-    flex:1 1 0 !important;                 /* equal widths */
-    min-width:0 !important;
-    padding:6px 6px !important;
-    border-radius:999px;
+  /* Each tab slightly narrower text and compact padding */
+  .tabbar__item,
+  .seg__item,
+  .nav-left a {
+    flex: 1 1 0 !important;
+    text-align: center !important;
+    padding: 8px 10px !important;
+    font-size: 14px !important;
+    white-space: nowrap;
   }
 
-  /* Compact icons + labels so 4 tabs fit comfortably */
-  .tabbar__icon{ width:18px; height:18px; }
-  .seg__item span, .tabbar__item span{
-    font-size:12px; line-height:1.1;
+  /* Keep CTA inside bar with good proportions */
+  .tabbar__cta,
+  .cta {
+    flex: 0 0 auto !important;
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+    border-radius: 999px !important;
+    white-space: nowrap;
   }
 
-  /* CTA stays inside but slimmer to free space */
-  .tabbar__cta, .tabbar__item.register{
-    flex:0 0 auto !important;
-    padding:8px 12px !important;
-    font-size:14px !important;
-    white-space:nowrap;
-    margin-left:6px !important;
+  /* Green border remains clean and aligned */
+  .tabbar__shell {
+    border: 2px solid var(--accent) !important;
+    border-radius: 999px !important;
+    background: #f5f5f7 !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08) !important;
   }
-
-  /* Make sure page content never hides under fixed bar */
-  body{ padding-top:calc(88px + env(safe-area-inset-top,0px)) !important; }
-}
-
-/* Extra-tight tweak for very small phones */
-@media (max-width: 360px){
-  .seg__item span, .tabbar__item span{ font-size:11px; }
-  .tabbar__cta, .tabbar__item.register{ padding:6px 10px !important; font-size:13px !important; }
 }
