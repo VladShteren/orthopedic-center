@@ -287,53 +287,59 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* === Mobile nav: balanced width so all 4 buttons fit nicely === */
+/* === MOBILE NAV: use full width and fit all 4 tabs === */
 @media (max-width: 720px){
+  /* Take the whole screen width (respecting notches) */
+  .tabbar{
+    padding-left: max(8px, env(safe-area-inset-left)) !important;
+    padding-right: max(8px, env(safe-area-inset-right)) !important;
+  }
 
-  /* Make outer shell use a little more of the screen */
-  .tabbar__shell,
-  .nav {
-    width: min(100% - 8px, 1220px) !important; /* slightly wider */
-    margin-inline: auto !important;
-    padding: 6px 10px !important;
+  /* Remove the old min(100% - 20px, …) that keeps it narrow */
+  .tabbar .tabbar__inner{
+    width: 100% !important;
+    margin: 12px auto 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  /* Make the rounded shell span the full width */
+  .tabbar .tabbar__shell{
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
     gap: 8px !important;
-  }
-
-  /* Inner tabs section — give a bit more room */
-  .tabbar__list,
-  .nav-left {
-    flex: 1 1 auto !important;
-    justify-content: space-between !important;
-    gap: 6px !important;
-    padding: 6px 10px !important;
-  }
-
-  /* Each tab slightly narrower text and compact padding */
-  .tabbar__item,
-  .seg__item,
-  .nav-left a {
-    flex: 1 1 0 !important;
-    text-align: center !important;
     padding: 8px 10px !important;
-    font-size: 14px !important;
-    white-space: nowrap;
   }
 
-  /* Keep CTA inside bar with good proportions */
-  .tabbar__cta,
-  .cta {
+  /* Segmented track: allow shrink + share space evenly */
+  .tabbar .seg{
+    flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px !important;
+    min-width: 0 !important;           /* critical so tabs can shrink */
+  }
+
+  .tabbar .seg__item{
+    flex: 1 1 0% !important;            /* 4 tabs share the row */
+    min-width: 0 !important;
+    padding: 8px 8px !important;
+    white-space: nowrap !important;
+    border-radius: 999px !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+  }
+  .tabbar .seg__item .tabbar__icon{ width: 20px; height: 20px; }
+
+  /* Keep the green CTA inside and prevent it from hogging space */
+  .tabbar .tabbar__cta{
     flex: 0 0 auto !important;
     padding: 10px 16px !important;
-    font-size: 14px !important;
-    border-radius: 999px !important;
-    white-space: nowrap;
-  }
-
-  /* Green border remains clean and aligned */
-  .tabbar__shell {
-    border: 2px solid var(--accent) !important;
-    border-radius: 999px !important;
-    background: #f5f5f7 !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08) !important;
+    max-width: 40% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 }
