@@ -132,7 +132,6 @@ body.scrolled .container.nav-wrap {
 
 /* Mobile scroll arrow hint */
 .container.nav-wrap::after {
-  content: "›";
   position: absolute;
   right: 14px;
   top: calc(50% + 2px);
