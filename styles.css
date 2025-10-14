@@ -287,72 +287,34 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* ---- MOBILE NAV: keep CTA INSIDE, tabs scroll if needed ---- */
+/* --- Fix: don't clip tabs; keep full visibility --- */
 @media (max-width: 720px){
-  /* The full-width wrapper */
-  .tabbar{
-    position:fixed !important;
-    top:0; left:0; right:0;
-    z-index:1000;
-    background: linear-gradient(to bottom, var(--bg) 100%, rgba(0,0,0,0.03)) !important;
-    padding-top: 10px !important;     /* space above bar */
-    padding-bottom: 16px !important;  /* space below bar */
-  }
-
-  /* Center the rounded bar like desktop */
-  .tabbar__inner{
-    width:min(100% - 20px, 1200px) !important;
-    margin:0 auto !important;
-  }
-
-  /* The rounded shell */
+  /* Let the rounded shell show its children fully */
   .tabbar__shell{
-    display:flex !important;
-    align-items:center !important;
-    gap:8px !important;
-    padding:8px !important;
-    background:#f5f5f7 !important;
-    border:1px solid var(--separator) !important;
-    border-radius:999px !important;
-    box-shadow:var(--shadow-sm) !important;
-    overflow:hidden !important;        /* clip any spill */
+    overflow: visible !important;        /* was hidden */
   }
 
-  /* TABS AREA — support both old (.tabbar__list) and new (.seg) markup */
+  /* Add safe padding so first/last tab aren't cut by the curve */
   .tabbar__list,
   .seg{
-    flex:1 1 auto !important;          /* allow shrinking */
-    min-width:0 !important;            /* CRITICAL for flex-shrink */
-    display:flex !important;
-    align-items:center;
-    gap:8px !important;
-    padding:8px !important;
-    overflow-x:auto !important;        /* tabs scroll instead of pushing CTA out */
-    -webkit-overflow-scrolling:touch;
-    scroll-snap-type:x proximity;
-  }
-  .tabbar__list::-webkit-scrollbar,
-  .seg::-webkit-scrollbar{ display:none; }
-  .tabbar__list{ scrollbar-width:none; }
-  .seg{ scrollbar-width:none; }
-
-  /* individual tabs don’t stretch; stay compact */
-  .tabbar__item,
-  .seg__item{
-    flex:0 0 auto !important;
-    scroll-snap-align:start;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    scroll-padding-inline: 12px;         /* keeps snap positions in view */
   }
 
-  /* CTA on the right — always inside shell */
+  /* Make sure the CTA never overlaps the scroll area */
   .tabbar__item.register,
   .tabbar__cta{
-    flex:0 0 auto !important;
-    white-space:nowrap !important;
-    margin-left:8px !important;
-    align-self:stretch !important;     /* same height as tabs row */
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    max-width:48% !important;          /* safety on very narrow phones */
+    position: relative;                   /* stay in flow */
+    z-index: 1;                           /* above, but not overlapping content */
+    flex: 0 0 auto !important;
+    margin-left: 8px !important;
+  }
+
+  /* Tabs are compact and fully visible while scrolling */
+  .tabbar__item,
+  .seg__item{
+    flex: 0 0 auto !important;
+    padding: 8px 12px !important;
   }
 }
