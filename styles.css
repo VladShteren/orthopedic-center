@@ -287,10 +287,10 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* === Mobile nav fix: keep CTA inside, show full first/last tabs, no clipping === */
+/* === Mobile nav final fix: CTA inside, full visibility, green border === */
 @media (max-width: 720px){
 
-  /* Solid wrapper (same as desktop) with space above/below */
+  /* Fixed solid wrapper */
   .tabbar{
     position: fixed !important;
     top: 0; left: 0; right: 0;
@@ -300,19 +300,20 @@ footer {
   }
   .tabbar__inner{ padding: 10px 10px 16px !important; }
 
-  /* Rounded shell, do NOT clip children */
+  /* Rounded shell with green accent border */
   .tabbar__shell{
     display: flex !important;
     align-items: center;
     gap: 10px;
     background: #f5f5f7 !important;
-    border: 1px solid var(--separator) !important;
+    border: 2px solid var(--accent) !important;  /* 💚 iOS green border */
     border-radius: 999px !important;
-    box-shadow: var(--shadow-sm) !important;
-    overflow: visible !important; /* <-- critical */
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08) !important;
+    overflow: visible !important;
+    padding: 4px !important; /* slight inset so border looks balanced */
   }
 
-  /* Scrollable tab track: support both .seg and .tabbar__list versions */
+  /* Scrollable tab track (works for both .seg and .tabbar__list) */
   .seg,
   .tabbar__list{
     flex: 1 1 auto !important;
@@ -321,7 +322,7 @@ footer {
     gap: 8px;
     background: rgba(118,118,128,.12);
     border-radius: 999px;
-    padding: 8px 12px !important;                 /* safe inset so edges aren't cut */
+    padding: 8px 12px !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -329,17 +330,17 @@ footer {
   .seg::-webkit-scrollbar,
   .tabbar__list::-webkit-scrollbar{ display: none; }
 
-  /* Tabs never stretch; they scroll */
+  /* Tabs are compact and scroll horizontally */
   .seg__item,
   .tabbar__item{ flex: 0 0 auto !important; padding: 8px 12px !important; }
 
-  /* Add invisible side spacers so 1st/last tab are fully visible under the curve */
+  /* Invisible padding at edges so tabs never hide under the curve */
   .seg::before, .seg::after,
   .tabbar__list::before, .tabbar__list::after{
     content:""; flex: 0 0 6px;
   }
 
-  /* CTA stays INSIDE the shell, never overlaps the scroll area */
+  /* CTA always inside bar */
   .tabbar__cta,
   .tabbar__item.register{
     position: relative !important;
@@ -348,6 +349,56 @@ footer {
     margin-left: 6px !important;
   }
 
-  /* Body offset so content doesn't slide under the fixed bar */
+  /* Add safe top space so content doesn't slide under fixed nav */
   body{ padding-top: calc(88px + env(safe-area-inset-top, 0px)) !important; }
+}
+/* ==== Mobile nav: show all 4 tabs without scrolling ==== */
+@media (max-width: 720px){
+  /* Tighter shell so more room for tabs */
+  .tabbar__shell{
+    gap: 8px !important;
+    padding: 6px !important;
+  }
+
+  /* The tab track: no scroll, distribute items evenly */
+  .seg,
+  .tabbar__list{
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;     /* spread evenly */
+    gap: 4px !important;
+    padding: 6px 8px !important;
+    overflow: visible !important;       /* no horizontal scroll */
+  }
+
+  /* Each tab takes an equal slice of the track */
+  .seg__item,
+  .tabbar__item{
+    flex: 1 1 0 !important;             /* equal width */
+    min-width: 0 !important;
+    padding: 6px 6px !important;
+  }
+
+  /* Compact icon + label so all four fit comfortably */
+  .tabbar__icon{ width: 18px; height: 18px; }
+  .seg__item span,
+  .tabbar__item span{ font-size: 12px; line-height: 1.05; }
+
+  /* Keep CTA inside but slimmer to free space for tabs */
+  .tabbar__cta,
+  .tabbar__item.register{
+    flex: 0 0 auto !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    white-space: nowrap;
+    margin-left: 6px !important;
+  }
+}
+
+/* Extra-tight tweaks for very narrow phones */
+@media (max-width: 360px){
+  .seg__item span,
+  .tabbar__item span{ font-size: 11px; }
+  .tabbar__cta,
+  .tabbar__item.register{ padding: 8px 10px !important; font-size: 13px !important; }
 }
