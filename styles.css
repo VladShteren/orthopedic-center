@@ -32,44 +32,20 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
 .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
 /* ========= NAVIGATION ========= */
-/* Sticky container with initial breathing room */
-/* .container.nav-wrap {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding-top: 16px;
-  transition: padding-top .22s ease;
-  backdrop-filter: saturate(160%) blur(20px);
-  -webkit-backdrop-filter: saturate(160%) blur(20px);
-} */
-
 .container.nav-wrap {
   position: sticky;
   top: 0;
   z-index: 1000;
-
-  /* Keep small breathing room initially */
   padding-top: 16px;
   transition: padding-top .22s ease, background .3s ease;
-
-  /* Solid background (same as page) */
   background: #f5f5f7;
-
-  /* Subtle fade at bottom for elegance */
   background: linear-gradient(to bottom, #f5f5f7 100%, rgba(0,0,0,0.03));
-
-  /* Remove transparency/glass */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
-
-
-
 /* When page is scrolled, remove the gap */
-body.scrolled .container.nav-wrap {
-  padding-top: 0;
-}
+body.scrolled .container.nav-wrap { padding-top: 0; }
 
 /* Nav bar design */
 .nav {
@@ -77,7 +53,7 @@ body.scrolled .container.nav-wrap {
   align-items: center;
   justify-content: space-between;
   background: #f5f5f7;
-  border: 1px solid var(--separator);
+  border: 1px solid var(--accent); /* ← green border */
   border-radius: 999px;
   padding: 8px 12px;
   box-shadow: var(--shadow-sm);
@@ -254,6 +230,7 @@ footer {
     border-radius: 10px;
   }
 }
+
 /* ===== Mobile nav: same solid background above and below (like desktop) ===== */
 @media (max-width: 720px) {
   /* Keep your original top spacing */
@@ -268,15 +245,15 @@ footer {
     background: linear-gradient(to bottom, var(--bg) 100%, rgba(0,0,0,0.03)) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    padding-top: 4px !important; /* keep breathing room above bar */
-    padding-bottom: 16px !important; /* add same space below bar */
+    padding-top: 4px !important;
+    padding-bottom: 16px !important;
   }
 
   /* Inner rounded bar stays solid */
   body .tabbar__shell,
   body .nav {
     background: #f5f5f7 !important;
-    border: 1px solid var(--separator) !important;
+    border: 1px solid var(--accent) !important; /* ← green border on mobile */
     border-radius: 999px !important;
     box-shadow: var(--shadow-sm) !important;
     width: min(100% - 20px, 1200px);
@@ -286,9 +263,9 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
+
 /* === MOBILE NAV: make all 5 buttons fit on one row === */
 @media (max-width: 720px){
-  /* Full-width wrapper + safe-area */
   .tabbar{
     padding-left: max(10px, env(safe-area-inset-left)) !important;
     padding-right: max(10px, env(safe-area-inset-right)) !important;
@@ -298,23 +275,21 @@ footer {
     width:100% !important;
     display:flex !important;
     align-items:center !important;
-    gap:8px !important;                /* tighter gap between group and CTA */
-    padding:8px 10px !important;       /* compact shell padding */
+    gap:8px !important;
+    padding:8px 10px !important;
   }
-
-  /* Segmented track with 4 equal tabs */
   .seg{
     flex:1 1 auto !important;
     display:flex !important;
     align-items:center !important;
-    gap:6px !important;                /* tighter gaps between tabs */
+    gap:6px !important;
     padding:6px !important;
-    min-width:0 !important;            /* allow shrinking */
+    min-width:0 !important;
   }
   .seg__item{
-    flex:1 1 0% !important;            /* 4 tabs share the row evenly */
+    flex:1 1 0% !important;
     min-width:0 !important;
-    padding:8px 8px !important;        /* compact pill padding */
+    padding:8px 8px !important;
     border-radius:999px !important;
     white-space:nowrap !important;
     font-size:clamp(12px, 3.4vw, 14px) !important;
@@ -324,15 +299,50 @@ footer {
     width:clamp(18px, 4.8vw, 20px) !important;
     height:clamp(18px, 4.8vw, 20px) !important;
   }
-
-  /* Green CTA stays inside and doesn’t hog space */
   .tabbar__cta{
     flex:0 0 auto !important;
-    padding:10px 14px !important;      /* a bit narrower */
+    padding:10px 14px !important;
     font-size:clamp(13px, 3.6vw, 15px) !important;
-    max-width:40% !important;          /* prevents pushing tabs off-screen */
+    max-width:40% !important;
     white-space:nowrap !important;
     overflow:hidden !important;
     text-overflow:ellipsis !important;
+  }
+}
+/* ---------- Cards: text on top, buttons at bottom (equal heights) ---------- */
+.cards { align-items: stretch; }                 /* ensure grid stretches items */
+.cards .block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.block .card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 auto;                               /* body takes the free space */
+}
+.block .card__cta {
+  margin-top: auto;                              /* push actions to the bottom */
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-top: 10px;
+}
+
+/* If your cards don't use .card__body, this keeps it working too */
+.block > .card__cta:last-child { margin-top: auto; }
+
+/* ---------- Nav: white interior like cards + keep green border ---------- */
+.nav {
+  background: #fff !important;                   /* same white as cards */
+  border: 1px solid var(--accent) !important;    /* green outline */
+}
+
+/* Mobile: same white interior */
+@media (max-width: 720px) {
+  body .nav {
+    background: #fff !important;
+    border: 1px solid var(--accent) !important;
   }
 }
