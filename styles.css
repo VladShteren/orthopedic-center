@@ -319,3 +319,52 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
+/* --- Fix: keep mobile CTA INSIDE the rounded bar --- */
+@media (max-width: 720px){
+  /* The outer rounded bar */
+  body .tabbar__shell{
+    display:flex !important;
+    align-items:center !important;
+    gap:8px !important;
+    padding:8px !important;
+    overflow:hidden !important;     /* clip anything that tries to spill */
+    border-radius:999px !important;
+  }
+
+  /* Make the tabs row shrink & scroll instead of pushing CTA out */
+  .seg{
+    flex:1 1 auto !important;       /* allow shrinking */
+    min-width:0 !important;          /* CRITICAL for flex-shrink to work */
+    display:flex !important;
+    gap:8px !important;
+    padding:8px !important;
+    overflow-x:auto !important;      /* tabs can scroll horizontally */
+    -webkit-overflow-scrolling:touch;
+  }
+  .seg::-webkit-scrollbar{ display:none; }
+  .seg{ scrollbar-width:none; }
+
+  /* Each tab stays compact */
+  .seg__item{
+    flex:0 0 auto !important;
+    scroll-snap-align:start;
+  }
+
+  /* CTA stays inside, never reflows outside the shell */
+  .tabbar__cta{
+    flex:0 0 auto !important;
+    white-space:nowrap !important;
+    margin-left:8px !important;
+    align-self:stretch !important;   /* same height as the shell */
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    max-width:48% !important;        /* safety on very narrow phones */
+  }
+
+  /* Make sure nothing around the bar causes spill */
+  body .tabbar,
+  body .tabbar__inner{
+    overflow:clip !important;        /* or use hidden; clip prevents scrollbars */
+  }
+}
