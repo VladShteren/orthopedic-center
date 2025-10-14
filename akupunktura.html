@@ -1,279 +1,403 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ортопедический центр — Акупунктура</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ортопедический центр — Акупунктура</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
-  <!-- Page-only layout & spacing refinement -->
-  <style>
-    /* Page sections */
-    .section { margin: 40px 0 24px; }
-    .section__title {
-      margin: 0 0 14px; font-weight: 800;
-      font-size: clamp(22px, 3vw, 28px); color: #0b0b0c; letter-spacing: -0.01em;
-    }
-    .section__note { color: var(--tertiary); font-size: 13px; margin: 0 0 10px; }
-    /* .divider { height: 1px; background: var(--separator, rgba(60,60,67,.16)); margin: 22px 0 6px; border-radius: 1px; } */
-    .divider {
-      height: 1px;
-      background: var(--bg);  /* same color as background → invisible */
-      margin: 22px 0 6px;
-      border-radius: 1px;
-    }
-    
-    /* Roomier grid */
-    .cards { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+    <!-- Page-only layout & spacing refinement + mobile top bar -->
+    <style>
+        :root { --accent:#34c759; --chip:#e9e9eb; }
 
-    /* Size variants */
-    .card { display:flex; flex-direction:column; height:100%; }
-    .card--hero { grid-column: 1 / -1; }
-    .card--wide { grid-column: span 2; }
-    .card--tall { grid-row: span 2; }
-    @media (max-width: 980px) {
-      .card--wide { grid-column: span 1; }
-      .card--tall { grid-row: auto; }
-    }
+        /* Page sections */
+        .section { margin: 40px 0 24px; }
+        .section__title {
+          margin: 0 0 14px; font-weight: 800;
+          font-size: clamp(22px, 3vw, 28px); color: #0b0b0c; letter-spacing: -0.01em;
+        }
+        .section__note { color: var(--tertiary); font-size: 13px; margin: 0 0 10px; }
+        .divider { height: 1px; background: var(--bg); margin: 22px 0 6px; border-radius: 1px; }
 
-    /* Card anatomy (inherits .block from styles.css) */
-    .card.block { padding: 0; overflow: hidden; }
-    .card__media { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
-    .card__body { padding: 22px 24px; line-height: 1.65; }
-    .card__title { margin: 0 0 10px; font-weight: 800; font-size: clamp(18px, 2.4vw, 22px); color: #0b0b0c; letter-spacing: -0.01em; }
-    .card__meta { color: var(--tertiary); font-size: 13px; margin: -2px 0 12px; }
+        /* Roomier grid */
+        .cards { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
 
-    .chip-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    .chip { font-size:13px; color:#1c1c1e; background:rgba(118,118,128,.12); padding:6px 10px; border-radius:999px; }
+        /* Size variants */
+        .card { display:flex; flex-direction:column; height:100%; }
+        .card--hero { grid-column: 1 / -1; }
+        .card--wide { grid-column: span 2; }
+        .card--tall { grid-row: span 2; }
+        @media (max-width: 980px) {
+          .card--wide { grid-column: span 1; }
+          .card--tall { grid-row: auto; }
+        }
 
-    .list-grid { display:grid; gap:10px; margin: 2px 0 0; }
+        /* Card anatomy (inherits .block from styles.css) */
+        .card.block { padding: 0; overflow: hidden; }
+        .card__media { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+        .card__body { padding: 22px 24px; line-height: 1.65; }
+        .card__title { margin: 0 0 10px; font-weight: 800; font-size: clamp(18px, 2.4vw, 22px); color: #0b0b0c; letter-spacing: -0.01em; }
+        .card__meta { color: var(--tertiary); font-size: 13px; margin: -2px 0 12px; }
 
-    .twoup { display:grid; gap:18px; }
-    @media (min-width: 960px){ .twoup { grid-template-columns: 1fr 1fr; } }
+        .chip-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+        .chip { font-size:13px; color:#1c1c1e; background:rgba(118,118,128,.12); padding:6px 10px; border-radius:999px; }
 
-    .card__cta { display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap: wrap; }
-    .btn-ghost {
-      background:#fff; border:1px solid var(--separator); color:#111114;
-      padding:10px 14px; border-radius:12px; font-weight:600; transition:all .2s ease;
-    }
-    .btn-ghost:hover { background:rgba(118,118,128,.06); }
+        .list-grid { display:grid; gap:10px; margin: 2px 0 0; }
 
-    /* Section-specific fine-tuning */
-    main > .block { padding: 22px; }
-  </style>
+        .twoup { display:grid; gap:18px; }
+        @media (min-width: 960px){ .twoup { grid-template-columns: 1fr 1fr; } }
+
+        .card__cta { display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap: wrap; }
+        .btn-ghost {
+          background:#fff; border:1px solid var(--separator); color:#111114;
+          padding:10px 14px; border-radius:12px; font-weight:600; transition:all .2s ease;
+        }
+        .btn-ghost:hover { background:rgba(118,118,128,.06); }
+
+        /* Section-specific fine-tuning */
+        main > .block { padding: 22px; }
+
+        /* ---------------- MOBILE: top rounded bar like desktop ---------------- */
+        .tabbar{display:none;} /* hidden on desktop */
+
+        @media (max-width:720px){
+          /* hide desktop nav on small screens */
+          .nav-wrap{display:none;}
+
+          /* leave space for the fixed rounded bar */
+          body{padding-top:calc(88px + env(safe-area-inset-top,0px));}
+
+          .tabbar{display:block;position:fixed;inset:0 0 auto 0;z-index:1000;background:transparent;}
+          .tabbar__inner{width:min(100% - 20px,1200px);margin:calc(10px + env(safe-area-inset-top,0px)) auto 0;}
+
+          .tabbar__shell{
+            display:flex;align-items:center;gap:10px;
+            padding:10px;
+            background:rgba(255,255,255,.9);
+            -webkit-backdrop-filter:saturate(160%) blur(14px);
+            backdrop-filter:saturate(160%) blur(14px);
+            border:1px solid rgba(60,60,67,.12);
+            border-radius:999px;
+            box-shadow:0 10px 24px rgba(0,0,0,.06);
+          }
+
+          /* left segmented track to mimic desktop chips */
+          .seg{
+            flex:1;
+            display:flex;align-items:center;gap:8px;
+            padding:8px;
+            background:#e9e9eb; /* matches desktop grey track */
+            border-radius:999px;
+          }
+          .seg__item{
+            flex:1 1 0;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:4px;padding:8px 12px;border-radius:999px;text-decoration:none;color:#1c1c1e;
+            min-width:72px;
+          }
+          .seg__item .tabbar__icon{width:20px;height:20px;display:block;}
+          .seg__item .tabbar__icon svg{width:100%;height:100%;}
+          .seg__item span{font-size:13px;line-height:1;}
+
+          /* active = white pill + green label like desktop */
+          .seg__item[aria-current="page"]{
+            background:#fff;color:var(--accent);font-weight:800;
+            box-shadow:inset 0 -1px 0 rgba(0,0,0,.02);
+          }
+
+          /* right CTA — green pill, text only (no icon) */
+          .tabbar__cta{
+            flex:none;text-decoration:none;background:var(--accent);color:#fff;font-weight:800;
+            padding:12px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px rgba(52,199,89,.28);
+          }
+          .tabbar__cta:active{transform:translateY(1px);}
+        }
+
+        /* footer stays normal (no bottom bar) */
+        footer{padding:26px 0;text-align:center;color:#8e8e93;}
+    </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- DESKTOP NAV (unchanged) -->
 <div class="container nav-wrap">
-  <nav class="nav">
-    <div class="nav-left">
-      <a href="index.html">Главная</a>
-      <a href="akupunktura.html" class="active" aria-current="page">Акупунктура</a>
-      <a href="lechebny-massazh.html">Массаж</a>
-      <a href="travy.html">Травы</a>
-    </div>
-    <a class="cta" href="zapisatsya.html">Записаться</a>
-  </nav>
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="index.html">Главная</a>
+            <a href="akupunktura.html" class="active" aria-current="page">Акупунктура</a>
+            <a href="lechebny-massazh.html">Массаж</a>
+            <a href="travy.html">Травы</a>
+        </div>
+        <a class="cta" href="zapisatsya.html">Записаться</a>
+    </nav>
 </div>
+
+<!-- MOBILE TOP BAR (desktop look + icons; CTA without icon) -->
+<nav class="tabbar" role="navigation" aria-label="Основная навигация (мобильная)">
+    <div class="tabbar__inner">
+        <div class="tabbar__shell">
+            <div class="seg">
+                <!-- Главная -->
+                <a class="seg__item" href="index.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
+            </svg>
+          </span>
+                    <span>Главная</span>
+                </a>
+
+                <!-- Акупунктура -->
+                <a class="seg__item" href="akupunktura.html" aria-current="page">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 5c-2 2-6.5 6.5-9 9l-5 5"/><path d="M15 9l-3-3"/><circle cx="19" cy="5" r="1.8" fill="currentColor"/>
+            </svg>
+          </span>
+                    <span>Акуп.</span>
+                </a>
+
+                <!-- Массаж -->
+                <a class="seg__item" href="lechebny-massazh.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12v-2a2 2 0 0 1 4 0v2"/><path d="M10 12v-3a2 2 0 1 1 4 0v3"/><path d="M14 12v-4a2 2 0 1 1 4 0v6a5 5 0 0 1-5 5H8a4 4 0 0 1-4-4v-1a3 3 0 0 1 3-3z"/>
+            </svg>
+          </span>
+                    <span>Массаж</span>
+                </a>
+
+                <!-- Травы -->
+                <a class="seg__item" href="travy.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 3c-7 1-12 6-12 12 0 3.866 3.134 7 7 7 6-0 6-10 5-19z"/><path d="M4 20c3-4 7-6 12-7"/>
+            </svg>
+          </span>
+                    <span>Травы</span>
+                </a>
+            </div>
+
+            <!-- CTA -->
+            <a class="tabbar__cta" href="zapisatsya.html">Записаться</a>
+        </div>
+    </div>
+</nav>
 
 <!-- HERO -->
 <header class="container hero">
-  <div class="hero-inner">
-    <h1 class="hero-title">Акупунктура</h1>
-    <p>Мягкая, доказательно-ориентированная методика для снижения боли, восстановления движения и улучшения сна — без лишней нагрузки на организм.</p>
-  </div>
+    <div class="hero-inner">
+        <h1 class="hero-title">Акупунктура</h1>
+        <p>Мягкая, доказательно-ориентированная методика для снижения боли, восстановления движения и улучшения сна — без лишней нагрузки на организм.</p>
+    </div>
 </header>
 
 <main class="container">
 
-  <!-- Section: Обзор -->
-  <section class="section">
-    <h2 class="section__title">Обзор</h2>
-    <p class="section__note">Ключевая идея и ожидаемые эффекты — в одном месте. Для подробностей — секции ниже.</p>
-    <div class="cards">
-      <!-- Hero-wide card -->
-      <article class="card card--hero block">
-        <img class="card__media" src="assets/images/acupuncture/relax_session.jpg" alt="Расслабляющий сеанс акупунктуры">
-        <div class="card__body">
-          <h3 class="card__title">Зачем акупунктура?</h3>
-          <p class="card__meta">Боль в спине и шее • Головные боли • Сон • Восстановление после нагрузок</p>
-          <p>Иглы стимулируют нейромодуляцию и локальный кровоток, уменьшают мышечный спазм и помогают нервной системе выйти из режима «стресс». В результате — снижение боли, улучшение подвижности и качества сна.</p>
-          <div class="chip-row">
-            <span class="chip">Боль ↓</span>
-            <span class="chip">Сон ↑</span>
-            <span class="chip">Подвижность ↑</span>
-            <span class="chip">Стресс ↓</span>
-          </div>
-          <div class="card__cta">
-            <a class="btn-primary" href="zapisatsya.html">Записаться</a>
-            <a class="btn-ghost" href="#faq">FAQ</a>
-          </div>
+    <!-- Section: Обзор -->
+    <section class="section">
+        <h2 class="section__title">Обзор</h2>
+        <p class="section__note">Ключевая идея и ожидаемые эффекты — в одном месте. Для подробностей — секции ниже.</p>
+        <div class="cards">
+            <!-- Hero-wide card -->
+            <article class="card card--hero block">
+                <img class="card__media" src="assets/images/acupuncture/relax_session.jpg" alt="Расслабляющий сеанс акупунктуры">
+                <div class="card__body">
+                    <h3 class="card__title">Зачем акупунктура?</h3>
+                    <p class="card__meta">Боль в спине и шее • Головные боли • Сон • Восстановление после нагрузок</p>
+                    <p>Иглы стимулируют нейромодуляцию и локальный кровоток, уменьшают мышечный спазм и помогают нервной системе выйти из режима «стресс». В результате — снижение боли, улучшение подвижности и качества сна.</p>
+                    <div class="chip-row">
+                        <span class="chip">Боль ↓</span>
+                        <span class="chip">Сон ↑</span>
+                        <span class="chip">Подвижность ↑</span>
+                        <span class="chip">Стресс ↓</span>
+                    </div>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="zapisatsya.html">Записаться</a>
+                        <a class="btn-ghost" href="#faq">FAQ</a>
+                    </div>
+                </div>
+            </article>
         </div>
-      </article>
-    </div>
-  </section>
+    </section>
 
-  <div class="container divider"></div>
+    <div class="container divider"></div>
 
-  <!-- Section: Техники -->
-  <section class="section">
-    <h2 class="section__title">Техники</h2>
-    <div class="cards">
-      <!-- Tall techniques card -->
-      <article class="card card--tall block">
-        <img class="card__media" src="assets/images/acupuncture/acu_points.jpg" alt="Точки акупунктуры на теле">
-        <div class="card__body">
-          <h3 class="card__title">Основные подходы</h3>
-          <ul class="list-grid">
-            <li><strong>Корпоральная акупунктура:</strong> классические точки на теле для регуляции боли и тонуса.</li>
-            <li><strong>Dry Needling:</strong> работа с триггерными точками мышцы для снятия спазма.</li>
-            <li><strong>Аурикулотерапия:</strong> мягкая поддержка сна и стресса через ухо.</li>
-            <li><strong>Электроакупунктура:</strong> низкие частоты усиливают аналгезию при хронической боли.</li>
-            <li><strong>Моксотерапия:</strong> бережное прогревание для улучшения кровотока.</li>
-          </ul>
+    <!-- Section: Техники -->
+    <section class="section">
+        <h2 class="section__title">Техники</h2>
+        <div class="cards">
+            <!-- Tall techniques card -->
+            <article class="card card--tall block">
+                <img class="card__media" src="assets/images/acupuncture/acu_points.jpg" alt="Точки акупунктуры на теле">
+                <div class="card__body">
+                    <h3 class="card__title">Основные подходы</h3>
+                    <ul class="list-grid">
+                        <li><strong>Корпоральная акупунктура:</strong> классические точки на теле для регуляции боли и тонуса.</li>
+                        <li><strong>Dry Needling:</strong> работа с триггерными точками мышцы для снятия спазма.</li>
+                        <li><strong>Аурикулотерапия:</strong> мягкая поддержка сна и стресса через ухо.</li>
+                        <li><strong>Электроакупунктура:</strong> низкие частоты усиливают аналгезию при хронической боли.</li>
+                        <li><strong>Моксотерапия:</strong> бережное прогревание для улучшения кровотока.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Wide: how a session goes -->
+            <article class="card card--wide block">
+                <img class="card__media" src="assets/images/acupuncture/dry_needling.jpg" alt="Сухое иглоукалывание">
+                <div class="card__body">
+                    <h3 class="card__title">Как проходит сеанс</h3>
+                    <div class="twoup">
+                        <ol class="list-grid">
+                            <li><strong>Оценка 5–10 минут:</strong> жалобы, цель, противопоказания.</li>
+                            <li><strong>Выбор точек:</strong> стерильные одноразовые иглы.</li>
+                            <li><strong>Экспозиция 20–30 минут:</strong> расслабление, комфорт.</li>
+                        </ol>
+                        <ol class="list-grid" start="4">
+                            <li><strong>Дополнения:</strong> мокса/электростимуляция при необходимости.</li>
+                            <li><strong>Домашние рекомендации:</strong> 2–3 простых упражнения.</li>
+                            <li><strong>План курса:</strong> частота и критерии прогресса.</li>
+                        </ol>
+                    </div>
+                    <p class="card__meta">Боль при постановке минимальна; чаще — тепло, тяжесть, «распирание», быстро проходящие.</p>
+                </div>
+            </article>
+
+            <!-- Moxa small card -->
+            <article class="card block">
+                <img class="card__media" src="assets/images/acupuncture/moxa.jpg" alt="Моксотерапия">
+                <div class="card__body">
+                    <h3 class="card__title">Моксотерапия</h3>
+                    <p>Бережное прогревание для улучшения кровотока и расслабления при хроническом мышечном напряжении.</p>
+                </div>
+            </article>
         </div>
-      </article>
+    </section>
 
-      <!-- Wide: how a session goes -->
-      <article class="card card--wide block">
-        <img class="card__media" src="assets/images/acupuncture/dry_needling.jpg" alt="Сухое иглоукалывание">
-        <div class="card__body">
-          <h3 class="card__title">Как проходит сеанс</h3>
-          <div class="twoup">
-            <ol class="list-grid">
-              <li><strong>Оценка 5–10 минут:</strong> жалобы, цель, противопоказания.</li>
-              <li><strong>Выбор точек:</strong> стерильные одноразовые иглы.</li>
-              <li><strong>Экспозиция 20–30 минут:</strong> расслабление, комфорт.</li>
-            </ol>
-            <ol class="list-grid" start="4">
-              <li><strong>Дополнения:</strong> мокса/электростимуляция при необходимости.</li>
-              <li><strong>Домашние рекомендации:</strong> 2–3 простых упражнения.</li>
-              <li><strong>План курса:</strong> частота и критерии прогресса.</li>
-            </ol>
-          </div>
-          <p class="card__meta">Боль при постановке минимальна; чаще — тепло, тяжесть, «распирание», быстро проходящие.</p>
+    <div class="container divider"></div>
+
+    <!-- Section: Показания и безопасность -->
+    <section class="section">
+        <h2 class="section__title">Показания и безопасность</h2>
+        <div class="cards">
+            <!-- Indications -->
+            <article class="card block">
+                <img class="card__media" src="assets/images/acupuncture/auricular.jpg" alt="Аурикулотерапия">
+                <div class="card__body">
+                    <h3 class="card__title">Показания</h3>
+                    <ul class="list-grid">
+                        <li>Спина/шея: острое и хроническое напряжение.</li>
+                        <li>Головные боли, мигрень.</li>
+                        <li>Плечо, локоть, кисть: «локоть теннисиста», туннельный синдром.</li>
+                        <li>Колено, стопа: перегрузки, фасциит.</li>
+                        <li>Стресс, нарушения сна.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Safety -->
+            <article class="card block">
+                <img class="card__media" src="assets/images/acupuncture/safety.jpg" alt="Безопасность и стерильность">
+                <div class="card__body">
+                    <h3 class="card__title">Безопасность</h3>
+                    <ul class="list-grid">
+                        <li>Стерильные одноразовые иглы, антисептика кожи.</li>
+                        <li>Мягкие протоколы в чувствительных зонах.</li>
+                        <li>Согласование с врачом при антикоагулянтах/беременности.</li>
+                        <li>Нормальная реакция: лёгкая тяжесть/сонливость до 24 ч.</li>
+                    </ul>
+                </div>
+            </article>
         </div>
-      </article>
+    </section>
 
-      <!-- Moxa small card -->
-      <article class="card block">
-        <img class="card__media" src="assets/images/acupuncture/moxa.jpg" alt="Моксотерапия">
-        <div class="card__body">
-          <h3 class="card__title">Моксотерапия</h3>
-          <p>Бережное прогревание для улучшения кровотока и расслабления при хроническом мышечном напряжении.</p>
+    <div class="container divider"></div>
+
+    <!-- Section: Курс и ожидания -->
+    <section class="section">
+        <h2 class="section__title">Курс и ожидаемый результат</h2>
+        <div class="cards">
+            <!-- Tall: course & expectations -->
+            <article class="card card--tall block">
+                <img class="card__media" src="assets/images/acupuncture/electro_acu.jpg" alt="Электроакупунктура">
+                <div class="card__body">
+                    <h3 class="card__title">Курс и результат</h3>
+                    <ul class="list-grid">
+                        <li><strong>Острые состояния:</strong> 2–4 сеанса за 1–2 недели.</li>
+                        <li><strong>Хронические:</strong> 4–8 сеансов 1–2 раза/нед.</li>
+                        <li><strong>Поддержка:</strong> 1–2 раза/мес. при нагрузках.</li>
+                        <li><strong>Эффект:</strong> боль ↓, подвижность ↑, сон лучше.</li>
+                    </ul>
+                    <p class="card__meta">Часто облегчение после 1–2 процедур; при «хронике» — накопительный эффект за 3–6 сеансов.</p>
+                </div>
+            </article>
+
+            <!-- Prep -->
+            <article class="card block">
+                <img class="card__media" src="assets/images/acupuncture/prep.jpg" alt="Подготовка к процедуре">
+                <div class="card__body">
+                    <h3 class="card__title">Как подготовиться</h3>
+                    <ul class="list-grid">
+                        <li>Лёгкий приём пищи за 1–2 часа.</li>
+                        <li>Удобная одежда с доступом к зоне.</li>
+                        <li>Сообщите о лекарствах и аллергиях.</li>
+                        <li>После — вода и спокойный режим 2–4 часа.</li>
+                    </ul>
+                </div>
+            </article>
         </div>
-      </article>
-    </div>
-  </section>
+    </section>
 
-  <div class="container divider"></div>
+    <div class="container divider"></div>
 
-  <!-- Section: Показания и безопасность -->
-  <section class="section">
-    <h2 class="section__title">Показания и безопасность</h2>
-    <div class="cards">
-      <!-- Indications -->
-      <article class="card block">
-        <img class="card__media" src="assets/images/acupuncture/auricular.jpg" alt="Аурикулотерапия">
-        <div class="card__body">
-          <h3 class="card__title">Показания</h3>
-          <ul class="list-grid">
-            <li>Спина/шея: острое и хроническое напряжение.</li>
-            <li>Головные боли, мигрень.</li>
-            <li>Плечо, локоть, кисть: «локоть теннисиста», туннельный синдром.</li>
-            <li>Колено, стопа: перегрузки, фасциит.</li>
-            <li>Стресс, нарушения сна.</li>
-          </ul>
+    <!-- Section: FAQ -->
+    <section class="section" id="faq">
+        <h2 class="section__title">Частые вопросы</h2>
+        <div class="cards">
+            <!-- FAQ wide -->
+            <article class="card card--wide block">
+                <img class="card__media" src="assets/images/acupuncture/faq.jpg" alt="Вопросы об акупунктуре">
+                <div class="card__body">
+                    <h3 class="card__title">Вопросы и ответы</h3>
+                    <div class="twoup">
+                        <div>
+                            <p><strong>Больно ли это?</strong><br>Ощущения умеренные: покалывание/тепло. Большинство пациентов расслабляются.</p>
+                            <p><strong>Нужна подготовка?</strong><br>Только лёгкая еда и удобная одежда — остальное организуем на месте.</p>
+                        </div>
+                        <div>
+                            <p><strong>Совместимо с массажем и ЛФК?</strong><br>Да, сочетание часто ускоряет восстановление.</p>
+                            <p><strong>Сколько держится эффект?</strong><br>От нескольких дней до недель; у хронических — накапливается курсом.</p>
+                        </div>
+                    </div>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="zapisatsya.html">Записаться на сеанс</a>
+                        <a class="btn-ghost" href="lechebny-massazh.html">Комбинировать с массажем</a>
+                    </div>
+                </div>
+            </article>
         </div>
-      </article>
-
-      <!-- Safety -->
-      <article class="card block">
-        <img class="card__media" src="assets/images/acupuncture/safety.jpg" alt="Безопасность и стерильность">
-        <div class="card__body">
-          <h3 class="card__title">Безопасность</h3>
-          <ul class="list-grid">
-            <li>Стерильные одноразовые иглы, антисептика кожи.</li>
-            <li>Мягкие протоколы в чувствительных зонах.</li>
-            <li>Согласование с врачом при антикоагулянтах/беременности.</li>
-            <li>Нормальная реакция: лёгкая тяжесть/сонливость до 24 ч.</li>
-          </ul>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <div class="container divider"></div>
-
-  <!-- Section: Курс и ожидания -->
-  <section class="section">
-    <h2 class="section__title">Курс и ожидаемый результат</h2>
-    <div class="cards">
-      <!-- Tall: course & expectations -->
-      <article class="card card--tall block">
-        <img class="card__media" src="assets/images/acupuncture/electro_acu.jpg" alt="Электроакупунктура">
-        <div class="card__body">
-          <h3 class="card__title">Курс и результат</h3>
-          <ul class="list-grid">
-            <li><strong>Острые состояния:</strong> 2–4 сеанса за 1–2 недели.</li>
-            <li><strong>Хронические:</strong> 4–8 сеансов 1–2 раза/нед.</li>
-            <li><strong>Поддержка:</strong> 1–2 раза/мес. при нагрузках.</li>
-            <li><strong>Эффект:</strong> боль ↓, подвижность ↑, сон лучше.</li>
-          </ul>
-          <p class="card__meta">Часто облегчение после 1–2 процедур; при «хронике» — накопительный эффект за 3–6 сеансов.</p>
-        </div>
-      </article>
-
-      <!-- Prep -->
-      <article class="card block">
-        <img class="card__media" src="assets/images/acupuncture/prep.jpg" alt="Подготовка к процедуре">
-        <div class="card__body">
-          <h3 class="card__title">Как подготовиться</h3>
-          <ul class="list-grid">
-            <li>Лёгкий приём пищи за 1–2 часа.</li>
-            <li>Удобная одежда с доступом к зоне.</li>
-            <li>Сообщите о лекарствах и аллергиях.</li>
-            <li>После — вода и спокойный режим 2–4 часа.</li>
-          </ul>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <div class="container divider"></div>
-
-  <!-- Section: FAQ -->
-  <section class="section" id="faq">
-    <h2 class="section__title">Частые вопросы</h2>
-    <div class="cards">
-      <!-- FAQ wide -->
-      <article class="card card--wide block">
-        <img class="card__media" src="assets/images/acupuncture/faq.jpg" alt="Вопросы об акупунктуре">
-        <div class="card__body">
-          <h3 class="card__title">Вопросы и ответы</h3>
-          <div class="twoup">
-            <div>
-              <p><strong>Больно ли это?</strong><br>Ощущения умеренные: покалывание/тепло. Большинство пациентов расслабляются.</p>
-              <p><strong>Нужна подготовка?</strong><br>Только лёгкая еда и удобная одежда — остальное организуем на месте.</p>
-            </div>
-            <div>
-              <p><strong>Совместимо с массажем и ЛФК?</strong><br>Да, сочетание часто ускоряет восстановление.</p>
-              <p><strong>Сколько держится эффект?</strong><br>От нескольких дней до недель; у хронических — накапливается курсом.</p>
-            </div>
-          </div>
-          <div class="card__cta">
-            <a class="btn-primary" href="zapisatsya.html">Записаться на сеанс</a>
-            <a class="btn-ghost" href="lechebny-massazh.html">Комбинировать с массажем</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
+    </section>
 
 </main>
 
 <footer>© 2025 — Ортопедический центр • Акупунктура</footer>
+
+<!-- Auto-highlight current page for both desktop and mobile -->
+<script>
+    (function () {
+      const path = location.pathname.split('/').pop() || 'index.html';
+      // mobile top bar
+      document.querySelectorAll('.tabbar a').forEach(a => {
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+      // desktop bar
+      document.querySelectorAll('.nav .nav-left a').forEach(a => {
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+    })();
+</script>
 </body>
 </html>

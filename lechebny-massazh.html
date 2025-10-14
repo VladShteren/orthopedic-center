@@ -1,263 +1,384 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ортопедический центр — Лечебный массаж</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ортопедический центр — Лечебный массаж</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
-  <!-- Page-only layout & spacing (reuse from acupuncture page) -->
-  <style>
-    .section { margin: 40px 0 24px; }
-    .section__title { margin: 0 0 14px; font-weight: 800; font-size: clamp(22px, 3vw, 28px); color:#0b0b0c; letter-spacing:-0.01em; }
-    .section__note { color: var(--tertiary); font-size:13px; margin:0 0 10px; }
-    /* .divider { height:1px; background:var(--separator, rgba(60,60,67,.16)); margin:22px 0 6px; border-radius:1px; } */
-    .divider {
-      height: 1px;
-      background: var(--bg);  /* same color as background → invisible */
-      margin: 22px 0 6px;
-      border-radius: 1px;
-    }
+    <!-- Page-only layout & spacing + mobile top bar -->
+    <style>
+        :root { --accent:#34c759; --chip:#e9e9eb; }
 
-    .cards { display:grid; gap:22px; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); align-items:start; }
-    .card { display:flex; flex-direction:column; height:100%; }
-    .card--hero { grid-column:1 / -1; }
-    .card--wide { grid-column:span 2; }
-    .card--tall { grid-row:span 2; }
-    @media (max-width:980px){ .card--wide{ grid-column:span 1; } .card--tall{ grid-row:auto; } }
+        .section { margin: 40px 0 24px; }
+        .section__title { margin: 0 0 14px; font-weight: 800; font-size: clamp(22px, 3vw, 28px); color:#0b0b0c; letter-spacing:-0.01em; }
+        .section__note { color: var(--tertiary); font-size:13px; margin:0 0 10px; }
+        .divider { height:1px; background:var(--bg); margin:22px 0 6px; border-radius:1px; }
 
-    .card.block { padding:0; overflow:hidden; }
-    .card__media { width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
-    .card__body { padding:22px 24px; line-height:1.65; }
-    .card__title { margin:0 0 10px; font-weight:800; font-size:clamp(18px,2.4vw,22px); color:#0b0b0c; letter-spacing:-0.01em; }
-    .card__meta { color:var(--tertiary); font-size:13px; margin:-2px 0 12px; }
-    .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    .chip{ font-size:13px; color:#1c1c1e; background:rgba(118,118,128,.12); padding:6px 10px; border-radius:999px; }
-    .list-grid{ display:grid; gap:10px; margin:2px 0 0; }
-    .twoup{ display:grid; gap:18px; } @media(min-width:960px){ .twoup{ grid-template-columns:1fr 1fr; } }
-    .card__cta{ display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap; }
-    .btn-ghost{ background:#fff; border:1px solid var(--separator); color:#111114; padding:10px 14px; border-radius:12px; font-weight:600; transition:all .2s ease; }
-    .btn-ghost:hover{ background:rgba(118,118,128,.06); }
-    main > .block{ padding:22px; }
-  </style>
+        .cards { display:grid; gap:22px; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); align-items:start; }
+        .card { display:flex; flex-direction:column; height:100%; }
+        .card--hero { grid-column:1 / -1; }
+        .card--wide { grid-column:span 2; }
+        .card--tall { grid-row:span 2; }
+        @media (max-width:980px){ .card--wide{ grid-column:span 1; } .card--tall{ grid-row:auto; } }
+
+        .card.block { padding:0; overflow:hidden; }
+        .card__media { width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
+        .card__body { padding:22px 24px; line-height:1.65; }
+        .card__title { margin:0 0 10px; font-weight:800; font-size:clamp(18px,2.4vw,22px); color:#0b0b0c; letter-spacing:-0.01em; }
+        .card__meta { color:var(--tertiary); font-size:13px; margin:-2px 0 12px; }
+
+        .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+        .chip{ font-size:13px; color:#1c1c1e; background:rgba(118,118,128,.12); padding:6px 10px; border-radius:999px; }
+
+        .list-grid{ display:grid; gap:10px; margin:2px 0 0; }
+
+        .twoup{ display:grid; gap:18px; }
+        @media(min-width:960px){ .twoup{ grid-template-columns:1fr 1fr; } }
+
+        .card__cta{ display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap; }
+        .btn-ghost{ background:#fff; border:1px solid var(--separator); color:#111114; padding:10px 14px; border-radius:12px; font-weight:600; transition:all .2s ease; }
+        .btn-ghost:hover{ background:rgba(118,118,128,.06); }
+
+        main > .block{ padding:22px; }
+
+        /* ---------------- MOBILE: top rounded bar like desktop ---------------- */
+        .tabbar{display:none;} /* hidden on desktop */
+
+        @media (max-width:720px){
+          /* hide desktop nav on small screens */
+          .nav-wrap{display:none;}
+
+          /* leave space for the fixed rounded bar */
+          body{padding-top:calc(88px + env(safe-area-inset-top,0px));}
+
+          .tabbar{display:block;position:fixed;inset:0 0 auto 0;z-index:1000;background:transparent;}
+          .tabbar__inner{width:min(100% - 20px,1200px);margin:calc(10px + env(safe-area-inset-top,0px)) auto 0;}
+
+          .tabbar__shell{
+            display:flex;align-items:center;gap:10px;
+            padding:10px;
+            background:rgba(255,255,255,.9);
+            -webkit-backdrop-filter:saturate(160%) blur(14px);
+            backdrop-filter:saturate(160%) blur(14px);
+            border:1px solid rgba(60,60,67,.12);
+            border-radius:999px;
+            box-shadow:0 10px 24px rgba(0,0,0,.06);
+          }
+
+          /* left segmented track (icons above text) */
+          .seg{
+            flex:1;
+            display:flex;align-items:center;gap:8px;
+            padding:8px;
+            background:var(--chip);
+            border-radius:999px;
+          }
+          .seg__item{
+            flex:1 1 0;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:4px;padding:8px 12px;border-radius:999px;text-decoration:none;color:#1c1c1e;
+            min-width:72px;
+          }
+          .seg__item .tabbar__icon{width:20px;height:20px;display:block;}
+          .seg__item .tabbar__icon svg{width:100%;height:100%;}
+          .seg__item span{font-size:13px;line-height:1;}
+
+          /* active = white pill + green label like desktop */
+          .seg__item[aria-current="page"]{
+            background:#fff;color:var(--accent);font-weight:800;
+            box-shadow:inset 0 -1px 0 rgba(0,0,0,.02);
+          }
+
+          /* right CTA — green pill, text only (no icon) */
+          .tabbar__cta{
+            flex:none;text-decoration:none;background:var(--accent);color:#fff;font-weight:800;
+            padding:12px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px rgba(52,199,89,.28);
+          }
+          .tabbar__cta:active{transform:translateY(1px);}
+        }
+
+        /* footer normal */
+        footer{ padding:26px 0; text-align:center; color:#8e8e93; }
+    </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- DESKTOP NAV (unchanged) -->
 <div class="container nav-wrap">
-  <nav class="nav">
-    <div class="nav-left">
-      <a href="index.html">Главная</a>
-      <a href="akupunktura.html">Акупунктура</a>
-      <a href="lechebny-massazh.html" class="active" aria-current="page">Массаж</a>
-      <a href="travy.html">Травы</a>
-    </div>
-    <a class="cta" href="zapisatsya.html">Записаться</a>
-  </nav>
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="index.html">Главная</a>
+            <a href="akupunktura.html">Акупунктура</a>
+            <a href="lechebny-massazh.html" class="active" aria-current="page">Массаж</a>
+            <a href="travy.html">Травы</a>
+        </div>
+        <a class="cta" href="zapisatsya.html">Записаться</a>
+    </nav>
 </div>
+
+<!-- MOBILE TOP BAR (desktop look + icons; CTA without icon) -->
+<nav class="tabbar" role="navigation" aria-label="Основная навигация (мобильная)">
+    <div class="tabbar__inner">
+        <div class="tabbar__shell">
+            <div class="seg">
+                <!-- Главная -->
+                <a class="seg__item" href="index.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
+            </svg>
+          </span>
+                    <span>Главная</span>
+                </a>
+
+                <!-- Акупунктура -->
+                <a class="seg__item" href="akupunktura.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 5c-2 2-6.5 6.5-9 9l-5 5"/><path d="M15 9l-3-3"/><circle cx="19" cy="5" r="1.8" fill="currentColor"/>
+            </svg>
+          </span>
+                    <span>Акуп.</span>
+                </a>
+
+                <!-- Массаж -->
+                <a class="seg__item" href="lechebny-massazh.html" aria-current="page">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12v-2a2 2 0 0 1 4 0v2"/><path d="M10 12v-3a2 2 0 1 1 4 0v3"/><path d="M14 12v-4a2 2 0 1 1 4 0v6a5 5 0 0 1-5 5H8a4 4 0 0 1-4-4v-1a3 3 0 0 1 3-3z"/>
+            </svg>
+          </span>
+                    <span>Массаж</span>
+                </a>
+
+                <!-- Травы -->
+                <a class="seg__item" href="travy.html">
+          <span class="tabbar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 3c-7 1-12 6-12 12 0 3.866 3.134 7 7 7 6-0 6-10 5-19z"/><path d="M4 20c3-4 7-6 12-7"/>
+            </svg>
+          </span>
+                    <span>Травы</span>
+                </a>
+            </div>
+
+            <!-- CTA -->
+            <a class="tabbar__cta" href="zapisatsya.html">Записаться</a>
+        </div>
+    </div>
+</nav>
 
 <!-- HERO -->
 <header class="container hero">
-  <div class="hero-inner">
-    <h1 class="hero-title">Лечебный массаж</h1>
-    <p>Предсказуемое снижение боли и мышечного напряжения, улучшение подвижности и восстановления после нагрузок. Индивидуальные протоколы на основе оценки.</p>
-  </div>
+    <div class="hero-inner">
+        <h1 class="hero-title">Лечебный массаж</h1>
+        <p>Предсказуемое снижение боли и мышечного напряжения, улучшение подвижности и восстановления после нагрузок. Индивидуальные протоколы на основе оценки.</p>
+    </div>
 </header>
 
 <main class="container">
 
-  <!-- Обзор -->
-  <section class="section">
-    <h2 class="section__title">Обзор</h2>
-    <p class="section__note">Что даёт массаж и кому подходит — кратко.</p>
-    <div class="cards">
-      <article class="card card--hero block">
-        <!-- Suggest: assets/images/massage/hero_relaxation.jpg -->
-        <img class="card__media" src="assets/images/massage/hero_relaxation.jpg" alt="Расслабляющий лечебный массаж">
-        <div class="card__body">
-          <h3 class="card__title">Зачем лечебный массаж?</h3>
-          <p class="card__meta">Шея и плечи • Поясница • Головные боли напряжения • Восстановление после спорта</p>
-          <p>Тканевые техники улучшают микроциркуляцию, снижают гипертонус и чувствительность триггерных зон, помогают нервной системе переключиться в режим восстановления. В результате — меньше боли, свободнее движение, лучше сон.</p>
-          <div class="chip-row">
-            <span class="chip">Расслабление ↑</span>
-            <span class="chip">Боль ↓</span>
-            <span class="chip">Кровоток ↑</span>
-            <span class="chip">Стресс ↓</span>
-          </div>
-          <div class="card__cta">
-            <a class="btn-primary" href="zapisatsya.html">Записаться</a>
-            <a class="btn-ghost" href="#faq">FAQ</a>
-          </div>
+    <!-- Обзор -->
+    <section class="section">
+        <h2 class="section__title">Обзор</h2>
+        <p class="section__note">Что даёт массаж и кому подходит — кратко.</p>
+        <div class="cards">
+            <article class="card card--hero block">
+                <img class="card__media" src="assets/images/massage/hero_relaxation.jpg" alt="Расслабляющий лечебный массаж">
+                <div class="card__body">
+                    <h3 class="card__title">Зачем лечебный массаж?</h3>
+                    <p class="card__meta">Шея и плечи • Поясница • Головные боли напряжения • Восстановление после спорта</p>
+                    <p>Тканевые техники улучшают микроциркуляцию, снижают гипертонус и чувствительность триггерных зон, помогают нервной системе переключиться в режим восстановления. В результате — меньше боли, свободнее движение, лучше сон.</p>
+                    <div class="chip-row">
+                        <span class="chip">Расслабление ↑</span>
+                        <span class="chip">Боль ↓</span>
+                        <span class="chip">Кровоток ↑</span>
+                        <span class="chip">Стресс ↓</span>
+                    </div>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="zapisatsya.html">Записаться</a>
+                        <a class="btn-ghost" href="#faq">FAQ</a>
+                    </div>
+                </div>
+            </article>
         </div>
-      </article>
-    </div>
-  </section>
+    </section>
 
-  <div class="container divider"></div>
+    <div class="container divider"></div>
 
-  <!-- Техники -->
-  <section class="section">
-    <h2 class="section__title">Техники</h2>
-    <div class="cards">
+    <!-- Техники -->
+    <section class="section">
+        <h2 class="section__title">Техники</h2>
+        <div class="cards">
 
-      <!-- Глубокие ткани / триггеры -->
-      <article class="card block">
-        <!-- Suggest: assets/images/massage/deep_tissue.jpg -->
-        <img class="card__media" src="assets/images/massage/deep_tissue.jpg" alt="Массаж глубоких тканей">
-        <div class="card__body">
-          <h3 class="card__title">Глубокие ткани и триггерные точки</h3>
-          <p>Прицельная работа с укороченными мышечными пучками и фасциями для снятия локального спазма и улучшения амплитуды движений.</p>
-          <ul class="list-grid">
-            <li>Дозированное давление, ориентир — комфорт.</li>
-            <li>Эффективно при боли в шее/плече/пояснице.</li>
-            <li>Часто комбинируется с мягкими техниками.</li>
-          </ul>
+            <!-- Глубокие ткани / триггеры -->
+            <article class="card block">
+                <img class="card__media" src="assets/images/massage/deep_tissue.jpg" alt="Массаж глубоких тканей">
+                <div class="card__body">
+                    <h3 class="card__title">Глубокие ткани и триггерные точки</h3>
+                    <p>Прицельная работа с укороченными мышечными пучками и фасциями для снятия локального спазма и улучшения амплитуды движений.</p>
+                    <ul class="list-grid">
+                        <li>Дозированное давление, ориентир — комфорт.</li>
+                        <li>Эффективно при боли в шее/плече/пояснице.</li>
+                        <li>Часто комбинируется с мягкими техниками.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Миофасциальные техники (wide) -->
+            <article class="card card--wide block">
+                <img class="card__media" src="assets/images/massage/myofascial_release.jpg" alt="Миофасциальный релиз">
+                <div class="card__body">
+                    <h3 class="card__title">Миофасциальный релиз</h3>
+                    <p class="card__meta">Мягкие длительные растяжения тканей • Безболезненно</p>
+                    <p>Подходит при хроническом напряжении и «скованности». Длительные мягкие удержания снижают чувствительность тканей и восстанавливают скольжение фасций.</p>
+                    <div class="chip-row">
+                        <span class="chip">Мягко</span><span class="chip">Без боли</span><span class="chip">Подвижность ↑</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Банки / инструментальные техники (tall) -->
+            <article class="card card--tall block">
+                <img class="card__media" src="assets/images/massage/cupping.jpg" alt="Терапия банками">
+                <div class="card__body">
+                    <h3 class="card__title">Каппинг (банки) и инструментальные техники</h3>
+                    <ul class="list-grid">
+                        <li>Кратковременное отрицательное давление улучшает кровоток.</li>
+                        <li>Инструментальный мягкий скрейпинг — по показаниям.</li>
+                        <li>Следы (кровоизлияния) возможны и проходят за 3–7 дней.</li>
+                    </ul>
+                    <p class="card__meta">Используются только при отсутствии противопоказаний.</p>
+                </div>
+            </article>
+
         </div>
-      </article>
+    </section>
 
-      <!-- Миофасциальные техники (wide) -->
-      <article class="card card--wide block">
-        <!-- Suggest: assets/images/massage/myofascial_release.jpg -->
-        <img class="card__media" src="assets/images/massage/myofascial_release.jpg" alt="Миофасциальный релиз">
-        <div class="card__body">
-          <h3 class="card__title">Миофасциальный релиз</h3>
-          <p class="card__meta">Мягкие длительные растяжения тканей • Безболезненно</p>
-          <p>Подходит при хроническом напряжении и «скованности». Длительные мягкие удержания снижают чувствительность тканей и восстанавливают скольжение фасций.</p>
-          <div class="chip-row">
-            <span class="chip">Мягко</span><span class="chip">Без боли</span><span class="chip">Подвижность ↑</span>
-          </div>
+    <div class="container divider"></div>
+
+    <!-- Показания и безопасность -->
+    <section class="section">
+        <h2 class="section__title">Показания и безопасность</h2>
+        <div class="cards">
+
+            <article class="card block">
+                <img class="card__media" src="assets/images/massage/indications.jpg" alt="Показания к лечебному массажу">
+                <div class="card__body">
+                    <h3 class="card__title">Показания</h3>
+                    <ul class="list-grid">
+                        <li>Шея, плечи, грудной отдел — офисная нагрузка.</li>
+                        <li>Поясница — мышечно-тонический синдром.</li>
+                        <li>ТБС/колено — перегрузки, спорт.</li>
+                        <li>Головные боли напряжения, стресс, нарушение сна.</li>
+                        <li>Подготовка и восстановление к/после тренировок.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card block">
+                <img class="card__media" src="assets/images/massage/safety.jpg" alt="Безопасность массажа">
+                <div class="card__body">
+                    <h3 class="card__title">Безопасность</h3>
+                    <ul class="list-grid">
+                        <li>Работа в пределах комфорта, без «терпеть».</li>
+                        <li>Избегаем активного воздействия при воспалении/травме.</li>
+                        <li>Согласуем с врачом при варикозе, антикоагулянтах, беременности.</li>
+                        <li>Нормально: лёгкая болезненность 24–48 часов.</li>
+                    </ul>
+                </div>
+            </article>
+
         </div>
-      </article>
+    </section>
 
-      <!-- Банки / инструментальные техники (tall) -->
-      <article class="card card--tall block">
-        <!-- Suggest: assets/images/massage/cupping.jpg -->
-        <img class="card__media" src="assets/images/massage/cupping.jpg" alt="Терапия банками">
-        <div class="card__body">
-          <h3 class="card__title">Каппинг (банки) и инструментальные техники</h3>
-          <ul class="list-grid">
-            <li>Кратковременное отрицательное давление улучшает кровоток.</li>
-            <li>Инструментальный мягкий скрейпинг — по показаниям.</li>
-            <li>Следы (кровоизлияния) возможны и проходят за 3–7 дней.</li>
-          </ul>
-          <p class="card__meta">Используются только при отсутствии противопоказаний.</p>
+    <div class="container divider"></div>
+
+    <!-- Курс -->
+    <section class="section">
+        <h2 class="section__title">Курс и ожидаемый результат</h2>
+        <div class="cards">
+
+            <article class="card card--tall block">
+                <img class="card__media" src="assets/images/massage/course.jpg" alt="Курс лечебного массажа">
+                <div class="card__body">
+                    <h3 class="card__title">Как строим курс</h3>
+                    <ul class="list-grid">
+                        <li><strong>Острые состояния:</strong> 2–3 сеанса/нед. 1–2 недели.</li>
+                        <li><strong>Хроническая напряжённость:</strong> 1–2 раза/нед. 3–6 недель.</li>
+                        <li><strong>Поддержка:</strong> 1–2 раза/мес. при нагрузках/стрессе.</li>
+                        <li><strong>Домашнее задание:</strong> 3–5 минут саморазминка/дыхание.</li>
+                    </ul>
+                    <p class="card__meta">Оценка прогресса: боль, амплитуда движений, сон/самочувствие.</p>
+                </div>
+            </article>
+
+            <article class="card block">
+                <img class="card__media" src="assets/images/massage/prep.jpg" alt="Подготовка к массажу">
+                <div class="card__body">
+                    <h3 class="card__title">Как подготовиться</h3>
+                    <ul class="list-grid">
+                        <li>Лёгкая пища за 1–2 часа, без интенсивных тренировок за 2–3 часа.</li>
+                        <li>Удобная одежда, доступ к зоне работы.</li>
+                        <li>Сообщите о лекарствах, кожных реакциях, беременности.</li>
+                        <li>После — вода, спокойный режим, тёплый душ по желанию.</li>
+                    </ul>
+                </div>
+            </article>
+
         </div>
-      </article>
+    </section>
 
-    </div>
-  </section>
+    <div class="container divider"></div>
 
-  <div class="container divider"></div>
-
-  <!-- Показания и безопасность -->
-  <section class="section">
-    <h2 class="section__title">Показания и безопасность</h2>
-    <div class="cards">
-
-      <article class="card block">
-        <!-- Suggest: assets/images/massage/indications.jpg -->
-        <img class="card__media" src="assets/images/massage/indications.jpg" alt="Показания к лечебному массажу">
-        <div class="card__body">
-          <h3 class="card__title">Показания</h3>
-          <ul class="list-grid">
-            <li>Шея, плечи, грудной отдел — офисная нагрузка.</li>
-            <li>Поясница — мышечно-тонический синдром.</li>
-            <li>ТБС/колено — перегрузки, спорт.</li>
-            <li>Головные боли напряжения, стресс, нарушение сна.</li>
-            <li>Подготовка и восстановление к/после тренировок.</li>
-          </ul>
+    <!-- FAQ -->
+    <section class="section" id="faq">
+        <h2 class="section__title">Частые вопросы</h2>
+        <div class="cards">
+            <article class="card card--wide block">
+                <img class="card__media" src="assets/images/massage/faq.jpg" alt="Вопросы о лечебном массаже">
+                <div class="card__body">
+                    <h3 class="card__title">Вопросы и ответы</h3>
+                    <div class="twoup">
+                        <div>
+                            <p><strong>Больно ли это?</strong><br>Работаем в «комфортно-полезной» зоне, по вашей обратной связи. Сильная боль не нужна для результата.</p>
+                            <p><strong>Сколько длится сеанс?</strong><br>Обычно 45–60 минут, при первичном визите — плюс 10–15 минут на оценку.</p>
+                        </div>
+                        <div>
+                            <p><strong>Совместимо с акупунктурой/ЛФК?</strong><br>Да. Часто комбинируем, чтобы ускорить восстановление и закрепить результат.</p>
+                            <p><strong>Когда почувствую эффект?</strong><br>Часто сразу после сеанса: лёгкость и тепло. При «хронике» результат накапливается за 2–4 встречи.</p>
+                        </div>
+                    </div>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="zapisatsya.html">Записаться на массаж</a>
+                        <a class="btn-ghost" href="akupunktura.html">Комбинировать с акупунктурой</a>
+                    </div>
+                </div>
+            </article>
         </div>
-      </article>
-
-      <article class="card block">
-        <!-- Suggest: assets/images/massage/safety.jpg -->
-        <img class="card__media" src="assets/images/massage/safety.jpg" alt="Безопасность массажа">
-        <div class="card__body">
-          <h3 class="card__title">Безопасность</h3>
-          <ul class="list-grid">
-            <li>Работа в пределах комфорта, без «терпеть».</li>
-            <li>Избегаем активного воздействия при воспалении/травме.</li>
-            <li>Согласуем с врачом при варикозе, антикоагулянтах, беременности.</li>
-            <li>Нормально: лёгкая болезненность 24–48 часов.</li>
-          </ul>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <div class="container divider"></div>
-
-  <!-- Курс -->
-  <section class="section">
-    <h2 class="section__title">Курс и ожидаемый результат</h2>
-    <div class="cards">
-
-      <article class="card card--tall block">
-        <!-- Suggest: assets/images/massage/course.jpg -->
-        <img class="card__media" src="assets/images/massage/course.jpg" alt="Курс лечебного массажа">
-        <div class="card__body">
-          <h3 class="card__title">Как строим курс</h3>
-          <ul class="list-grid">
-            <li><strong>Острые состояния:</strong> 2–3 сеанса/нед. 1–2 недели.</li>
-            <li><strong>Хроническая напряжённость:</strong> 1–2 раза/нед. 3–6 недель.</li>
-            <li><strong>Поддержка:</strong> 1–2 раза/мес. при нагрузках/стрессе.</li>
-            <li><strong>Домашнее задание:</strong> 3–5 минут саморазминка/дыхание.</li>
-          </ul>
-          <p class="card__meta">Оценка прогресса: боль, амплитуда движений, сон/самочувствие.</p>
-        </div>
-      </article>
-
-      <article class="card block">
-        <!-- Suggest: assets/images/massage/prep.jpg -->
-        <img class="card__media" src="assets/images/massage/prep.jpg" alt="Подготовка к массажу">
-        <div class="card__body">
-          <h3 class="card__title">Как подготовиться</h3>
-          <ul class="list-grid">
-            <li>Лёгкая пища за 1–2 часа, без интенсивных тренировок за 2–3 часа.</li>
-            <li>Удобная одежда, доступ к зоне работы.</li>
-            <li>Сообщите о лекарствах, кожных реакциях, беременности.</li>
-            <li>После — вода, спокойный режим, тёплый душ по желанию.</li>
-          </ul>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <div class="container divider"></div>
-
-  <!-- FAQ -->
-  <section class="section" id="faq">
-    <h2 class="section__title">Частые вопросы</h2>
-    <div class="cards">
-      <article class="card card--wide block">
-        <!-- Suggest: assets/images/massage/faq.jpg -->
-        <img class="card__media" src="assets/images/massage/faq.jpg" alt="Вопросы о лечебном массаже">
-        <div class="card__body">
-          <h3 class="card__title">Вопросы и ответы</h3>
-          <div class="twoup">
-            <div>
-              <p><strong>Больно ли это?</strong><br>Работаем в «комфортно-полезной» зоне, по вашей обратной связи. Сильная боль не нужна для результата.</p>
-              <p><strong>Сколько длится сеанс?</strong><br>Обычно 45–60 минут, при первичном визите — плюс 10–15 минут на оценку.</p>
-            </div>
-            <div>
-              <p><strong>Совместимо с акупунктурой/ЛФК?</strong><br>Да. Часто комбинируем, чтобы ускорить восстановление и закрепить результат.</p>
-              <p><strong>Когда почувствую эффект?</strong><br>Часто сразу после сеанса: лёгкость и тепло. При «хронике» результат накапливается за 2–4 встречи.</p>
-            </div>
-          </div>
-          <div class="card__cta">
-            <a class="btn-primary" href="zapisatsya.html">Записаться на массаж</a>
-            <a class="btn-ghost" href="akupunktura.html">Комбинировать с акупунктурой</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
+    </section>
 
 </main>
 
 <footer>© 2025 — Ортопедический центр • Лечебный массаж</footer>
+
+<!-- Auto-highlight current page for both desktop and mobile -->
+<script>
+    (function () {
+      const path = location.pathname.split('/').pop() || 'index.html';
+      // mobile top bar
+      document.querySelectorAll('.tabbar a').forEach(a => {
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+      // desktop nav
+      document.querySelectorAll('.nav .nav-left a').forEach(a => {
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+    })();
+</script>
 </body>
 </html>

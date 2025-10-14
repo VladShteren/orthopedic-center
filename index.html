@@ -7,105 +7,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Page-only refinements -->
     <style>
-        /* Accent fallback in case not set in styles.css */
-        :root { --accent: #34c759; }
+        :root { --accent:#34c759; --chip:#e9e9eb; }
 
-        .section { margin: 40px 0 26px; }
-        .section__title { margin:0 0 14px; font-weight:800; font-size:clamp(22px,3vw,28px); color:#0b0b0c; letter-spacing:-0.01em; }
-        .section__note { color: var(--tertiary); font-size:13px; margin:0 0 12px; }
+        /* ---- your existing page styles (unchanged) ---- */
+        .section{margin:40px 0 26px;}
+        .section__title{margin:0 0 14px;font-weight:800;font-size:clamp(22px,3vw,28px);color:#0b0b0c;letter-spacing:-0.01em;}
+        .section__note{color:var(--tertiary);font-size:13px;margin:0 0 12px;}
+        .divider{height:1px;background:var(--bg);margin:22px 0 6px;border-radius:1px;}
+        .cards{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start;}
+        .card{display:flex;flex-direction:column;height:100%;}
+        .card.block{padding:0;overflow:hidden;}
+        .card__media{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;}
+        .card__body{padding:22px 24px;line-height:1.65;}
+        .card__title{margin:0 0 10px;font-weight:800;font-size:clamp(18px,2.4vw,22px);color:#0b0b0c;letter-spacing:-0.01em;}
+        .card__meta{color:var(--tertiary);font-size:13px;margin:-2px 0 12px;}
+        .card--hero{grid-column:1 / -1;}
+        .card--wide{grid-column:span 2;}
+        @media (max-width:980px){ .card--wide{grid-column:span 1;} }
+        .list-grid{display:grid;gap:10px;margin:2px 0 0;}
+        .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(118,118,128,.12);font-size:13px;color:#1c1c1e;}
+        .row{display:flex;gap:12px;flex-wrap:wrap;}
+        .contact{display:grid;gap:10px;}
+        @media (min-width:900px){ .contact{grid-template-columns:1.2fr 1fr;} }
+        main > .block{padding:22px;}
+        .btn-primary{background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:10px 18px;border-radius:999px;box-shadow:0 6px 16px rgba(52,199,89,.22);}
+        .btn-ghost{background:rgba(118,118,128,.12);color:#1c1c1e;text-decoration:none;font-weight:700;padding:10px 18px;border-radius:999px;}
 
-        /* Invisible divider (keeps spacing) */
-        .divider { height:1px; background: var(--bg); margin:22px 0 6px; border-radius:1px; }
-
-        .cards { display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); align-items:start; }
-        .card { display:flex; flex-direction:column; height:100%; }
-        .card.block { padding:0; overflow:hidden; }
-        .card__media { width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
-        .card__body { padding:22px 24px; line-height:1.65; }
-        .card__title { margin:0 0 10px; font-weight:800; font-size:clamp(18px,2.4vw,22px); color:#0b0b0c; letter-spacing:-0.01em; }
-        .card__meta { color: var(--tertiary); font-size:13px; margin:-2px 0 12px; }
-        .card--hero { grid-column:1 / -1; }
-        .card--wide { grid-column:span 2; }
-        @media (max-width:980px){ .card--wide { grid-column:span 1; } }
-
-        .list-grid { display:grid; gap:10px; margin:2px 0 0; }
-        .pill { display:inline-block; padding:8px 12px; border-radius:999px; background:rgba(118,118,128,.12); font-size:13px; color:#1c1c1e; }
-        .row { display:flex; gap:12px; flex-wrap:wrap; }
-
-        .contact { display:grid; gap:10px; }
-        @media (min-width:900px){ .contact { grid-template-columns:1.2fr 1fr; } }
-
-        /* Slimmer outer padding when reusing .block */
-        main > .block { padding:22px; }
-
-        /* ------- Mobile bottom tab bar with green "Записаться" button ------- */
-        .tabbar { display:none; } /* hidden on desktop */
+        /* ---- MOBILE: top rounded bar that mimics desktop layout ---- */
+        .tabbar{display:none;} /* hidden on desktop */
 
         @media (max-width:720px){
-          /* hide top nav on small screens */
-          .nav-wrap{ display:none; }
+          /* hide the original desktop nav only on small screens */
+          .nav-wrap{display:none;}
 
-          /* keep content visible above fixed tabbar */
-          body{ padding-bottom:calc(74px + env(safe-area-inset-bottom,0px)); }
+          /* leave space for fixed rounded bar */
+          body{padding-top:calc(88px + env(safe-area-inset-top,0px));}
 
-          .tabbar{
-            display:flex;
-            position:fixed; left:0; right:0; bottom:0;
-            height:74px;
-            padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
-            background:rgba(255,255,255,0.9);
+          .tabbar{display:block;position:fixed;inset:0 0 auto 0;z-index:1000;background:transparent;}
+          .tabbar__inner{width:min(100% - 20px,1200px);margin:calc(10px + env(safe-area-inset-top,0px)) auto 0;}
+
+          .tabbar__shell{
+            display:flex;align-items:center;gap:10px;
+            padding:10px;
+            background:rgba(255,255,255,.9);
             -webkit-backdrop-filter:saturate(160%) blur(14px);
             backdrop-filter:saturate(160%) blur(14px);
-            border-top:1px solid rgba(60,60,67,.16);
-            z-index:1000;
-          }
-          .tabbar__list{
-            display:flex; align-items:center; justify-content:space-between;
-            width:100%; gap:4px;
-          }
-          .tabbar__item{
-            flex:1 1 0;
-            display:flex; flex-direction:column; align-items:center; justify-content:center;
-            gap:2px; text-decoration:none; font-size:11px; color:#1c1c1e;
-            padding:4px 0; border-radius:12px;
-          }
-          .tabbar__item[aria-current="page"]{ color:var(--accent); font-weight:600; }
-          .tabbar__icon{ width:22px; height:22px; display:block; }
-          .tabbar__icon svg{ width:100%; height:100%; }
-
-          /* Green pill "Записаться" — text only (no icon) */
-          .tabbar__item.register{
-            flex:none;
-            background:var(--accent);
-            color:#fff;
-            font-weight:700;
-            padding:12px 18px;          /* a bit taller since no icon */
+            border:1px solid rgba(60,60,67,.12);
             border-radius:999px;
-            margin:0 4px;
-            display:flex;
-            flex-direction:row;          /* text centered in a row */
-            align-items:center;
-            justify-content:center;
-            gap:0;                       /* no gap needed */
-            box-shadow:0 4px 12px rgba(52,199,89,.28);
-            text-decoration:none;
-            line-height:1;
+            box-shadow:0 10px 24px rgba(0,0,0,.06);
           }
-          .tabbar__item.register span{ font-size:13px; }
-          .tabbar__item.register:hover{ background:#2eb150; }
-          .tabbar__item.register:active{ transform:translateY(1px); }
+
+          /* left segmented track (like desktop chip group) */
+          .seg{
+            flex:1;
+            display:flex;align-items:center;gap:8px;
+            padding:8px;
+            background:var(--chip);
+            border-radius:999px;
+          }
+          .seg__item{
+            flex:1 1 0;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:4px;padding:8px 12px;border-radius:999px;text-decoration:none;color:#1c1c1e;
+            min-width:72px;
+          }
+          .seg__item .tabbar__icon{width:20px;height:20px;display:block;}
+          .seg__item .tabbar__icon svg{width:100%;height:100%;}
+          .seg__item span{font-size:13px;line-height:1;}
+          .seg__item[aria-current="page"]{
+            background:#fff;color:var(--accent);font-weight:800;
+            box-shadow:inset 0 -1px 0 rgba(0,0,0,.02);
+          }
+
+          /* right CTA — green pill, text only */
+          .tabbar__cta{
+            flex:none;text-decoration:none;background:var(--accent);color:#fff;font-weight:800;
+            padding:12px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px rgba(52,199,89,.28);
+          }
+          .tabbar__cta:active{transform:translateY(1px);}
         }
 
-        /* Footer spacing so it doesn’t collide with tabbar */
-        footer{ padding:26px 0 90px; text-align:center; color:#8e8e93; }
-        @media (min-width:721px){ footer{ padding-bottom:26px; } }
+        footer{padding:26px 0;text-align:center;color:#8e8e93;}
     </style>
 </head>
 <body>
 
-<!-- NAV (desktop; hidden on mobile via CSS above) -->
+<!-- DESKTOP NAV (unchanged) -->
 <div class="container nav-wrap">
     <nav class="nav">
         <div class="nav-left">
@@ -118,53 +106,50 @@
     </nav>
 </div>
 
-<!-- MOBILE TAB BAR -->
+<!-- MOBILE TOP BAR (desktop look + icons over labels; CTA without icon) -->
 <nav class="tabbar" role="navigation" aria-label="Основная навигация (мобильная)">
-    <div class="tabbar__list">
-        <!-- Главная -->
-        <a class="tabbar__item" href="index.html" aria-current="page">
+    <div class="tabbar__inner">
+        <div class="tabbar__shell">
+            <div class="seg">
+                <a class="seg__item" href="index.html" aria-current="page">
           <span class="tabbar__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
             </svg>
           </span>
-            <span>Главная</span>
-        </a>
+                    <span>Главная</span>
+                </a>
 
-        <!-- Акупунктура -->
-        <a class="tabbar__item" href="akupunktura.html">
+                <a class="seg__item" href="akupunktura.html">
           <span class="tabbar__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 5c-2 2-6.5 6.5-9 9l-5 5"/><path d="M15 9l-3-3"/><circle cx="19" cy="5" r="1.8" fill="currentColor"/>
             </svg>
           </span>
-            <span>Акуп.</span>
-        </a>
+                    <span>Акуп.</span>
+                </a>
 
-        <!-- Массаж -->
-        <a class="tabbar__item" href="lechebny-massazh.html">
+                <a class="seg__item" href="lechebny-massazh.html">
           <span class="tabbar__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M6 12v-2a2 2 0 0 1 4 0v2"/><path d="M10 12v-3a2 2 0 1 1 4 0v3"/><path d="M14 12v-4a2 2 0 1 1 4 0v6a5 5 0 0 1-5 5H8a4 4 0 0 1-4-4v-1a3 3 0 0 1 3-3z"/>
             </svg>
           </span>
-            <span>Массаж</span>
-        </a>
+                    <span>Массаж</span>
+                </a>
 
-        <!-- Травы -->
-        <a class="tabbar__item" href="travy.html">
+                <a class="seg__item" href="travy.html">
           <span class="tabbar__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 3c-7 1-12 6-12 12 0 3.866 3.134 7 7 7 6-0 6-10 5-19z"/><path d="M4 20c3-4 7-6 12-7"/>
             </svg>
           </span>
-            <span>Травы</span>
-        </a>
+                    <span>Травы</span>
+                </a>
+            </div>
 
-        <!-- Записаться (зелёная кнопка, ТЕКСТ БЕЗ ИКОНКИ) -->
-        <a class="tabbar__item register" href="zapisatsya.html" aria-label="Записаться">
-            <span>Записаться</span>
-        </a>
+            <a class="tabbar__cta" href="zapisatsya.html">Записаться</a>
+        </div>
     </div>
 </nav>
 
@@ -177,7 +162,6 @@
 </header>
 
 <main class="container">
-
     <!-- Hero lead card -->
     <section class="section">
         <article class="card card--hero block">
@@ -205,7 +189,6 @@
         <p class="section__note">Выберите подход или комбинируйте — мы подскажем оптимальную схему.</p>
 
         <div class="cards">
-            <!-- Acupuncture -->
             <article class="card block">
                 <img class="card__media" src="assets/images/home/service_acu.jpg" alt="Акупунктура">
                 <div class="card__body">
@@ -219,7 +202,6 @@
                 </div>
             </article>
 
-            <!-- Massage -->
             <article class="card block">
                 <img class="card__media" src="assets/images/home/service_massage.jpg" alt="Лечебный массаж">
                 <div class="card__body">
@@ -233,7 +215,6 @@
                 </div>
             </article>
 
-            <!-- Herbs -->
             <article class="card block">
                 <img class="card__media" src="assets/images/home/service_herbs.jpg" alt="Травы и фитоподдержка">
                 <div class="card__body">
@@ -251,97 +232,97 @@
 
     <div class="container divider"></div>
 
-    <!-- Why us -->
-    <section class="section">
-        <h2 class="section__title">Почему выбирают нас</h2>
-        <div class="cards">
-            <article class="card block">
-                <img class="card__media" src="assets/images/home/why_safe.jpg" alt="Стерильность и безопасность">
-                <div class="card__body">
-                    <h3 class="card__title">Безопасность в приоритете</h3>
-                    <p>Стерильные одноразовые инструменты, аккуратные протоколы и информированное согласие на каждом этапе.</p>
-                </div>
-            </article>
-            <article class="card block">
-                <img class="card__media" src="assets/images/home/why_plan.jpg" alt="Индивидуальный план">
-                <div class="card__body">
-                    <h3 class="card__title">Индивидуальный план</h3>
-                    <p>Оценка, краткие цели, понятный план курса и домашние рекомендации — без лишних процедур.</p>
-                </div>
-            </article>
-            <article class="card block">
-                <img class="card__media" src="assets/images/home/why_measure.jpg" alt="Отслеживание прогресса">
-                <div class="card__body">
-                    <h3 class="card__title">Измеримый прогресс</h3>
-                    <p>Следим за болевой шкалой, объёмом движения и качеством сна, чтобы видеть реальный эффект.</p>
-                </div>
-            </article>
-        </div>
-    </section>
+<!--    &lt;!&ndash; Why us &ndash;&gt;-->
+<!--    <section class="section">-->
+<!--        <h2 class="section__title">Почему выбирают нас</h2>-->
+<!--        <div class="cards">-->
+<!--            <article class="card block">-->
+<!--                <img class="card__media" src="assets/images/home/why_safe.jpg" alt="Стерильность и безопасность">-->
+<!--                <div class="card__body">-->
+<!--                    <h3 class="card__title">Безопасность в приоритете</h3>-->
+<!--                    <p>Стерильные одноразовые инструменты, аккуратные протоколы и информированное согласие на каждом этапе.</p>-->
+<!--                </div>-->
+<!--            </article>-->
+<!--            <article class="card block">-->
+<!--                <img class="card__media" src="assets/images/home/why_plan.jpg" alt="Индивидуальный план">-->
+<!--                <div class="card__body">-->
+<!--                    <h3 class="card__title">Индивидуальный план</h3>-->
+<!--                    <p>Оценка, краткие цели, понятный план курса и домашние рекомендации — без лишних процедур.</p>-->
+<!--                </div>-->
+<!--            </article>-->
+<!--            <article class="card block">-->
+<!--                <img class="card__media" src="assets/images/home/why_measure.jpg" alt="Отслеживание прогресса">-->
+<!--                <div class="card__body">-->
+<!--                    <h3 class="card__title">Измеримый прогресс</h3>-->
+<!--                    <p>Следим за болевой шкалой, объёмом движения и качеством сна, чтобы видеть реальный эффект.</p>-->
+<!--                </div>-->
+<!--            </article>-->
+<!--        </div>-->
+<!--    </section>-->
 
-    <div class="container divider"></div>
+<!--    <div class="container divider"></div>-->
 
-    <!-- Process -->
-    <section class="section">
-        <h2 class="section__title">Как проходит первый визит</h2>
-        <div class="cards">
-            <article class="card card--wide block">
-                <img class="card__media" src="assets/images/home/process.jpg" alt="Процесс консультации">
-                <div class="card__body">
-                    <ol class="list-grid">
-                        <li><strong>Короткая беседа (5–10 мин):</strong> жалобы, цели, противопоказания.</li>
-                        <li><strong>Оценка и выбор методик:</strong> акупунктура/массаж/фитоподдержка или их сочетание.</li>
-                        <li><strong>Первая процедура:</strong> мягко, безопасно, с учётом чувствительности.</li>
-                        <li><strong>План и рекомендации:</strong> частота, ориентиры прогресса, домашние шаги.</li>
-                    </ol>
-                    <div class="card__cta" style="margin-top:14px;">
-                        <a class="btn-primary" href="zapisatsya.html">Записаться</a>
-                        <a class="btn-ghost" href="akupunktura.html">Посмотреть методики</a>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
+<!--    &lt;!&ndash; Process &ndash;&gt;-->
+<!--    <section class="section">-->
+<!--        <h2 class="section__title">Как проходит первый визит</h2>-->
+<!--        <div class="cards">-->
+<!--            <article class="card card&#45;&#45;wide block">-->
+<!--                <img class="card__media" src="assets/images/home/process.jpg" alt="Процесс консультации">-->
+<!--                <div class="card__body">-->
+<!--                    <ol class="list-grid">-->
+<!--                        <li><strong>Короткая беседа (5–10 мин):</strong> жалобы, цели, противопоказания.</li>-->
+<!--                        <li><strong>Оценка и выбор методик:</strong> акупунктура/массаж/фитоподдержка или их сочетание.</li>-->
+<!--                        <li><strong>Первая процедура:</strong> мягко, безопасно, с учётом чувствительности.</li>-->
+<!--                        <li><strong>План и рекомендации:</strong> частота, ориентиры прогресса, домашние шаги.</li>-->
+<!--                    </ol>-->
+<!--                    <div class="card__cta" style="margin-top:14px;">-->
+<!--                        <a class="btn-primary" href="zapisatsya.html">Записаться</a>-->
+<!--                        <a class="btn-ghost" href="akupunktura.html">Посмотреть методики</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </article>-->
+<!--        </div>-->
+<!--    </section>-->
 
-    <div class="container divider"></div>
+<!--    <div class="container divider"></div>-->
 
-    <!-- Contact / clinic block -->
-    <section class="section">
-        <h2 class="section__title">Контақты</h2>
-        <div class="contact block">
-            <div>
-                <img class="card__media" src="assets/images/home/map.jpg" alt="Карта и ориентиры клиники" style="border-bottom:1px solid var(--separator);">
-                <div class="card__body">
-                    <p><strong>Адрес:</strong> ул. Примерная, 10 • 2 этаж</p>
-                    <p><strong>Режим:</strong> Пн–Сб 10:00–20:00</p>
-                    <p><strong>Телефон:</strong> +7 (000) 000-00-00</p>
-                    <p class="card__meta">Парковка у входа, лифт. Просим приходить за 5–10 минут до начала.</p>
-                </div>
-            </div>
-            <div class="block" style="padding:0; overflow:hidden;">
-                <img class="card__media" src="assets/images/home/room.jpg" alt="Процедурный кабинет">
-                <div class="card__body">
-                    <h3 class="card__title">Готовы помочь</h3>
-                    <p>Оставьте заявку — подберём время и подскажем, с чего лучше начать именно вам.</p>
-                    <div class="card__cta">
-                        <a class="btn-primary" href="zapisatsya.html">Оставить заявку</a>
-                        <a class="btn-ghost" href="lechebny-massazh.html">Узнать о массаже</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!--    &lt;!&ndash; Contact &ndash;&gt;-->
+<!--    <section class="section">-->
+<!--        <h2 class="section__title">Контақты</h2>-->
+<!--        <div class="contact block">-->
+<!--            <div>-->
+<!--                <img class="card__media" src="assets/images/home/map.jpg" alt="Карта и ориентиры клиники" style="border-bottom:1px solid var(&#45;&#45;separator);">-->
+<!--                <div class="card__body">-->
+<!--                    <p><strong>Адрес:</strong> ул. Примерная, 10 • 2 этаж</p>-->
+<!--                    <p><strong>Режим:</strong> Пн–Сб 10:00–20:00</p>-->
+<!--                    <p><strong>Телефон:</strong> +7 (000) 000-00-00</p>-->
+<!--                    <p class="card__meta">Парковка у входа, лифт. Просим приходить за 5–10 минут до начала.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="block" style="padding:0; overflow:hidden;">-->
+<!--                <img class="card__media" src="assets/images/home/room.jpg" alt="Процедурный кабинет">-->
+<!--                <div class="card__body">-->
+<!--                    <h3 class="card__title">Готовы помочь</h3>-->
+<!--                    <p>Оставьте заявку — подберём время и подскажем, с чего лучше начать именно вам.</p>-->
+<!--                    <div class="card__cta">-->
+<!--                        <a class="btn-primary" href="zapisatsya.html">Оставить заявку</a>-->
+<!--                        <a class="btn-ghost" href="lechebny-massazh.html">Узнать о массаже</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
 
 </main>
 
 <footer>© 2025 — Ортопедический центр</footer>
 
-<!-- Auto-highlight current page for both desktop and mobile nav -->
+<!-- Auto-highlight current page -->
 <script>
     (function () {
       const path = location.pathname.split('/').pop() || 'index.html';
       document.querySelectorAll('.tabbar a').forEach(a => {
-        if (a.getAttribute('href') === path) a.setAttribute('aria-current', 'page');
+        if (a.getAttribute('href') === path) a.setAttribute('aria-current','page');
         else a.removeAttribute('aria-current');
       });
       document.querySelectorAll('.nav .nav-left a').forEach(a => {
@@ -350,6 +331,5 @@
       });
     })();
 </script>
-
 </body>
 </html>

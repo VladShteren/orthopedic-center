@@ -1,0 +1,150 @@
+<!-- Hero lead card -->
+    <section class="section">
+        <article class="card card--hero block">
+            <img class="card__media" src="assets/images/home/hero_clinic.jpg" alt="Светлая уютная процедурная">
+            <div class="card__body">
+                <div class="row">
+                    <span class="pill">Безопасные методики</span>
+                    <span class="pill">Индивидуальные планы</span>
+                    <span class="pill">Измеримый прогресс</span>
+                </div>
+                <h3 class="card__title" style="margin-top:12px;">С чем помогаем</h3>
+                <p class="card__meta">Шея и спина • Плечо/локоть • Колено/стопа • Головные боли • Стресс и сон</p>
+                <p>Мы сочетаем современные протоколы лечения боли и напряжения с аккуратными техниками релаксации. Цель — вернуть вам комфортное движение и хороший сон без лишних процедур.</p>
+                <div class="card__cta" style="margin-top:12px; display:flex; gap:12px; flex-wrap:wrap;">
+                    <a class="btn-primary" href="zapisatsya.html">Записаться на первичный приём</a>
+                    <a class="btn-ghost" href="#services">Услуги и цены</a>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+        <h2 class="section__title">Услуги</h2>
+        <p class="section__note">Выберите подход или комбинируйте — мы подскажем оптимальную схему.</p>
+
+        <div class="cards">
+            <article class="card block">
+                <img class="card__media" src="assets/images/home/service_acu.jpg" alt="Акупунктура">
+                <div class="card__body">
+                    <h3 class="card__title">Акупунктура</h3>
+                    <p class="card__meta">Боль ↓ • Подвижность ↑ • Сон ↑</p>
+                    <p>Мягкая нейромодуляция, уменьшение спазма и улучшение кровотока. Подходит при острой и хронической боли.</p>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="akupunktura.html">Подробнее</a>
+                        <a class="btn-ghost" href="zapisatsya.html">Записаться</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card block">
+                <img class="card__media" src="assets/images/home/service_massage.jpg" alt="Лечебный массаж">
+                <div class="card__body">
+                    <h3 class="card__title">Лечебный массаж</h3>
+                    <p class="card__meta">Расслабление • Мобилизация • Восстановление</p>
+                    <p>Точечные и фасциальные техники для снятия напряжения, улучшения подвижности и восстановления после нагрузок.</p>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="lechebny-massazh.html">Подробнее</a>
+                        <a class="btn-ghost" href="zapisatsya.html">Записаться</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card block">
+                <img class="card__media" src="assets/images/home/service_herbs.jpg" alt="Травы и фитоподдержка">
+                <div class="card__body">
+                    <h3 class="card__title">Фитоподдержка</h3>
+                    <p class="card__meta">Сон • Восстановление • Пищеварение</p>
+                    <p>Чаи, настои и экстракты для мягкой поддержки сна, стресса и восстановления. Только проверенные сырьё и дозировки.</p>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="travy.html">Подробнее</a>
+                        <a class="btn-ghost" href="zapisatsya.html">Подобрать курс</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <div class="container divider"></div>
+
+    <!-- Why us -->
+    <section class="section">
+        <h2 class="section__title">Почему выбирают нас</h2>
+        <div class="cards">
+            <article class="card block">
+                <img class="card__media" src="assets/images/home/why_safe.jpg" alt="Стерильность и безопасность">
+                <div class="card__body">
+                    <h3 class="card__title">Безопасность в приоритете</h3>
+                    <p>Стерильные одноразовые инструменты, аккуратные протоколы и информированное согласие на каждом этапе.</p>
+                </div>
+            </article>
+            <article class="card block">
+                <img class="card__media" src="assets/images/home/why_plan.jpg" alt="Индивидуальный план">
+                <div class="card__body">
+                    <h3 class="card__title">Индивидуальный план</h3>
+                    <p>Оценка, краткие цели, понятный план курса и домашние рекомендации — без лишних процедур.</p>
+                </div>
+            </article>
+            <article class="card block">
+                <img class="card__media" src="assets/images/home/why_measure.jpg" alt="Отслеживание прогресса">
+                <div class="card__body">
+                    <h3 class="card__title">Измеримый прогресс</h3>
+                    <p>Следим за болевой шкалой, объёмом движения и качеством сна, чтобы видеть реальный эффект.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <div class="container divider"></div>
+
+    <!-- Process -->
+    <section class="section">
+        <h2 class="section__title">Как проходит первый визит</h2>
+        <div class="cards">
+            <article class="card card--wide block">
+                <img class="card__media" src="assets/images/home/process.jpg" alt="Процесс консультации">
+                <div class="card__body">
+                    <ol class="list-grid">
+                        <li><strong>Короткая беседа (5–10 мин):</strong> жалобы, цели, противопоказания.</li>
+                        <li><strong>Оценка и выбор методик:</strong> акупунктура/массаж/фитоподдержка или их сочетание.</li>
+                        <li><strong>Первая процедура:</strong> мягко, безопасно, с учётом чувствительности.</li>
+                        <li><strong>План и рекомендации:</strong> частота, ориентиры прогресса, домашние шаги.</li>
+                    </ol>
+                    <div class="card__cta" style="margin-top:14px;">
+                        <a class="btn-primary" href="zapisatsya.html">Записаться</a>
+                        <a class="btn-ghost" href="akupunktura.html">Посмотреть методики</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <div class="container divider"></div>
+
+    <!-- Contact -->
+    <section class="section">
+        <h2 class="section__title">Контақты</h2>
+        <div class="contact block">
+            <div>
+                <img class="card__media" src="assets/images/home/map.jpg" alt="Карта и ориентиры клиники" style="border-bottom:1px solid var(--separator);">
+                <div class="card__body">
+                    <p><strong>Адрес:</strong> ул. Примерная, 10 • 2 этаж</p>
+                    <p><strong>Режим:</strong> Пн–Сб 10:00–20:00</p>
+                    <p><strong>Телефон:</strong> +7 (000) 000-00-00</p>
+                    <p class="card__meta">Парковка у входа, лифт. Просим приходить за 5–10 минут до начала.</p>
+                </div>
+            </div>
+            <div class="block" style="padding:0; overflow:hidden;">
+                <img class="card__media" src="assets/images/home/room.jpg" alt="Процедурный кабинет">
+                <div class="card__body">
+                    <h3 class="card__title">Готовы помочь</h3>
+                    <p>Оставьте заявку — подберём время и подскажем, с чего лучше начать именно вам.</p>
+                    <div class="card__cta">
+                        <a class="btn-primary" href="zapisatsya.html">Оставить заявку</a>
+                        <a class="btn-ghost" href="lechebny-massazh.html">Узнать о массаже</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
