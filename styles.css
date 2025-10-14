@@ -48,12 +48,13 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
 body.scrolled .container.nav-wrap { padding-top: 0; }
 
 /* Nav bar design */
+/* FIX: make inner bar white like cards, keep thin green border */
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f5f5f7;
-  border: 1px solid var(--accent); /* ← green border */
+  background: #fff;                 /* white interior */
+  border: 1px solid var(--accent);  /* green outline */
   border-radius: 999px;
   padding: 8px 12px;
   box-shadow: var(--shadow-sm);
@@ -233,10 +234,8 @@ footer {
 
 /* ===== Mobile nav: same solid background above and below (like desktop) ===== */
 @media (max-width: 720px) {
-  /* Keep your original top spacing */
   body { padding-top: 88px !important; }
 
-  /* Solid background wrapper behind mobile bar */
   body .tabbar,
   body .container.nav-wrap {
     position: fixed;
@@ -249,22 +248,21 @@ footer {
     padding-bottom: 16px !important;
   }
 
-  /* Inner rounded bar stays solid */
+  /* FIX: mobile nav interior also white with green border */
   body .tabbar__shell,
   body .nav {
-    background: #f5f5f7 !important;
-    border: 1px solid var(--accent) !important; /* ← green border on mobile */
+    background: #fff !important;
+    border: 1px solid var(--accent) !important;
     border-radius: 999px !important;
     box-shadow: var(--shadow-sm) !important;
     width: min(100% - 20px, 1200px);
     margin: 0 auto;
   }
 
-  /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
 
-/* === MOBILE NAV: make all 5 buttons fit on one row === */
+/* === MOBILE NAV: fit all 5 items on one row (unchanged from your setup) === */
 @media (max-width: 720px){
   .tabbar{
     padding-left: max(10px, env(safe-area-inset-left)) !important;
@@ -309,40 +307,49 @@ footer {
     text-overflow:ellipsis !important;
   }
 }
-/* ---------- Cards: text on top, buttons at bottom (equal heights) ---------- */
-.cards { align-items: stretch; }                 /* ensure grid stretches items */
-.cards .block {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.block .card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1 1 auto;                               /* body takes the free space */
-}
+
+/* ---------- Cards: text compact on top, buttons locked to bottom ---------- */
+/* FIX: keep content tight; do NOT stretch the body. Only push footer down. */
+.cards { align-items: stretch; }
+.cards .block { display: flex; flex-direction: column; height: 100%; }
+
+.block .card__body { display: flex; flex-direction: column; gap: 10px; } /* no flex-grow */
 .block .card__cta {
-  margin-top: auto;                              /* push actions to the bottom */
+  margin-top: auto;  /* pins buttons to the bottom */
   display: flex;
   gap: 12px;
   align-items: center;
   padding-top: 10px;
 }
 
-/* If your cards don't use .card__body, this keeps it working too */
+/* Still works if your markup doesn't have .card__body wrapper */
 .block > .card__cta:last-child { margin-top: auto; }
 
-/* ---------- Nav: white interior like cards + keep green border ---------- */
-.nav {
-  background: #fff !important;                   /* same white as cards */
-  border: 1px solid var(--accent) !important;    /* green outline */
+/* ---------- Cards: equal bottoms ---------- */
+.cards { align-items: stretch; }                 /* grid stretches every card */
+.cards .block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-/* Mobile: same white interior */
-@media (max-width: 720px) {
-  body .nav {
-    background: #fff !important;
-    border: 1px solid var(--accent) !important;
-  }
+.block .card__body{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;        /* <-- allow the body to grow to match tallest card */
+  min-height: 0;         /* avoid overflow issues in flex children */
 }
+
+.block .card__cta{
+  margin-top: auto;      /* pins the buttons to the bottom edge */
+  padding-top: 16px;     /* consistent breathing room above buttons */
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* If your markup doesn’t have .card__body wrapper */
+.block > .card__cta:last-child { margin-top: auto; }
