@@ -269,7 +269,7 @@ footer {
     background: linear-gradient(to bottom, var(--bg) 100%, rgba(0,0,0,0.03)) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    padding-top: 6px !important; /* keep breathing room above bar */
+    padding-top: 4px !important; /* keep breathing room above bar */
     padding-bottom: 16px !important; /* add same space below bar */
   }
 
@@ -287,118 +287,60 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* === Mobile nav final fix: CTA inside, full visibility, green border === */
+/* === Mobile nav: 4 tabs + CTA fully visible (no scroll) === */
 @media (max-width: 720px){
+  /* Keep solid wrapper you already use */
+  .tabbar{ position: fixed !important; top:0; left:0; right:0; z-index:1000; }
+  .tabbar__inner{ padding:10px 8px 16px !important; }
 
-  /* Fixed solid wrapper */
-  .tabbar{
-    position: fixed !important;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: var(--bg) !important;
-    background-image: linear-gradient(to bottom, var(--bg), var(--bg)) !important;
-  }
-  .tabbar__inner{ padding: 10px 10px 16px !important; }
-
-  /* Rounded shell with green accent border */
+  /* Rounded shell with green border (unchanged) but tighter */
   .tabbar__shell{
-    display: flex !important;
-    align-items: center;
-    gap: 10px;
-    background: #f5f5f7 !important;
-    border: 2px solid var(--accent) !important;  /* 💚 iOS green border */
-    border-radius: 999px !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08) !important;
-    overflow: visible !important;
-    padding: 4px !important; /* slight inset so border looks balanced */
+    display:flex !important; align-items:center;
+    gap:6px !important; padding:6px !important;
+    background:#f5f5f7 !important;
+    border:2px solid var(--accent) !important; border-radius:999px !important;
+    box-shadow:0 6px 16px rgba(0,0,0,.08) !important;
   }
 
-  /* Scrollable tab track (works for both .seg and .tabbar__list) */
-  .seg,
-  .tabbar__list{
-    flex: 1 1 auto !important;
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-    background: rgba(118,118,128,.12);
-    border-radius: 999px;
-    padding: 8px 12px !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .seg::-webkit-scrollbar,
-  .tabbar__list::-webkit-scrollbar{ display: none; }
-
-  /* Tabs are compact and scroll horizontally */
-  .seg__item,
-  .tabbar__item{ flex: 0 0 auto !important; padding: 8px 12px !important; }
-
-  /* Invisible padding at edges so tabs never hide under the curve */
-  .seg::before, .seg::after,
-  .tabbar__list::before, .tabbar__list::after{
-    content:""; flex: 0 0 6px;
+  /* Tab track – NO HORIZONTAL SCROLL; tabs share width evenly */
+  .seg, .tabbar__list{
+    flex:1 1 0 !important;
+    display:flex !important; align-items:center;
+    justify-content:space-between !important;
+    gap:4px !important; padding:6px !important;
+    background:rgba(118,118,128,.12); border-radius:999px;
+    overflow:visible !important;           /* <-- no scroll */
   }
 
-  /* CTA always inside bar */
-  .tabbar__cta,
-  .tabbar__item.register{
-    position: relative !important;
-    z-index: 1;
-    flex: 0 0 auto !important;
-    margin-left: 6px !important;
+  /* Each tab gets an equal slice */
+  .seg__item, .tabbar__item{
+    flex:1 1 0 !important;                 /* equal widths */
+    min-width:0 !important;
+    padding:6px 6px !important;
+    border-radius:999px;
   }
 
-  /* Add safe top space so content doesn't slide under fixed nav */
-  body{ padding-top: calc(88px + env(safe-area-inset-top, 0px)) !important; }
-}
-/* ==== Mobile nav: show all 4 tabs without scrolling ==== */
-@media (max-width: 720px){
-  /* Tighter shell so more room for tabs */
-  .tabbar__shell{
-    gap: 8px !important;
-    padding: 6px !important;
+  /* Compact icons + labels so 4 tabs fit comfortably */
+  .tabbar__icon{ width:18px; height:18px; }
+  .seg__item span, .tabbar__item span{
+    font-size:12px; line-height:1.1;
   }
 
-  /* The tab track: no scroll, distribute items evenly */
-  .seg,
-  .tabbar__list{
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;     /* spread evenly */
-    gap: 4px !important;
-    padding: 6px 8px !important;
-    overflow: visible !important;       /* no horizontal scroll */
+  /* CTA stays inside but slimmer to free space */
+  .tabbar__cta, .tabbar__item.register{
+    flex:0 0 auto !important;
+    padding:8px 12px !important;
+    font-size:14px !important;
+    white-space:nowrap;
+    margin-left:6px !important;
   }
 
-  /* Each tab takes an equal slice of the track */
-  .seg__item,
-  .tabbar__item{
-    flex: 1 1 0 !important;             /* equal width */
-    min-width: 0 !important;
-    padding: 6px 6px !important;
-  }
-
-  /* Compact icon + label so all four fit comfortably */
-  .tabbar__icon{ width: 18px; height: 18px; }
-  .seg__item span,
-  .tabbar__item span{ font-size: 12px; line-height: 1.05; }
-
-  /* Keep CTA inside but slimmer to free space for tabs */
-  .tabbar__cta,
-  .tabbar__item.register{
-    flex: 0 0 auto !important;
-    padding: 10px 12px !important;
-    font-size: 14px !important;
-    white-space: nowrap;
-    margin-left: 6px !important;
-  }
+  /* Make sure page content never hides under fixed bar */
+  body{ padding-top:calc(88px + env(safe-area-inset-top,0px)) !important; }
 }
 
-/* Extra-tight tweaks for very narrow phones */
+/* Extra-tight tweak for very small phones */
 @media (max-width: 360px){
-  .seg__item span,
-  .tabbar__item span{ font-size: 11px; }
-  .tabbar__cta,
-  .tabbar__item.register{ padding: 8px 10px !important; font-size: 13px !important; }
+  .seg__item span, .tabbar__item span{ font-size:11px; }
+  .tabbar__cta, .tabbar__item.register{ padding:6px 10px !important; font-size:13px !important; }
 }
