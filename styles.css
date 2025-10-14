@@ -287,59 +287,53 @@ footer {
   /* Hide scroll hint arrow on mobile */
   .container.nav-wrap::after { display: none !important; }
 }
-/* === MOBILE NAV: use full width and fit all 4 tabs === */
+/* === MOBILE NAV: make all 5 buttons fit on one row === */
 @media (max-width: 720px){
-  /* Take the whole screen width (respecting notches) */
+  /* Full-width wrapper + safe-area */
   .tabbar{
-    padding-left: max(8px, env(safe-area-inset-left)) !important;
-    padding-right: max(8px, env(safe-area-inset-right)) !important;
+    padding-left: max(10px, env(safe-area-inset-left)) !important;
+    padding-right: max(10px, env(safe-area-inset-right)) !important;
+  }
+  .tabbar__inner{ width:100% !important; margin:12px auto 0 !important; }
+  .tabbar__shell{
+    width:100% !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:8px !important;                /* tighter gap between group and CTA */
+    padding:8px 10px !important;       /* compact shell padding */
   }
 
-  /* Remove the old min(100% - 20px, …) that keeps it narrow */
-  .tabbar .tabbar__inner{
-    width: 100% !important;
-    margin: 12px auto 0 !important;
-    padding: 0 !important;
-    display: block !important;
+  /* Segmented track with 4 equal tabs */
+  .seg{
+    flex:1 1 auto !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:6px !important;                /* tighter gaps between tabs */
+    padding:6px !important;
+    min-width:0 !important;            /* allow shrinking */
+  }
+  .seg__item{
+    flex:1 1 0% !important;            /* 4 tabs share the row evenly */
+    min-width:0 !important;
+    padding:8px 8px !important;        /* compact pill padding */
+    border-radius:999px !important;
+    white-space:nowrap !important;
+    font-size:clamp(12px, 3.4vw, 14px) !important;
+    line-height:1 !important;
+  }
+  .seg__item .tabbar__icon{
+    width:clamp(18px, 4.8vw, 20px) !important;
+    height:clamp(18px, 4.8vw, 20px) !important;
   }
 
-  /* Make the rounded shell span the full width */
-  .tabbar .tabbar__shell{
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    padding: 8px 10px !important;
-  }
-
-  /* Segmented track: allow shrink + share space evenly */
-  .tabbar .seg{
-    flex: 1 1 auto !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 6px !important;
-    min-width: 0 !important;           /* critical so tabs can shrink */
-  }
-
-  .tabbar .seg__item{
-    flex: 1 1 0% !important;            /* 4 tabs share the row */
-    min-width: 0 !important;
-    padding: 8px 8px !important;
-    white-space: nowrap !important;
-    border-radius: 999px !important;
-    font-size: 14px !important;
-    line-height: 1 !important;
-  }
-  .tabbar .seg__item .tabbar__icon{ width: 20px; height: 20px; }
-
-  /* Keep the green CTA inside and prevent it from hogging space */
-  .tabbar .tabbar__cta{
-    flex: 0 0 auto !important;
-    padding: 10px 16px !important;
-    max-width: 40% !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+  /* Green CTA stays inside and doesn’t hog space */
+  .tabbar__cta{
+    flex:0 0 auto !important;
+    padding:10px 14px !important;      /* a bit narrower */
+    font-size:clamp(13px, 3.6vw, 15px) !important;
+    max-width:40% !important;          /* prevents pushing tabs off-screen */
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
   }
 }
