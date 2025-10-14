@@ -353,3 +353,24 @@ footer {
 
 /* If your markup doesn’t have .card__body wrapper */
 .block > .card__cta:last-child { margin-top: auto; }
+/* ---------- Section header centered ---------- */
+.section__header {
+  text-align: center;
+  margin: 80px auto 48px;      /* top, sides (auto centers block), bottom */
+  max-width: 720px;            /* optional: keeps line width readable */
+  padding: 0 16px;             /* safe padding on mobile */
+}
+
+.section__title {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  color: #0b0b0c;
+  margin: 0 0 10px;
+}
+
+.section__note {
+  font-size: 18px;
+  color: var(--secondary);
+  line-height: 1.5;
+  margin: 0;
+}
