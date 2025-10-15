@@ -15,6 +15,7 @@
   --shadow-lg: 0 18px 44px rgba(0,0,0,0.08);
   --fs-title: clamp(32px, 6vw, 60px);
   --fs-sub: clamp(18px, 2vw, 20px);
+  --chip: #e9e9eb; /* for mobile segmented track */
 }
 
 /* ========= Base Reset ========= */
@@ -41,8 +42,6 @@ a { color: inherit; text-decoration: none; transition: all .2s ease; }
   transition: padding-top .22s ease, background .3s ease;
   background: #f5f5f7;
   background: linear-gradient(to bottom, #f5f5f7 100%, rgba(0,0,0,0.03));
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 /* When page is scrolled, remove the gap */
@@ -85,9 +84,8 @@ body.scrolled .container.nav-wrap { padding-top: 0; }
   padding: 8px 16px;
   border-radius: 999px;
   transition: color .2s ease, background .2s ease, border-color .2s ease;
-  scroll-snap-align: start;
-  background: transparent;          /* default: no pill */
-  border: 0;                        /* default: no border */
+  background: transparent;  /* default: no pill */
+  border: 0;                /* default: no border */
 }
 
 /* Hover hint on desktop only (subtle grey) */
@@ -100,12 +98,12 @@ body.scrolled .container.nav-wrap { padding-top: 0; }
 .nav-left a[aria-current="page"] {
   background: #fff;
   color: var(--accent);
-  border: 2px solid var(--accent);
+  border: 1px solid var(--accent);   /* was 2px */
   box-shadow: none;
   font-weight: 700;
 }
 
-/* Booking button */
+/* Booking button (unchanged look) */
 .cta {
   background: linear-gradient(180deg, #34d167, #2fbe5c);
   color: #fff;
@@ -118,19 +116,6 @@ body.scrolled .container.nav-wrap { padding-top: 0; }
 }
 .cta:hover { filter: brightness(1.05); }
 .cta:active { transform: translateY(1px); }
-
-/* Mobile scroll arrow hint (hidden on md+) */
-.container.nav-wrap::after {
-  position: absolute;
-  right: 14px;
-  top: calc(50% + 2px);
-  transform: translateY(-50%);
-  font-size: 20px;
-  line-height: 1;
-  color: rgba(0,0,0,0.25);
-  pointer-events: none;
-}
-@media (min-width: 768px) { .container.nav-wrap::after { display: none; } }
 
 /* ========= HERO ========= */
 .hero { padding: 80px 0 32px; text-align: center; }
@@ -153,7 +138,7 @@ body.scrolled .container.nav-wrap { padding-top: 0; }
 /* ========= CARDS / BLOCKS ========= */
 .block {
   background: var(--surface);
-  border: 1px solid var(--separator);
+  border: 1px solid var(--accent);    /* was --separator */
   border-radius: var(--radius-lg);
   padding: 28px;
   margin: 34px 0;
@@ -188,7 +173,7 @@ body.scrolled .container.nav-wrap { padding-top: 0; }
   width: 100%;
   padding: 12px 14px;
   border-radius: 14px;
-  border: 1px solid var(--separator);
+  border: 1px solid var(--accent);   /* was --separator */
   background: #fff;
   font-size: 16px;
   box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
@@ -244,177 +229,101 @@ footer {
   }
 }
 
-/* ===== Mobile nav: same solid background above and below (like desktop) ===== */
+/* ======== MOBILE MENU ======== */
+.tabbar { display: none; } /* hidden on desktop */
+
 @media (max-width: 720px) {
-  body { padding-top: 88px !important; }
+  .nav-wrap { display: none; } /* hide desktop nav */
+  body { padding-top: calc(88px + env(safe-area-inset-top, 0px)); }
 
-  body .tabbar,
-  body .container.nav-wrap {
+  .tabbar {
+    display: block;
     position: fixed;
-    top: 0; left: 0; right: 0;
+    inset: 0 0 auto 0;
     z-index: 1000;
-    background: linear-gradient(to bottom, var(--bg) 100%, rgba(0,0,0,0.03)) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding-top: 6px !important;
-    padding-bottom: 6px !important;
+    background: transparent;
   }
 
-  /* Mobile nav capsule keeps green border like desktop */
-  body .tabbar__shell,
-  body .nav {
-    background: #fff !important;
-    border: 1px solid var(--accent) !important;  /* green outline on mobile */
-    border-radius: 999px !important;
-    box-shadow: var(--shadow-sm) !important;
+  .tabbar__inner {
     width: min(100% - 20px, 1200px);
-    margin: 0 auto;
+    margin: calc(10px + env(safe-area-inset-top, 0px)) auto 0;
   }
 
-  .container.nav-wrap::after { display: none !important; }
-}
-
-/* === MOBILE NAV: fit all 5 items on one row (unchanged from your setup) === */
-@media (max-width: 720px){
-  .tabbar{
-    padding-left: max(10px, env(safe-area-inset-left)) !important;
-    padding-right: max(10px, env(safe-area-inset-right)) !important;
+  .tabbar__shell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255,255,255,.9);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    backdrop-filter: saturate(160%) blur(14px);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
   }
-  .tabbar__inner{ width:100% !important; margin:12px auto 0 !important; }
-  .tabbar__shell{
-    width:100% !important;
-    display:flex !important;
-    align-items:center !important;
-    gap:8px !important;
-    padding:6px 10px !important;
+
+  .seg {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--chip);
+    border-radius: 999px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--accent);   /* added */
   }
-  .seg{
-    flex:1 1 auto !important;
-    display:flex !important;
-    align-items:center !important;
-    gap:6px !important;
-    padding:6px !important;
-    min-width:0 !important;
+
+  .seg__item {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 8px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #1c1c1e;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color .2s ease, background .2s ease, border-color .2s ease;
+    border: 1px solid var(--accent);   /* added for consistency */
   }
-  .seg__item{
-    flex:1 1 0% !important;
-    min-width:0 !important;
-    padding:8px 8px !important;
-    border-radius:999px !important;
-    white-space:nowrap !important;
-    font-size:clamp(12px, 3.4vw, 14px) !important;
-    line-height:1 !important;
+
+  .seg__item .tabbar__icon { display: none !important; }
+
+  /* Active (white fill + green border + green text) */
+  .seg__item[aria-current="page"] {
+    background: #fff;
+    color: var(--accent);
+    border: 1px solid var(--accent);   /* was 2px */
+    box-shadow: none;
+    font-weight: 700;
   }
-  .seg__item .tabbar__icon{
-    width:clamp(18px, 4.8vw, 20px) !important;
-    height:clamp(18px, 4.8vw, 20px) !important;
+
+  .tabbar__cta {
+    flex: none;
+    text-decoration: none;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(52,199,89,.28);
   }
-  .tabbar__cta{
-    flex:0 0 auto !important;
-    padding:10px 14px !important;
-    font-size:clamp(13px, 3.6vw, 15px) !important;
-    max-width:40% !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-  }
+  .tabbar__cta:active { transform: translateY(1px); }
 }
 
-/* ---------- Cards: text compact on top, buttons locked to bottom ---------- */
-.cards { align-items: stretch; }
-.cards .block { display: flex; flex-direction: column; height: 100%; }
-
-.block .card__body { display: flex; flex-direction: column; gap: 10px; }
-.block .card__cta {
-  margin-top: auto;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding-top: 10px;
-}
-
-/* Still works if your markup doesn't have .card__body wrapper */
-.block > .card__cta:last-child { margin-top: auto; }
-
-/* ---------- Cards: equal bottoms ---------- */
-.cards { align-items: stretch; }
-.cards .block {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.block .card__body{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-.block .card__cta{
-  margin-top: auto;
-  padding-top: 16px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-/* ---------- Section header centered ---------- */
-.section__header {
-  text-align: center;
-  margin: 80px auto 48px;
-  max-width: 720px;
-  padding: 0 16px;
-}
-.section__title {
-  font-size: clamp(28px, 5vw, 48px);
-  font-weight: 800;
-  color: #0b0b0c;
-  margin: 0 0 10px;
-}
-.section__note {
-  font-size: 18px;
-  color: var(--secondary);
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* ========= FINAL: unified menu behavior (desktop + mobile) ========= */
-
-/* Active = white fill + green border/text */
-.container.nav-wrap .nav-left a.active,
-.container.nav-wrap .nav-left a[aria-current="page"] {
-  background: #fff !important;
-  color: var(--accent) !important;
-  border: 1px solid var(--accent) !important;
-  box-shadow: none !important;
-  outline: none !important;
-  font-weight: 700 !important;
-  border-radius: 999px !important;
-}
-
-/* Keep active look during hover/focus/tap */
+/* ========= FINAL UNIFIED MENU ========= */
 .container.nav-wrap .nav-left a.active:hover,
 .container.nav-wrap .nav-left a.active:focus,
 .container.nav-wrap .nav-left a.active:active {
   background: #fff !important;
   color: var(--accent) !important;
   border-color: var(--accent) !important;
-}
-
-/* Mobile: hide icons if present and keep proportions the same as desktop */
-@media (max-width: 720px) {
-  .container.nav-wrap .nav-left svg,
-  .container.nav-wrap .tabbar__icon { display: none !important; }
-
-  /* Ensure all mobile links match desktop sizing */
-  .container.nav-wrap .nav-left a {
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    line-height: 1 !important;
-    padding: 8px 16px !important;
-    border-radius: 999px !important;
-    -webkit-tap-highlight-color: transparent !important;
-  }
 }
