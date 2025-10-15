@@ -220,7 +220,7 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   }
 
   .tabbar__shell{
-    display:flex;align-items:center;gap:12px;padding:12px;
+    display:flex;align-items:center;gap:8px;padding:8px;
     background:#fff;
     border:1px solid var(--accent);
     border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,.06);
