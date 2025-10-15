@@ -60,7 +60,7 @@ body.scrolled .container.nav-wrap{padding-top:0;}
   border-radius:999px;
   padding:4px;
   overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--accent); /* ✅ green border around the grey segment */
+  border:1px solid var(--accent); /* green border around the grey segment */
 }
 .nav-left::-webkit-scrollbar{display:none;}
 .nav-left{scrollbar-width:none;}
@@ -72,7 +72,7 @@ body.scrolled .container.nav-wrap{padding-top:0;}
 }
 @media (hover:hover){ .nav-left a:hover{background:rgba(118,118,128,0.10);} }
 
-/* ✅ Updated active state: transparent background, no border — just green bold text */
+/* Active = transparent background, no border — just green bold text */
 .nav-left a.active,
 .nav-left a[aria-current="page"]{
   background:transparent !important;
@@ -122,7 +122,7 @@ body.scrolled .container.nav-wrap{padding-top:0;}
 .grid{display:grid;gap:18px;}
 @media (min-width:920px){ .grid-2{grid-template-columns:1fr 1fr;} }
 
-/* ========= EXTRA PAGE SECTIONS from snippet (kept) ========= */
+/* ========= EXTRA PAGE SECTIONS ========= */
 .section{margin:40px 0 26px;}
 .section__title{margin:0 0 14px;font-weight:800;font-size:clamp(22px,3vw,28px);color:#0b0b0c;letter-spacing:-0.01em;}
 .section__note{color:var(--tertiary);font-size:13px;margin:0 0 12px;}
@@ -163,7 +163,7 @@ main > .block{padding:22px;}
 .field{margin:12px 0 16px;}
 .field label{display:block;font-weight:700;color:#0b0b0c;margin-bottom:6px;}
 .req{color:#c62222;margin-left:4px;font-weight:800;}
-.help{color:var(--tertiary);font-size:12px;margin-top:4px;}
+.help{color:#8e8e93;font-size:12px;margin-top:4px;}
 .control{
   width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--separator);background:#fff;font-size:16px;
   box-shadow:0 1px 0 rgba(255,255,255,0.6) inset;transition:border-color .2s ease, box-shadow .2s ease;
@@ -187,19 +187,37 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
 /* ========= Small screens tiny tweak ========= */
 @media (max-width:360px){
   .nav-left a,.cta{padding:8px 10px;font-size:14px;border-radius:10px;}
+  /* mobile polish: keep cards breathable on tiny phones */
+  .card__body{padding:18px;}
 }
 
-/* ========= MOBILE MENU (rounded bar, NO icons, transparent buttons) ========= */
+/* ========= MOBILE MENU (rounded bar, NO icons, solid bg under bar, transparent active) ========= */
 .tabbar{display:none;} /* hidden on desktop */
 
 @media (max-width:720px){
   .nav-wrap{display:none;}
-  body{padding-top:calc(88px + env(safe-area-inset-top,0px));}
+  /* extra top padding to cover the ::after extender */
+  body{padding-top:calc(100px + env(safe-area-inset-top,0px));}
 
+  /* Solid background under/around the fixed top bar */
   .tabbar{
-    display:block;position:fixed;inset:0 0 auto 0;z-index:1000;background:transparent;
+    display:block;position:fixed;inset:0 0 auto 0;z-index:1000;
+    background:var(--bg);
   }
-  .tabbar__inner{width:min(100% - 20px,1200px);margin:calc(10px + env(safe-area-inset-top,0px)) auto 0;}
+  /* small extender below the rounded shell to avoid a gap */
+  .tabbar::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:-12px;height:12px;
+    background:var(--bg);
+    pointer-events:none;
+  }
+
+  .tabbar__inner{
+    width:min(100% - 20px,1200px);
+    margin:calc(10px + env(safe-area-inset-top,0px)) auto 0;
+    padding-left:max(10px, env(safe-area-inset-left));
+    padding-right:max(10px, env(safe-area-inset-right));
+  }
 
   .tabbar__shell{
     display:flex;align-items:center;gap:10px;padding:10px;
@@ -215,14 +233,19 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
     border-radius:999px;overflow:hidden;
   }
 
+  /* Equal-width text buttons; long labels still fit */
   .seg__item{
-    flex:1 1 0;display:flex;align-items:center;justify-content:center;
-    padding:8px 12px;border-radius:999px;text-decoration:none;color:#1c1c1e;
+    flex:1 1 0;min-width:0;
+    display:flex;align-items:center;justify-content:center;
+    padding:10px 12px;border-radius:999px;text-decoration:none;color:#1c1c1e;
     font-size:13px;line-height:1;font-weight:600;white-space:nowrap;
   }
-  .seg__item .tabbar__icon{display:none !important;}
+  @media (max-width:420px){
+    .seg__item{font-size:12px;padding:8px 8px;}
+  }
+  .seg__item .tabbar__icon{display:none !important;} /* icons removed */
 
-  /* ✅ Active state: transparent (no white fill) */
+  /* Active: transparent (no white fill), green label */
   .seg__item[aria-current="page"]{
     background:transparent !important;
     color:var(--accent) !important;
@@ -233,6 +256,21 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   .tabbar__cta{
     flex:none;text-decoration:none;background:var(--accent);color:#fff;font-weight:800;
     padding:12px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px rgba(52,199,89,.28);
+    max-width:40%;overflow:hidden;text-overflow:ellipsis;
   }
   .tabbar__cta:active{transform:translateY(1px);}
+
+  /* ---------- Mobile polish: layout & cards ---------- */
+  .container{padding:18px;}                 /* softer side padding */
+  .hero{padding:70px 0 24px;}               /* tighter hero vertical rhythm */
+  .cards{gap:18px;}                          /* slightly denser grid gap */
+  .block{padding:22px;margin:24px 0;}       /* compact block padding */
+  .card__media{
+    aspect-ratio:3/2;object-fit:cover;display:block;
+    border-bottom:1px solid var(--separator);
+  }
+  .card.block{background:#fff;border:1px solid var(--separator);border-radius:22px;overflow:hidden;}
+  .card__body{padding:18px 18px 20px;}
+  .card__cta{flex-wrap:wrap;gap:10px;}
+  .section__header{margin:60px auto 36px;}
 }
