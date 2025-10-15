@@ -6,152 +6,6 @@
     <title>Ортопедический центр — Записаться</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <style>
-<!--        :root { &#45;&#45;accent:#34c759; &#45;&#45;chip:#e9e9eb; }-->
-
-<!--        .section { margin: 36px 0 22px; }-->
-<!--        .section__title { margin: 0 0 12px; font-weight: 800; font-size: clamp(22px, 3vw, 28px); color: #0b0b0c; letter-spacing: -0.01em; }-->
-<!--        .section__note { color: var(&#45;&#45;tertiary); font-size: 13px; margin: 0 0 10px; }-->
-
-<!--        /* Center the intro texts */-->
-<!--        .section.intro-align { text-align: center; }-->
-<!--        @media (min-width: 920px){ .intro-align { padding-left: 0; } }-->
-
-<!--        .divider { height: 1px; background: var(&#45;&#45;bg); border-radius: 1px; margin: 22px 0; }-->
-
-<!--        /* Cupertino-style form card */-->
-<!--        .appt-card.block{-->
-<!--          padding: 24px;-->
-<!--          margin-top: 0;-->
-<!--          background: #fff;-->
-<!--          border: 1px solid #e6e7eb;-->
-<!--          border-radius: 22px;-->
-<!--          box-shadow: 0 8px 24px rgba(0,0,0,.06);-->
-<!--        }-->
-
-<!--        @media (min-width: 920px){-->
-<!--          .appt-layout { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }-->
-<!--          .appt-layout > aside > *:first-child { margin-top: 0; }-->
-<!--        }-->
-
-<!--        .form { width: 100%; max-width: 720px; }-->
-<!--        .form legend { font-weight: 700; color: #0b0b0c; margin-bottom: 10px; }-->
-
-<!--        /* Remove the default fieldset borders */-->
-<!--        fieldset.field{ border: 0; padding: 0; margin: 0 0 18px; }-->
-<!--        fieldset.field + fieldset.field{ margin-top: 18px; }-->
-
-<!--        .row { display: grid; gap: 12px; }-->
-<!--        .row-2 { grid-template-columns: 1fr; }-->
-<!--        @media (min-width: 720px){ .row-2 { grid-template-columns: 1fr 1fr; } }-->
-
-<!--        /* Cupertino inputs */-->
-<!--        .control,-->
-<!--        select.control,-->
-<!--        textarea.control{-->
-<!--          width: 100%;-->
-<!--          border: 1px solid #e6e7eb;-->
-<!--          background: #fff;-->
-<!--          border-radius: 14px;-->
-<!--          padding: 12px 14px;-->
-<!--          font: inherit;-->
-<!--          color: #0b0b0c;-->
-<!--          outline: none;-->
-<!--          box-shadow: inset 0 1px 0 rgba(0,0,0,.02);-->
-<!--          transition: border-color .2s ease, box-shadow .2s ease;-->
-<!--        }-->
-<!--        .control:focus,-->
-<!--        select.control:focus,-->
-<!--        textarea.control:focus{-->
-<!--          border-color: #86a8ff;-->
-<!--          box-shadow: 0 0 0 4px rgba(134,168,255,.18);-->
-<!--        }-->
-
-<!--        label{ font-size: 14px; color:#1c1c1e; margin-bottom:6px; display:block; }-->
-<!--        .hint{ color:#8e8e93; font-size:12px; margin-top:4px; }-->
-<!--        .section-caption { color: #1c1c1e; font-weight: 600; margin-top: 8px; }-->
-
-<!--        .pill-note { display: inline-flex; align-items: center; gap: 8px; background: rgba(118,118,128,.12); color: #1c1c1e; padding: 6px 10px; border-radius: 999px; font-size: 13px; }-->
-
-<!--        .summary { background:linear-gradient(180deg,#fdfefe,#f5f9ff); border:2px solid #e6efff; border-radius:22px; padding:18px; line-height:1.6; box-shadow: var(&#45;&#45;shadow-sm); }-->
-<!--        .summary + .summary, .summary + .media-card, .media-card + .summary { margin-top:14px; }-->
-<!--        .summary h4 { margin:0 0 8px; font-size:16px; font-weight:800; color:#0b0b0c; }-->
-<!--        .summary ul { margin:8px 0 0 18px; padding:0; }-->
-<!--        .summary li { margin:4px 0; }-->
-
-<!--        .media-card { background: var(&#45;&#45;surface); border: 1px solid #e6e7eb; border-radius: 22px; padding: 0; overflow: hidden; box-shadow: var(&#45;&#45;shadow-sm); }-->
-<!--        .media-card img { display: block; width: 100%; height: auto; }-->
-<!--        .media-card .caption { padding: 12px 14px; font-size: 13px; color: var(&#45;&#45;secondary); }-->
-
-<!--        .banner { display:none; background:#e8fbe9; border:1.5px solid #bfe9c8; color:#0a3b22; padding:12px 14px; border-radius:14px; margin:12px 0 0; font-weight:600; }-->
-<!--        .banner.show { display:block; }-->
-<!--        .success-image { width:100%; border-radius:22px; margin-top:14px; opacity:.9; display:none; box-shadow:0 6px 16px rgba(0,0,0,.08); }-->
-<!--        .banner.show + .success-image { display:block; }-->
-
-<!--        .hero-image { width:100%; max-width:980px; border-radius:22px; margin:24px auto 0; display:block; box-shadow:0 6px 16px rgba(0,0,0,.08); }-->
-<!--        .contact-list { list-style:none; margin:0; padding:0; }-->
-<!--        .contact-list li { margin:6px 0; display:flex; gap:8px; align-items:flex-start; }-->
-<!--        .contact-list svg { flex:0 0 18px; margin-top:2px; opacity:.7; }-->
-
-<!--        /* &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; MOBILE: top rounded bar like desktop &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; */-->
-<!--        .tabbar{display:none;} /* hidden on desktop */-->
-
-<!--        @media (max-width:720px){-->
-<!--          /* hide desktop nav on small screens */-->
-<!--          .nav-wrap{display:none;}-->
-
-<!--          /* leave space for fixed rounded bar */-->
-<!--          body{padding-top:calc(88px + env(safe-area-inset-top,0px));}-->
-
-<!--          .tabbar{display:block;position:fixed;inset:0 0 auto 0;z-index:1000;background:transparent;}-->
-<!--          .tabbar__inner{width:min(100% - 20px,1200px);margin:calc(10px + env(safe-area-inset-top,0px)) auto 0;}-->
-
-<!--          .tabbar__shell{-->
-<!--            display:flex;align-items:center;gap:10px;-->
-<!--            padding:10px;-->
-<!--            background:rgba(255,255,255,.9);-->
-<!--            -webkit-backdrop-filter:saturate(160%) blur(14px);-->
-<!--            backdrop-filter:saturate(160%) blur(14px);-->
-<!--            border:1px solid rgba(60,60,67,.12);-->
-<!--            border-radius:999px;-->
-<!--            box-shadow:0 10px 24px rgba(0,0,0,.06);-->
-<!--          }-->
-
-<!--          /* left segmented track (icons above text) */-->
-<!--          .seg{-->
-<!--            flex:1;-->
-<!--            display:flex;align-items:center;gap:8px;-->
-<!--            padding:8px;-->
-<!--            background:var(&#45;&#45;chip);-->
-<!--            border-radius:999px;-->
-<!--          }-->
-<!--          .seg__item{-->
-<!--            flex:1 1 0;-->
-<!--            display:flex;flex-direction:column;align-items:center;justify-content:center;-->
-<!--            gap:4px;padding:8px 12px;border-radius:999px;text-decoration:none;color:#1c1c1e;-->
-<!--            min-width:72px;-->
-<!--          }-->
-<!--          .seg__item .tabbar__icon{width:20px;height:20px;display:block;}-->
-<!--          .seg__item .tabbar__icon svg{width:100%;height:100%;}-->
-<!--          .seg__item span{font-size:13px;line-height:1;}-->
-
-<!--          /* active = white pill + green label */-->
-<!--          .seg__item[aria-current="page"]{-->
-<!--            background:#fff;color:var(&#45;&#45;accent);font-weight:800;-->
-<!--            box-shadow:inset 0 -1px 0 rgba(0,0,0,.02);-->
-<!--          }-->
-
-<!--          /* right CTA — green pill, text only */-->
-<!--          .tabbar__cta{-->
-<!--            flex:none;text-decoration:none;background:var(&#45;&#45;accent);color:#fff;font-weight:800;-->
-<!--            padding:12px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px rgba(52,199,89,.28);-->
-<!--          }-->
-<!--          .tabbar__cta:active{transform:translateY(1px);}-->
-<!--        }-->
-
-<!--        footer{ padding:26px 0; text-align:center; color:#8e8e93; }-->
-    </style>
 </head>
 <body>
 <!-- NAV (desktop, unchanged) -->
@@ -167,48 +21,48 @@
     </nav>
 </div>
 
-<!-- MOBILE TOP BAR (desktop look + icons; CTA without icon) -->
+<!-- MOBILE TOP BAR (unchanged) -->
 <nav class="tabbar" role="navigation" aria-label="Основная навигация (мобильная)">
     <div class="tabbar__inner">
         <div class="tabbar__shell">
             <div class="seg">
                 <!-- Главная -->
                 <a class="seg__item" href="index.html">
-          <span class="tabbar__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
-            </svg>
-          </span>
+            <span class="tabbar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
+              </svg>
+            </span>
                     <span>Главная</span>
                 </a>
 
                 <!-- Акупунктура -->
                 <a class="seg__item" href="akupunktura.html">
-          <span class="tabbar__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 5c-2 2-6.5 6.5-9 9l-5 5"/><path d="M15 9l-3-3"/><circle cx="19" cy="5" r="1.8" fill="currentColor"/>
-            </svg>
-          </span>
+            <span class="tabbar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 5c-2 2-6.5 6.5-9 9l-5 5"/><path d="M15 9l-3-3"/><circle cx="19" cy="5" r="1.8" fill="currentColor"/>
+              </svg>
+            </span>
                     <span>Акуп.</span>
                 </a>
 
                 <!-- Массаж -->
                 <a class="seg__item" href="lechebny-massazh.html">
-          <span class="tabbar__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 12v-2a2 2 0 0 1 4 0v2"/><path d="M10 12v-3a2 2 0 1 1 4 0v3"/><path d="M14 12v-4a2 2 0 1 1 4 0v6a5 5 0 0 1-5 5H8a4 4 0 0 1-4-4v-1a3 3 0 0 1 3-3z"/>
-            </svg>
-          </span>
+            <span class="tabbar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 12v-2a2 2 0 0 1 4 0v2"/><path d="M10 12v-3a2 2 0 1 1 4 0v3"/><path d="M14 12v-4a2 2 0 1 1 4 0v6a5 5 0 0 1-5 5H8a4 4 0 0 1-4-4v-1a3 3 0 0 1 3-3z"/>
+              </svg>
+            </span>
                     <span>Массаж</span>
                 </a>
 
                 <!-- Травы -->
                 <a class="seg__item" href="travy.html">
-          <span class="tabbar__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 3c-7 1-12 6-12 12 0 3.866 3.134 7 7 7 6-0 6-10 5-19z"/><path d="M4 20c3-4 7-6 12-7"/>
-            </svg>
-          </span>
+            <span class="tabbar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 3c-7 1-12 6-12 12 0 3.866 3.134 7 7 7 6-0 6-10 5-19z"/><path d="M4 20c3-4 7-6 12-7"/>
+              </svg>
+            </span>
                     <span>Травы</span>
                 </a>
             </div>
@@ -224,11 +78,21 @@
     <div class="hero-inner">
         <h1 class="hero-title">Записаться на приём</h1>
         <p>Короткая анкета — и мы подтвердим время в течение рабочего дня.</p>
-        <img src="assets/images/booking/hero_booking.jpg" alt="Чистый стол с блокнотом и растениями" class="hero-image" loading="lazy" decoding="async">
+
+        <!-- ✅ HERO IMAGE styled as a card like other pages -->
+        <div style="background:var(--surface,#fff);border:1px solid var(--separator,#e6e7eb);
+                  border-radius:var(--radius-lg,22px);box-shadow:var(--shadow-lg,0 18px 44px rgba(0,0,0,.08));
+                  overflow:hidden;margin:36px auto 0;max-width:980px;">
+            <img src="assets/images/booking/hero_booking.jpg"
+                 alt="Чистый стол с блокнотом и растениями"
+                 width="1600" height="900"
+                 loading="lazy" decoding="async"
+                 style="display:block;width:100%;height:auto;">
+        </div>
     </div>
 </header>
 
-<!-- INTRO (now centered) -->
+<!-- INTRO -->
 <section class="container section intro-align">
     <h2 class="section__title">Заполнить форму</h2>
     <p class="section__note">Акупунктура, массаж и травы — выберем подходящий план вместе.</p>
@@ -238,27 +102,28 @@
 <main class="container">
     <div class="appt-layout">
         <!-- FORM -->
-        <section class="appt-card block" aria-labelledby="formTitle">
+        <section class="appt-card block" aria-labelledby="formTitle"
+                 style="padding:24px;margin-top:0;background:#fff;border:1px solid #e6e7eb;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.06);">
             <h2 id="formTitle" class="visually-hidden" style="position:absolute;left:-9999px">Форма записи</h2>
 
             <form class="form form--elegant" id="apptForm" action="#" method="post" novalidate>
-                <fieldset class="field">
+                <fieldset class="field" style="border:0;padding:0;margin:0 0 18px;">
                     <legend>Контактные данные</legend>
-                    <div class="row row-2">
+                    <div class="row row-2" style="display:grid;gap:12px;grid-template-columns:1fr;">
                         <div class="field">
                             <label for="name">Имя и фамилия <span class="req" aria-hidden="true">*</span></label>
                             <input class="control" id="name" name="name" type="text" placeholder="Иван Иванов" required autocomplete="name" />
                         </div>
                         <div class="field">
                             <label for="phone">Телефон <span class="req" aria-hidden="true">*</span></label>
-                            <input class="control" id="phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required inputmode="tel" autocomplete="tel" pattern="^[\d\+\-\s\(\)]{7,}$" />
+                            <input class="control" id="phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required inputmode="tel" autocomplete="tel" pattern="^[\\d\\+\\-\\s\\(\\)]{7,}$" />
                         </div>
                     </div>
-                    <div class="row row-2">
+                    <div class="row row-2" style="display:grid;gap:12px;grid-template-columns:1fr;">
                         <div class="field">
                             <label for="email">E-mail</label>
                             <input class="control" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" />
-                            <p class="hint" id="emailHint">Нужен только для напоминаний и подтверждения записи.</p>
+                            <p class="hint" id="emailHint" style="color:#8e8e93;font-size:12px;margin-top:4px;">Нужен только для напоминаний и подтверждения записи.</p>
                         </div>
                         <div class="field">
                             <label for="dob">Дата рождения</label>
@@ -267,9 +132,9 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="field">
+                <fieldset class="field" style="border:0;padding:0;margin:0 0 18px;">
                     <legend>Услуга и время</legend>
-                    <div class="row row-2">
+                    <div class="row row-2" style="display:grid;gap:12px;grid-template-columns:1fr;">
                         <div class="field">
                             <label for="service">Услуга <span class="req" aria-hidden="true">*</span></label>
                             <select class="control" id="service" name="service" required>
@@ -283,11 +148,11 @@
                         <div class="field">
                             <label for="date">Желаемая дата</label>
                             <input class="control" id="date" name="date" type="date" min="" />
-                            <p class="hint">Можно оставить пустым — предложим ближайшие окна.</p>
+                            <p class="hint" style="color:#8e8e93;font-size:12px;margin-top:4px;">Можно оставить пустым — предложим ближайшие окна.</p>
                         </div>
                     </div>
 
-                    <div class="row row-2">
+                    <div class="row row-2" style="display:grid;gap:12px;grid-template-columns:1fr;">
                         <div class="field">
                             <label for="time">Время</label>
                             <select class="control" id="time" name="time">
@@ -307,15 +172,15 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="field">
+                <fieldset class="field" style="border:0;padding:0;margin:0 0 18px;">
                     <legend>Коротко о задаче</legend>
-                    <div class="row">
+                    <div class="row" style="display:grid;gap:12px;">
                         <div class="field">
                             <label for="complaint">Главная жалоба <span class="req" aria-hidden="true">*</span></label>
                             <input class="control" id="complaint" name="complaint" type="text" placeholder="Боль в шее / головные боли / стресс…" required />
                         </div>
                     </div>
-                    <div class="row row-2">
+                    <div class="row row-2" style="display:grid;gap:12px;grid-template-columns:1fr;">
                         <div class="field">
                             <label for="goal">Цель приёма</label>
                             <input class="control" id="goal" name="goal" type="text" placeholder="Снять боль, улучшить сон, восстановить подвижность…" />
@@ -346,60 +211,84 @@
 
                 <div class="card__cta" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
                     <button class="btn-primary" type="submit" id="submitBtn" aria-live="polite">Отправить заявку</button>
-                    <span class="pill-note" id="statusNote">Ответим в рабочее время: 10:00–20:00</span>
+                    <span class="pill-note" id="statusNote" style="display:inline-flex;align-items:center;gap:8px;background:rgba(118,118,128,.12);color:#1c1c1e;padding:6px 10px;border-radius:999px;font-size:13px;">Ответим в рабочее время: 10:00–20:00</span>
                 </div>
 
-                <div class="banner" id="successBanner" role="status" aria-live="polite">Готово! Мы получили вашу заявку и скоро свяжемся для подтверждения времени.</div>
-                <img src="assets/images/booking/success.jpg" alt="Спокойный поток воды и камни" class="success-image" loading="lazy" decoding="async">
+                <div class="banner" id="successBanner" role="status" aria-live="polite"
+                     style="display:none;background:#e8fbe9;border:1.5px solid #bfe9c8;color:#0a3b22;padding:12px 14px;border-radius:14px;margin:12px 0 0;font-weight:600;">
+                    Готово! Мы получили вашу заявку и скоро свяжемся для подтверждения времени.
+                </div>
+
+                <!-- ✅ SUCCESS IMAGE styled like a card (hidden until success) -->
+                <img id="successImage"
+                     src="assets/images/booking/success.jpg"
+                     alt="Спокойный поток воды и камни"
+                     width="1600" height="900"
+                     loading="lazy" decoding="async"
+                     style="display:none;width:100%;height:auto;border-radius:22px;margin-top:14px;box-shadow:0 18px 44px rgba(0,0,0,.08);border:1px solid #e6e7eb;">
             </form>
         </section>
 
         <!-- RIGHT COLUMN -->
         <aside>
-            <div class="summary" aria-labelledby="contactTitle">
-                <h4 id="contactTitle">Контакты</h4>
-                <ul class="contact-list">
-                    <li>
+            <div class="summary" aria-labelledby="contactTitle"
+                 style="background:linear-gradient(180deg,#fdfefe,#f5f9ff); border:2px solid #e6efff; border-radius:22px; padding:18px; line-height:1.6; box-shadow:var(--shadow-sm);">
+                <h4 id="contactTitle" style="margin:0 0 8px; font-size:16px; font-weight:800; color:#0b0b0c;">Контакты</h4>
+                <ul class="contact-list" style="list-style:none; margin:0; padding:0;">
+                    <li style="margin:6px 0; display:flex; gap:8px; align-items:flex-start;">
                         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1v3.49a1 1 0 01-.92 1 18 18 0 01-17.66-17.7 1 1 0 011-.92H7.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.02L6.6 10.8z" fill="currentColor"/></svg>
                         <span><strong>Телефон:</strong> <a href="tel:+79990000000">+7 (999) 000-00-00</a></span>
                     </li>
-                    <li>
+                    <li style="margin:6px 0; display:flex; gap:8px; align-items:flex-start;">
                         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5a3 3 0 013-3h10a3 3 0 013 3v8a3 3 0 01-3 3H9l-4 4V5z" fill="currentColor"/></svg>
                         <span><strong>WhatsApp / Telegram:</strong> <a href="https://t.me/yourclinic" target="_blank" rel="noopener">@yourclinic</a></span>
                     </li>
-                    <li>
+                    <li style="margin:6px 0; display:flex; gap:8px; align-items:flex-start;">
                         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor"/></svg>
                         <span><strong>Адрес:</strong> ул. Примерная, 10 • 2 этаж</span>
                     </li>
-                    <li>
+                    <li style="margin:6px 0; display:flex; gap:8px; align-items:flex-start;">
                         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm1 6h-2v5l4 2 .9-1.8-2.9-1.2z" fill="currentColor"/></svg>
                         <span><strong>Режим:</strong> Пн–Сб 10:00–20:00</span>
                     </li>
                 </ul>
-                <p class="section-caption">Парковка у входа, лифт, спокойная обстановка.</p>
+                <p class="section-caption" style="color:#1c1c1e; font-weight:600; margin-top:8px;">Парковка у входа, лифт, спокойная обстановка.</p>
             </div>
 
-            <div class="summary" aria-labelledby="howTitle">
-                <h4 id="howTitle">Как это работает</h4>
-                <ul>
-                    <li><strong>1.</strong> Оставляете заявку — мы перезваниваем/пишем.</li>
-                    <li><strong>2.</strong> Подбираем окно и специалиста.</li>
-                    <li><strong>3.</strong> Первый приём: 45–60 минут, мягкие протоколы.</li>
+            <div class="summary" aria-labelledby="howTitle"
+                 style="background:linear-gradient(180deg,#fdfefe,#f5f9ff); border:2px solid #e6efff; border-radius:22px; padding:18px; line-height:1.6; box-shadow:var(--shadow-sm); margin-top:14px;">
+                <h4 id="howTitle" style="margin:0 0 8px; font-size:16px; font-weight:800; color:#0b0b0c;">Как это работает</h4>
+                <ul style="margin:8px 0 0 18px; padding:0;">
+                    <li style="margin:4px 0;"><strong>1.</strong> Оставляете заявку — мы перезваниваем/пишем.</li>
+                    <li style="margin:4px 0;"><strong>2.</strong> Подбираем окно и специалиста.</li>
+                    <li style="margin:4px 0;"><strong>3.</strong> Первый приём: 45–60 минут, мягкие протоколы.</li>
                 </ul>
-                <p class="section-caption">Оплата: карты/наличные. Квитанция по запросу.</p>
+                <p class="section-caption" style="color:#1c1c1e; font-weight:600; margin-top:8px;">Оплата: карты/наличные. Квитанция по запросу.</p>
             </div>
 
-            <div class="media-card" aria-hidden="true">
-                <img src="assets/images/booking/room.jpg" alt="" loading="lazy" decoding="async">
-                <div class="caption">Спокойная атмосфера кабинета</div>
+            <!-- ✅ MEDIA CARD styled like other pages -->
+            <div class="block card"
+                 aria-hidden="true"
+                 style="background:var(--surface,#fff);border:1px solid var(--separator,#e6e7eb);
+                    border-radius:var(--radius-lg,22px);box-shadow:var(--shadow-lg,0 18px 44px rgba(0,0,0,.08));
+                    overflow:hidden;margin-top:14px;">
+                <img src="assets/images/booking/room.jpg"
+                     alt="Интерьер кабинета"
+                     width="1600" height="1067"
+                     loading="lazy" decoding="async"
+                     style="display:block;width:100%;height:auto;object-fit:cover;">
+                <div class="card__body" style="padding:12px 14px;line-height:1.6;">
+                    <p style="margin:0;font-size:13px;color:var(--secondary,#636366);">Спокойная атмосфера кабинета</p>
+                </div>
             </div>
 
-            <div class="summary" aria-labelledby="prepTitle">
-                <h4 id="prepTitle">Подготовка к визиту</h4>
-                <ul>
-                    <li>Лёгкий приём пищи за 1–2 часа.</li>
-                    <li>Удобная одежда, доступ к зоне работы.</li>
-                    <li>Возьмите список лекарств (если есть).</li>
+            <div class="summary" aria-labelledby="prepTitle"
+                 style="background:linear-gradient(180deg,#fdfefe,#f5f9ff); border:2px solid #e6efff; border-radius:22px; padding:18px; line-height:1.6; box-shadow:var(--shadow-sm); margin-top:14px;">
+                <h4 id="prepTitle" style="margin:0 0 8px; font-size:16px; font-weight:800; color:#0b0b0c;">Подготовка к визиту</h4>
+                <ul style="margin:8px 0 0 18px; padding:0;">
+                    <li style="margin:4px 0;">Лёгкий приём пищи за 1–2 часа.</li>
+                    <li style="margin:4px 0;">Удобная одежда, доступ к зоне работы.</li>
+                    <li style="margin:4px 0;">Возьмите список лекарств (если есть).</li>
                 </ul>
             </div>
         </aside>
@@ -427,12 +316,12 @@
     })();
 
     // ===== EmailJS wiring =====
-    // Replace with your actual Public Key from EmailJS (Account → API Keys)
     emailjs.init('zVFYLgZTN1D4ikw99');
 
     const form   = document.getElementById('apptForm');
     const banner = document.getElementById('successBanner');
     const btn    = document.getElementById('submitBtn');
+    const successImage = document.getElementById('successImage');
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -442,11 +331,12 @@
       btn.textContent = 'Отправляем…';
 
       emailjs.sendForm(
-        'service_t2y4yiv',     // Your Service ID (Gmail)
-        'template_pmji3go',    // Your Template ID (Contact Us)
+        'service_t2y4yiv',     // Service ID
+        'template_pmji3go',    // Template ID
         form
       ).then(() => {
-        banner.classList.add('show');
+        banner.style.display = 'block';          // show banner
+        successImage.style.display = 'block';    // ✅ show success image (no CSS needed)
         btn.textContent = 'Отправить заявку';
         btn.disabled = false;
         form.reset();
