@@ -8,38 +8,83 @@
     <link rel="stylesheet" href="styles.css">
 
     <!-- Defer so .tabbar exists when script runs -->
-    <script defer>
+    <script>
         (function () {
-          const tabbar = document.querySelector('.tabbar');
-          if (!tabbar) return;
+          const mql = window.matchMedia('(max-width: 720px)');
 
-          let lastY = window.scrollY || window.pageYOffset;
-          let ticking = false;
-          const THRESHOLD = 8;     // minimal movement to react
-          const SHOW_AT_TOP = 10;  // always show near top
+          function init() {
+            const tabbar = document.querySelector('.tabbar');
+            if (!tabbar) return;
 
-          function onScroll() {
-            const y = window.scrollY || window.pageYOffset;
-            const delta = y - lastY;
+            // показываем при инициализации
+            tabbar.classList.remove('tabbar--hidden');
 
-            if (!ticking) {
+            let lastY =
+              window.scrollY ??
+              document.documentElement.scrollTop ??
+              document.body.scrollTop ?? 0;
+
+            let ticking = false;
+            const THRESHOLD = 5;     // чуть чувствительнее
+            const SHOW_AT_TOP = 10;  // всегда видно у самого верха
+
+            function currentScrollY() {
+              // более надёжный способ для iOS/Safari
+              return window.scrollY ??
+                     document.documentElement.scrollTop ??
+                     document.body.scrollTop ?? 0;
+            }
+
+            function handle(y) {
+              const delta = y - lastY;
+
+              if (y <= SHOW_AT_TOP || delta < -THRESHOLD) {
+                tabbar.classList.remove('tabbar--hidden'); // вверх — показать
+              } else if (delta > THRESHOLD) {
+                tabbar.classList.add('tabbar--hidden');    // вниз — спрятать
+              }
+              lastY = y;
+            }
+
+            function onScroll() {
+              if (ticking) return;
+              ticking = true;
               requestAnimationFrame(() => {
-                if (y <= SHOW_AT_TOP || delta < -THRESHOLD) {
-                  tabbar.classList.remove('tabbar--hidden');   // scrolling up -> show
-                } else if (delta > THRESHOLD) {
-                  tabbar.classList.add('tabbar--hidden');      // scrolling down -> hide
-                }
-                lastY = y;
+                handle(currentScrollY());
                 ticking = false;
               });
-              ticking = true;
+            }
+
+            // слушаем и window, и document — для iOS
+            window.addEventListener('scroll', onScroll, { passive: true });
+            document.addEventListener('scroll', onScroll, { passive: true });
+
+            // при ротации/resize снова показать
+            window.addEventListener('resize', () => {
+              tabbar.classList.remove('tabbar--hidden');
+              lastY = currentScrollY();
+            }, { passive: true });
+          }
+
+          function maybeInit(e) {
+            if (mql.matches) {
+              // мобильный брейкпоинт — инициализируем
+              init();
             }
           }
 
-          window.addEventListener('scroll', onScroll, { passive: true });
-          window.addEventListener('resize', () => {
-            tabbar.classList.remove('tabbar--hidden'); // show again on rotate/resize
-            lastY = window.scrollY || window.pageYOffset;
+          // Ждём, пока DOM готов
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', maybeInit, { once: true });
+          } else {
+            maybeInit();
+          }
+
+          // Если пользователь меняет ширину (DevTools/rotate) — пересоздавать не нужно,
+          // потому что обработчики безопасны. Но можно по событию mql просто показать бар.
+          mql.addEventListener?.('change', () => {
+            const tabbar = document.querySelector('.tabbar');
+            if (tabbar) tabbar.classList.remove('tabbar--hidden');
           });
         })();
     </script>

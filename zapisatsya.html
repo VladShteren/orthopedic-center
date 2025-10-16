@@ -6,6 +6,86 @@
     <title>Ортопедический центр — Записаться</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>
+        (function () {
+          const mql = window.matchMedia('(max-width: 720px)');
+
+          function init() {
+            const tabbar = document.querySelector('.tabbar');
+            if (!tabbar) return;
+
+            // показываем при инициализации
+            tabbar.classList.remove('tabbar--hidden');
+
+            let lastY =
+              window.scrollY ??
+              document.documentElement.scrollTop ??
+              document.body.scrollTop ?? 0;
+
+            let ticking = false;
+            const THRESHOLD = 5;     // чуть чувствительнее
+            const SHOW_AT_TOP = 10;  // всегда видно у самого верха
+
+            function currentScrollY() {
+              // более надёжный способ для iOS/Safari
+              return window.scrollY ??
+                     document.documentElement.scrollTop ??
+                     document.body.scrollTop ?? 0;
+            }
+
+            function handle(y) {
+              const delta = y - lastY;
+
+              if (y <= SHOW_AT_TOP || delta < -THRESHOLD) {
+                tabbar.classList.remove('tabbar--hidden'); // вверх — показать
+              } else if (delta > THRESHOLD) {
+                tabbar.classList.add('tabbar--hidden');    // вниз — спрятать
+              }
+              lastY = y;
+            }
+
+            function onScroll() {
+              if (ticking) return;
+              ticking = true;
+              requestAnimationFrame(() => {
+                handle(currentScrollY());
+                ticking = false;
+              });
+            }
+
+            // слушаем и window, и document — для iOS
+            window.addEventListener('scroll', onScroll, { passive: true });
+            document.addEventListener('scroll', onScroll, { passive: true });
+
+            // при ротации/resize снова показать
+            window.addEventListener('resize', () => {
+              tabbar.classList.remove('tabbar--hidden');
+              lastY = currentScrollY();
+            }, { passive: true });
+          }
+
+          function maybeInit(e) {
+            if (mql.matches) {
+              // мобильный брейкпоинт — инициализируем
+              init();
+            }
+          }
+
+          // Ждём, пока DOM готов
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', maybeInit, { once: true });
+          } else {
+            maybeInit();
+          }
+
+          // Если пользователь меняет ширину (DevTools/rotate) — пересоздавать не нужно,
+          // потому что обработчики безопасны. Но можно по событию mql просто показать бар.
+          mql.addEventListener?.('change', () => {
+            const tabbar = document.querySelector('.tabbar');
+            if (tabbar) tabbar.classList.remove('tabbar--hidden');
+          });
+        })();
+    </script>
 </head>
 <body>
 <!-- NAV (desktop, unchanged) -->
