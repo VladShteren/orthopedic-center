@@ -339,29 +339,30 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   .seg__item{font-size:clamp(12px,4.2vw,15px);padding:7px 8px;}
   .tabbar__cta{flex-basis:36%;padding:8px 12px;font-size:clamp(12px,4vw,15px);}
 }
-
-@media (max-width: 720px){
-  /* 1) fix width math */
-  .tabbar__inner{
-    width: min(calc(100% - 8px), 1200px);
+@media (max-width:720px){
+  .tabbar__shell{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:clamp(10px, 4vw, 36px); /* adaptive breathing space */
+    padding:8px;
+    background:#fff;
+    border:1px solid var(--accent);
+    border-radius:999px;
+    box-shadow:0 10px 24px rgba(0,0,0,.06);
+    min-width:0;
   }
 
-  /* 2) let the row and items actually shrink */
-  .tabbar__shell{ min-width: 0; }
-  .seg{ min-width: 0; }
-  .seg__item{ min-width: 0; }
-
-
-
-  .seg__item{
-    white-space: normal;       // allow wrap
-    text-align: center;
-    line-height: 1.1;
+  .seg{
+    flex:1 1 auto;
+    max-width:calc(100% - 120px); /* leave room for CTA */
+    min-width:0;
   }
 
-}
-
-/* Tiny screens: nudge font a bit smaller so 4 cells fit comfortably */
-@media (max-width: 340px){
-  .seg__item{ font-size: clamp(12px, 4.2vw, 15px); }
+  .tabbar__cta{
+    flex:0 0 auto;
+    padding:10px 18px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
 }
