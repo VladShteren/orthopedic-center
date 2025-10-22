@@ -351,20 +351,14 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   .seg{ min-width: 0; }
   .seg__item{ min-width: 0; }
 
-  /* Option A: keep one line, but safely clip instead of spilling */
-  .seg__item{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;       /* keep single line */
-  }
 
-  /* --- If you prefer full labels over ellipsis, use Option B instead:
+
   .seg__item{
     white-space: normal;       // allow wrap
     text-align: center;
     line-height: 1.1;
   }
-  */
+
 }
 
 /* Tiny screens: nudge font a bit smaller so 4 cells fit comfortably */
