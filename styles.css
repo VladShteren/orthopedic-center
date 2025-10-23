@@ -17,6 +17,9 @@
   --fs-title:clamp(32px,6vw,60px);
   --fs-sub:clamp(18px,2vw,20px);
   --chip:#e9e9eb; /* mobile segmented track */
+
+  /* Mobile nav button height for symmetry */
+  --tabbtn-h: 38px;
 }
 
 /* A11y helper for icon-only items */
@@ -41,8 +44,8 @@ a{color:inherit;text-decoration:none;transition:all .2s ease;}
   position:sticky;top:0;z-index:1000;
   padding-top:6px;padding-bottom:6px;
   transition:padding-top .22s ease, background .3s ease;
-  background:#f5f5f7;
-  background:linear-gradient(to bottom,#f5f5f7 100%,rgba(0,0,0,0.03));
+  /* FIX: make gradient visible */
+  background:linear-gradient(to bottom,#f5f5f7 0%, rgba(0,0,0,0.03) 100%);
   backdrop-filter:none;-webkit-backdrop-filter:none;
 }
 body.scrolled .container.nav-wrap{padding-top:0;}
@@ -111,7 +114,7 @@ body.scrolled .container.nav-wrap{padding-top:0;}
 .container.nav-wrap::after{
   position:absolute;right:14px;top:calc(50% + 2px);
   transform:translateY(-50%);font-size:20px;line-height:1;
-  color:rgba(0,0,0,0.25);pointer-events:none;content:'';
+  color:rgba(0,0,0,0.25);pointer-events:none;content:'›';
 }
 @media (min-width:768px){ .container.nav-wrap::after{display:none;} }
 
@@ -119,7 +122,7 @@ body.scrolled .container.nav-wrap{padding-top:0;}
 .hero{padding:80px 0 32px;text-align:center;}
 .hero-inner{max-width:980px;margin:0 auto;}
 .hero-title{margin:0 0 12px;font-size:var(--fs-title);font-weight:800;color:#0b0b0c;letter-spacing:-0.02em;}
-.hero p{font-size:var(--fs-sub);color:var(--secondary);max-width:760px;margin:0 auto;}
+.hero p{font-size:var(--fs-sub);color:#0b0b0c;opacity:.75;max-width:760px;margin:0 auto;}
 .page-book .hero-title{font-size:clamp(36px,6.8vw,58px);}
 
 /* ========= CARDS / BLOCKS ========= */
@@ -212,7 +215,7 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   .card__body{padding:18px;}
 }
 
-/* ========= MOBILE MENU (wider, full labels, dark-on state) ========= */
+/* ========= MOBILE MENU (symmetrical buttons, no floating) ========= */
 .tabbar{display:none;} /* hidden on desktop */
 
 @media (max-width:720px){
@@ -220,29 +223,22 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   body{padding-top:calc(104px + env(safe-area-inset-top,0px));}
 
   .tabbar{
-    display:block;position:fixed;inset:0 0 auto 0;z-index:1000;
+    display:block;position:fixed;inset:0 0 auto 0;z-index:1100;
     background:var(--bg);
-    /* Hide/show animation support */
     transform:translateY(0);
     transition:transform .28s ease, opacity .2s ease;
     will-change:transform;
   }
-  /* Hidden state for scroll-down */
-  .tabbar--hidden{
-    transform:translateY(calc(-100% - 16px));
-    opacity:0;
-    pointer-events:none;
-  }
+  .tabbar--hidden{ transform:translateY(calc(-100% - 16px)); opacity:0; pointer-events:none; }
 
   .tabbar::after{
     content:"";
     position:absolute;left:0;right:0;bottom:-12px;height:12px;
-    background:var(--bg);
-    pointer-events:none;
+    background:var(--bg);pointer-events:none;
   }
 
   .tabbar__inner{
-    width:min(100% - 8px,1200px); /* почти от края до края */
+    width:min(100% - 8px,1200px);
     margin:calc(12px + env(safe-area-inset-top,0px)) auto 0;
     padding-left:max(8px, env(safe-area-inset-left));
     padding-right:max(8px, env(safe-area-inset-right));
@@ -250,83 +246,54 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
 
   .tabbar__shell{
     display:flex;align-items:center;gap:6px;padding:8px;
-    background:#fff;
-    border:1px solid var(--accent);
-    border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,.06);
+    background:#fff;border:1px solid var(--accent);border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,.06);
+    /* keep everything on one line for symmetry */
+    flex-wrap:nowrap;justify-content:space-between;
   }
 
-  /* ===== Mobile segments: 4 equal text cells (no bold, slightly bigger) ===== */
+  /* 4 equal nav buttons (segmented) */
   .seg{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr); /* 4 equal columns */
-    align-items:center;
-    gap:6px;
-    padding:6px 8px;
-    background:var(--chip);
-    border:1px solid var(--accent);
-    border-radius:999px;overflow:hidden;
+    display:grid;grid-template-columns:repeat(4,1fr);align-items:center;
+    gap:6px;padding:6px 8px;background:var(--chip);
+    border:1px solid var(--accent);border-radius:999px;
     flex:1 1 auto;min-width:0;
   }
 
   .seg__item{
     display:flex;align-items:center;justify-content:center;
-    padding:7px 10px;border-radius:999px;
-    text-decoration:none;color:#1c1c1e;
-    font-weight:500;                 /* same as desktop (not bold) */
-    line-height:1.1;white-space:nowrap;
-    font-size:clamp(13px,3.8vw,16px); /* slightly bigger on mobile */
-    overflow:visible;text-overflow:clip;
+    height:var(--tabbtn-h); /* SYMMETRY */
+    padding:0 10px;
+    border-radius:999px;text-decoration:none;color:#1c1c1e;
+    font-weight:500;line-height:1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    font-size:clamp(11px,2.8vw,15px); /* shrink gracefully */
+    letter-spacing:-0.01em;
   }
-
-  /* Keep icons hidden on mobile labels */
   .seg__item .tabbar__icon{display:none;}
+  .seg__item[aria-current="page"]{color:var(--accent-dark);font-weight:600;}
 
-  /* Active: only color changes, weight stays the same */
-  .seg__item[aria-current="page"]{
-    background:transparent !important;
-    color:var(--accent-dark) !important;
-    box-shadow:none !important;
-    font-weight:500 !important;
-  }
-
-  /* CTA: compact like desktop, perfectly centered */
+  /* CTA with the same height & radius — symmetrical with items */
   .tabbar__cta{
-    flex:0 0 auto; /* fixed width, not stretching */
-    background:linear-gradient(180deg,#34d167,#2fbe5c);
-    color:#fff;
-    font-weight:700;
-    padding:10px 18px; /* EXACTLY like desktop */
-    border:none;
+    flex:0 0 auto;
+    height:var(--tabbtn-h);  /* SYMMETRY */
+    padding:0 14px;         /* same vertical rhythm as seg__item */
     border-radius:999px;
-    font-size:15px; /* same as desktop */
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#34d167,#2fbe5c);
+    color:#fff;font-weight:700;
+    font-size:clamp(12px,3vw,15px);
     box-shadow:0 4px 10px rgba(52,199,89,0.3);
-    transition:transform .1s ease, filter .2s ease, background .15s ease;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    text-align:center;
-    line-height:1;
+    transition:transform .1s, filter .2s, background .15s;
   }
   .tabbar__cta:hover{filter:brightness(1.05);}
-  .tabbar__cta:active,
-  .tabbar__cta.is-on,
-  .tabbar__cta[aria-pressed="true"],
-  .tabbar__cta[data-state="on"]{
-    background:linear-gradient(180deg,#1e8f3f,#0f6f2c); /* darker */
-    box-shadow:0 10px 24px rgba(15,111,44,.28);
-    transform:translateY(1px);
-  }
+  .tabbar__cta:active{background:linear-gradient(180deg,#1e8f3f,#0f6f2c);transform:translateY(1px);}
 
   /* ---------- Mobile polish ---------- */
   .container{padding:20px;}
   .hero{padding:70px 0 24px;}
   .cards{gap:20px;}
   .block{padding:22px;margin:24px 0;}
-  .card__media{
-    aspect-ratio:3/2;object-fit:cover;display:block;
-    border-bottom:1px solid var(--separator);
-  }
+  .card__media{aspect-ratio:3/2;object-fit:cover;display:block;border-bottom:1px solid var(--separator);}
   .card.block{background:#fff;border:1px solid var(--separator);border-radius:22px;overflow:hidden;}
   .card__body{padding:18px 18px 20px;}
   .card__cta{flex-wrap:wrap;gap:10px;}
@@ -336,75 +303,61 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
 /* Extra tiny phones */
 @media (max-width:340px){
   .seg{gap:5px;padding:6px 8px;}
-  .seg__item{font-size:clamp(12px,4.2vw,15px);padding:7px 8px;}
-  .tabbar__cta{flex-basis:36%;padding:8px 12px;font-size:clamp(12px,4vw,15px);}
+  .seg__item{font-size:clamp(10.5px,4vw,14px);}
+  .tabbar__cta{font-size:clamp(11.5px,3.6vw,14px);}
 }
-/* --- Mobile tabbar: shrink instead of wrap --- */
+/* === Mobile tabs: content-width & perfect symmetry === */
 @media (max-width:720px){
-  .tabbar__shell{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:6px;
-    padding:8px;
-    background:#fff;
-    border:1px solid var(--accent);
-    border-radius:999px;
-    box-shadow:0 10px 24px rgba(0,0,0,.06);
-    width:min(1200px,100% - 16px);
-    margin:0 auto;
-    flex-wrap:nowrap;             /* no wrapping */
-  }
+  /* one place to tweak the visual height for ALL buttons */
+  :root{ --tabbtn-h: 40px; }
 
-  /* 4 equal cells that shrink together */
+  .tabbar__shell{ flex-wrap:nowrap; align-items:center; }
+
+  /* use flex instead of 4 equal grid columns */
   .seg{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    align-items:center;
+    display:flex;
     gap:6px;
     padding:6px 8px;
     background:var(--chip);
     border:1px solid var(--accent);
     border-radius:999px;
-    flex:1 1 auto;
-    min-width:0;
+    flex:1 1 auto;   /* stretch but allow CTA space */
+    min-width:0;     /* allow shrink on tiny screens */
   }
 
-  .seg__item{
-    display:flex;
+  /* SAME height & typography model for tabs and CTA */
+  .seg__item,
+  .tabbar__cta{
+    display:inline-flex;
     align-items:center;
     justify-content:center;
-    padding:6px 8px;
+    height:var(--tabbtn-h);      /* symmetry */
+    padding:0 16px;              /* width follows text */
     border-radius:999px;
-    text-decoration:none;
-    color:#1c1c1e;
-    font-weight:500;
-    line-height:1.1;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
-    /* responsive shrinking text */
-    font-size:clamp(11px, 2.8vw, 15px);
+    line-height:1;
     letter-spacing:-0.01em;
+    font-size:clamp(12px,3.2vw,15px); /* elastic shrink */
   }
 
-  /* active state */
+  .seg__item{
+    font-weight:600; color:#1c1c1e;
+  }
   .seg__item[aria-current="page"]{
     color:var(--accent-dark);
-    font-weight:600;
   }
+  .seg__item .tabbar__icon{ display:none; }
 
-  /* CTA stays proportionally scaled too */
+  /* CTA matches height; only style difference is the fill */
   .tabbar__cta{
-    flex:0 0 auto;
     background:linear-gradient(180deg,#34d167,#2fbe5c);
-    color:#fff;
-    font-weight:700;
-    padding:calc(8px + 0.2vw) calc(14px + 0.4vw);
-    border:none;
-    border-radius:999px;
-    font-size:clamp(12px,3vw,15px);
-    box-shadow:0 4px 10px rgba(52,199,89,0.3);
-    transition:transform .1s,filter .2s,background .15s;
+    color:#fff; font-weight:700;
+    box-shadow:0 4px 10px rgba(52,199,89,.3);
+    border:1px solid transparent; /* keeps optical thickness like segmented track */
+    transition:transform .1s, filter .2s, background .15s;
   }
+  .tabbar__cta:hover{ filter:brightness(1.05); }
+  .tabbar__cta:active{ background:linear-gradient(180deg,#1e8f3f,#0f6f2c); transform:translateY(1px); }
 }
