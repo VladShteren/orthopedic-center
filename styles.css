@@ -288,3 +288,42 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   .seg__item{font-size:clamp(10.5px,4vw,14px);}
   .tabbar__cta{font-size:clamp(11.5px,3.6vw,14px);}
 }
+/* ==== iOS polish for mobile nav (paste at the end) ==== */
+
+/* 0) Stop Safari from inflating text sizes */
+html { -webkit-text-size-adjust: 100%; }
+
+/* 1) Make tabs and CTA slightly tighter and shrink earlier */
+@media (max-width: 720px){
+  /* one knob for height if you want it a bit slimmer */
+  :root{ --tabbtn-h: 36px; }
+
+  .tabbar__shell{ align-items:center; }
+
+  /* keep content-width tabs */
+  .seg{
+    display:flex;
+    gap:8px;                 /* a touch more air between pills */
+    padding:6px 10px;
+    overflow:hidden;         /* avoid accidental bleed */
+  }
+
+  /* SAME metrics for tabs and CTA */
+  .seg__item,
+  .tabbar__cta{
+    height:var(--tabbtn-h);
+    padding:0 12px;          /* narrower so long words fit */
+    font-size:clamp(11px, 2.4vw, 14px);  /* shrink sooner, cap lower */
+    line-height:1; letter-spacing:-0.01em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+
+  .seg__item{ font-weight:600; }
+  .seg__item[aria-current="page"]{ color:var(--accent-dark); }
+
+  /* keep CTA visually same height; only fill differs */
+  .tabbar__cta{
+    font-weight:700;
+    box-shadow:0 6px 16px rgba(52,199,89,.22); /* slightly softer */
+  }
+}
