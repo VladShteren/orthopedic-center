@@ -252,3 +252,32 @@ footer{color:var(--tertiary);font-size:13px;padding:36px 0;text-align:center;}
   .seg__item{font-size:clamp(11px,4.2vw,14px);padding:7px 8px;min-height:36px;}
   .tabbar__cta{flex-basis:100%;padding:8px 12px;font-size:clamp(12px,4vw,15px);}
 }
+/* --- Mobile tabbar fixes (place after your current CSS) --- */
+@media (max-width:720px){
+  /* stretch shell edge-to-edge and allow wrapping */
+  .tabbar__inner{ width:100%; max-width:none; margin:calc(12px + env(safe-area-inset-top,0px)) 0 0; }
+  .tabbar__shell{ width:100%; margin:0; padding:8px; gap:6px; flex-wrap:wrap; }
+
+  /* make columns adaptive, not hard-coded "4" */
+  .seg{
+    flex:1 1 320px;                /* grow + can drop to next line */
+    display:grid; gap:6px; padding:6px 8px;
+    background:var(--chip); border:1px solid var(--accent); border-radius:999px;
+    grid-template-columns:repeat(auto-fit, minmax(88px, 1fr));
+  }
+
+  /* readable, can wrap, slightly tighter paddings */
+  .seg__item{
+    padding:6px 8px; min-height:34px;
+    font-size:clamp(12px,3.4vw,15px);
+    white-space:normal; word-break:keep-all; text-align:center;
+  }
+  .seg__item .tabbar__icon{ display:none; } /* keep labels only */
+
+  /* let CTA wrap to a new row if needed */
+  .tabbar__cta{ flex:0 1 auto; }
+  @media (max-width:420px){
+    .tabbar__cta{ flex:1 0 100%; order:2; }  /* full-width below segments */
+    .seg{ order:1; width:100%; }
+  }
+}
